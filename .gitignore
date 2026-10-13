@@ -1,0 +1,5 @@
+# Ignore Wrangler / Cloudflare cache
+.wrangler/
+
+# Ignore all video files in assets
+assets/videos/

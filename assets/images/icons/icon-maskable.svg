@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ============================================================
+  HOMESCAPE - MASKABLE ICON (SVG)
+  Version: 2.0.0
+  Purpose: Android adaptive icon with safe zone padding
+  Note: Content kept within 80% safe area (60px padding all sides)
+  ============================================================
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  
+  <defs>
+    <linearGradient id="bgGradientM" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#047857;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#065f46;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#022c22;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="roofGradientM" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6ee7b7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="windowGlowM" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#34d399;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Full background (no rounded corners - OS handles masking) -->
+  <rect width="512" height="512" fill="url(#bgGradientM)"/>
+  
+  <!-- House icon - scaled to 75% and centered (safe zone) -->
+  <g transform="translate(256, 240) scale(0.75)">
+    
+    <!-- Chimney -->
+    <rect x="60" y="-95" width="32" height="70" 
+          fill="#022c22" 
+          stroke="#34d399" 
+          stroke-width="8" 
+          rx="4" ry="4"/>
+    
+    <!-- Chimney smoke -->
+    <circle cx="76" cy="-110" r="10" fill="#6ee7b7" opacity="0.5"/>
+    <circle cx="92" cy="-130" r="14" fill="#6ee7b7" opacity="0.35"/>
+    
+    <!-- Roof -->
+    <path d="M 0,-125 L -135,-15 L -135,5 L 0,-105 L 135,5 L 135,-15 Z" 
+          fill="url(#roofGradientM)" 
+          stroke="#34d399" 
+          stroke-width="8" 
+          stroke-linejoin="round"/>
+    
+    <!-- Main house -->
+    <rect x="-105" y="-5" width="210" height="145" 
+          fill="#ffffff" 
+          stroke="#34d399" 
+          stroke-width="8" 
+          rx="10" ry="10"/>
+    
+    <!-- Door -->
+    <rect x="-28" y="55" width="56" height="85" 
+          fill="#047857" 
+          stroke="#022c22" 
+          stroke-width="5" 
+          rx="8" ry="8"/>
+    <circle cx="18" cy="100" r="4" fill="#6ee7b7"/>
+    
+    <!-- Left window -->
+    <rect x="-85" y="15" width="50" height="60" 
+          fill="#022c22" 
+          stroke="#34d399" 
+          stroke-width="5" 
+          rx="5" ry="5"/>
+    <line x1="-60" y1="15" x2="-60" y2="75" stroke="#34d399" stroke-width="4"/>
+    <line x1="-85" y1="45" x2="-35" y2="45" stroke="#34d399" stroke-width="4"/>
+    <ellipse cx="-60" cy="45" rx="20" ry="25" fill="url(#windowGlowM)" opacity="0.5"/>
+    
+    <!-- Right window -->
+    <rect x="35" y="15" width="50" height="60" 
+          fill="#022c22" 
+          stroke="#34d399" 
+          stroke-width="5" 
+          rx="5" ry="5"/>
+    <line x1="60" y1="15" x2="60" y2="75" stroke="#34d399" stroke-width="4"/>
+    <line x1="35" y1="45" x2="85" y2="45" stroke="#34d399" stroke-width="4"/>
+    <ellipse cx="60" cy="45" rx="20" ry="25" fill="url(#windowGlowM)" opacity="0.5"/>
+  </g>
+  
+  <!-- Monogram -->
+  <text x="256" y="455" 
+        font-family="'Playfair Display', Georgia, serif" 
+        font-size="48" 
+        font-weight="900" 
+        fill="#ffffff" 
+        text-anchor="middle"
+        letter-spacing="4">
+    HS
+  </text>
+  
+</svg>

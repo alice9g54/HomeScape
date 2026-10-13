@@ -1,0 +1,75 @@
+# ============================================================
+# ROBOTS.TXT - HomeScape Real Estate
+# ============================================================
+# This file tells search engines which pages to crawl and index.
+# Last Updated: September 2026
+# ============================================================
+
+# ============================================================
+# ALLOW ALL SEARCH ENGINES TO CRAWL
+# ============================================================
+User-agent: *
+Allow: /
+
+# ============================================================
+# DISALLOW - PAGES WE DON'T WANT INDEXED
+# ============================================================
+
+# Admin panel - no indexing
+Disallow: /admin/
+
+# User account pages - no indexing
+Disallow: /auth/
+Disallow: /client/
+
+# Backend files - no indexing
+Disallow: /backend/
+Disallow: /js/
+Disallow: /css/
+Disallow: /components/
+Disallow: /partials/
+
+# Asset files - no indexing
+Disallow: /assets/
+Disallow: /images/
+
+# Private files - no indexing
+Disallow: /*.json$
+Disallow: /*.env$
+Disallow: /*.md$
+Disallow: /*.txt$
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /node_modules/
+
+# ============================================================
+# SITEMAP LOCATION
+# ============================================================
+Sitemap: https://homescape.co.ke/sitemap.xml
+
+# ============================================================
+# CRAWL DELAY - BE NICE TO THE SERVER
+# ============================================================
+Crawl-delay: 5
+
+# ============================================================
+# SEO - KEY PAGES FOR SEARCH ENGINES
+# ============================================================
+# The following are the most important pages:
+# - Homepage: /
+# - Properties: /properties.html
+# - Property Details: /property-details.html
+# - Blog: /blog.html
+# - Contact: /contact.html
+# - Estate Tours: /estate-tours.html
+# - Compare: /compare.html
+
+# ============================================================
+# MOBILE CRAWLING OPTIMIZATION
+# ============================================================
+# All pages are mobile-responsive and should be crawled
+# accordingly by Google's mobile-first indexing.
+
+# ============================================================
+# END OF ROBOTS.TXT
+# ============================================================

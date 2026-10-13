@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="View detailed information about this premium property. Schedule a site visit, inquire via WhatsApp, or get directions to the location." />
+  <meta name="keywords" content="property details Kenya, luxury home specifications, real estate listing, property for sale Nairobi" />
+  <link rel="canonical" href="https://homescape.co.ke/property-details.html" />
+  <meta name="theme-color" content="#047857" />
+  <title>Property Details | Luxury Real Estate in Kenya | HomeScape</title>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 700: '#065f46', 800: '#047857', 900: '#022c22' },
+            accent: { 600: '#b45309', 700: '#854d0e' },
+            warmBg: '#fbfbf9',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .nav-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:active {
+      transform: scale(0.95);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background-color: #f1f5f9;
+      border: 2px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1e293b;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background-color: #e2e8f0;
+      border-color: #047857;
+      color: #047857;
+      transform: translateX(-4px);
+    }
+
+    .property-header {
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+      border: 1px solid #e2e8f0;
+      border-radius: 1.5rem;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .property-header .badge {
+      background: #022c22;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .property-header .type-loc {
+      color: #047857;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .property-header .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .property-header .price-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+      display: block;
+    }
+    .property-header .price {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #047857;
+    }
+
+    .gallery-thumb {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery-thumb:hover {
+      transform: scale(1.05);
+      border-color: #047857;
+    }
+    .gallery-thumb.active {
+      border-color: #047857;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.3);
+    }
+
+    .spec-item {
+      transition: all 0.3s ease;
+    }
+    .spec-item:hover {
+      background-color: #f0fdf4;
+    }
+
+    .form-input {
+      width: 100%;
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      color: #1e293b;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    .form-input:focus {
+      border-color: #047857;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
+    }
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Virtual Tour Badge */
+    .virtual-tour-badge {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.4rem 0.8rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      z-index: 5;
+    }
+    .virtual-tour-badge i {
+      font-size: 0.7rem;
+      color: #34d399;
+    }
+
+    /* CTA Button */
+    .cta-btn {
+      background: #d97706;
+      color: white;
+    }
+    .cta-btn:hover {
+      background: #b45309;
+    }
+
+    .map-btn {
+      background: #2563eb;
+      color: white;
+      transition: all 0.2s ease;
+    }
+    .map-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 4px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      margin-top: -6px;
+      background-color: #047857;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    input[type="range"]::-moz-range-track {
+      height: 4px;
+      background: #e2e8f0;
+      border-radius: 4px;
+    }
+    input[type="range"]::-moz-range-thumb {
+      background-color: #047857;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .related-card {
+      transition: all 0.3s ease;
+    }
+    .related-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px -10px rgba(4, 120, 87, 0.15);
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #065f46; }
+
+    .success-message {
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Agent Card */
+    .agent-card {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .agent-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #047857;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .agent-avatar i {
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body class="bg-warmBg text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full">
+    <div class="bg-white/90 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-lg px-5 sm:px-7 h-20 flex items-center justify-between">
+      
+      <a href="/index.html" class="flex items-center gap-3.5 group">
+        <div class="relative overflow-hidden rounded-xl">
+          <img 
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&q=80" 
+            alt="HomeScape Logo" 
+            class="w-10 h-10 sm:w-11 sm:h-11 object-cover rounded-xl shadow-inner border border-slate-200 group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg sm:text-xl font-serif font-bold text-slate-900 leading-none tracking-tight">Home<span class="text-brand-800">Scape</span></span>
+          <span class="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase text-slate-400 mt-1">Real Estate Group</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 bg-slate-100/70 p-1.5 rounded-2xl border border-slate-200/50">
+        <a href="/index.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Home</a>
+        <a href="/properties.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Properties</a>
+        <a href="/experience.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Experience</a>
+        <a href="/video-tours.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
+          <span>Videos</span>
+          <span class="bg-amber-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-bold tracking-normal shadow-xs">NEW</span>
+        </a>
+        <a href="/about.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">About</a>
+        <a href="/contact.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button type="button" id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-lg"></i>
+      </button>
+
+      <a href="/contact.html" class="hidden sm:flex nav-btn cta-btn text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase px-5 sm:px-6 py-3 rounded-xl transition-all duration-300 shadow-md items-center gap-2 group">
+        <span>Book Consultation</span>
+        <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+      </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-white border-t border-slate-200 px-4 py-4 space-y-1 mt-3 rounded-2xl shadow-lg">
+      <a href="/index.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Home</a>
+      <a href="/properties.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Properties</a>
+      <a href="/experience.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Experience</a>
+      <a href="/video-tours.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Videos</a>
+      <a href="/about.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">About</a>
+      <a href="/contact.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Contact</a>
+      <div class="pt-2">
+        <a href="/contact.html" class="block w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-wider text-center py-3 rounded-xl transition">
+          <i class="fa-regular fa-calendar-check mr-2"></i>
+          Book Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-8 w-full">
+    
+    <!-- ===== BREADCRUMB & BACK LINK ===== -->
+    <div class="flex items-center justify-between mb-6">
+      <a href="/properties.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left text-sm"></i>
+        <span>Back to All Properties</span>
+      </a>
+      <span id="prop-badge-top" class="badge">For Sale</span>
+    </div>
+
+    <!-- ===== PROPERTY HEADER ===== -->
+    <div class="property-header mb-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-1">
+            <span id="prop-type-loc" class="type-loc">Residential • Kilimani</span>
+            <span id="prop-status-badge" class="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">For Sale</span>
+          </div>
+          <h1 id="prop-title" class="title">The Grand Horizon Estate</h1>
+        </div>
+        <div class="md:text-right shrink-0">
+          <span class="price-label">Asking Price</span>
+          <span id="prop-price" class="price">KSh 38,000,000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== GALLERY SECTION ===== -->
+    <section class="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-12">
+      <div class="lg:col-span-3 h-80 sm:h-[450px] bg-slate-100 rounded-3xl overflow-hidden border border-slate-200 shadow-sm relative group">
+        <img id="main-gallery-img" src="" alt="Property Preview" class="w-full h-full object-cover transition duration-300" />
+        
+        <!-- Video Play Overlay -->
+        <button type="button" onclick="openPropertyVideo()" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer" aria-label="Play video tour">
+          <div class="w-20 h-20 bg-emerald-700/90 hover:bg-emerald-700 rounded-full flex items-center justify-center transition transform hover:scale-110 shadow-2xl">
+            <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
+          </div>
+        </button>
+        
+        <!-- Virtual Tour Badge -->
+        <div class="virtual-tour-badge">
+          <i class="fa-solid fa-video"></i>
+          <span>4K Video Tour</span>
+        </div>
+      </div>
+
+      <div class="flex lg:flex-col gap-3 justify-between">
+        <button type="button" onclick="switchMainImage('exterior')" class="gallery-thumb active flex-1 lg:flex-none h-24 lg:h-36 bg-slate-100 rounded-2xl overflow-hidden border-2 border-brand-800 relative group">
+          <img id="thumb-ext" src="" alt="Exterior" class="w-full h-full object-cover group-hover:scale-105 transition" />
+          <span class="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded">Exterior</span>
+        </button>
+        <button type="button" onclick="switchMainImage('interior')" class="gallery-thumb flex-1 lg:flex-none h-24 lg:h-36 bg-slate-100 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 relative group">
+          <img id="thumb-int" src="" alt="Interior" class="w-full h-full object-cover group-hover:scale-105 transition" />
+          <span class="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded">Interior</span>
+        </button>
+        <button type="button" onclick="switchMainImage('floorPlan')" class="gallery-thumb flex-1 lg:flex-none h-24 lg:h-36 bg-slate-100 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 relative group">
+          <img id="thumb-plan" src="" alt="Floor Plan" class="w-full h-full object-cover group-hover:scale-105 transition" />
+          <span class="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded">Floor Plan</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== CONTENT & SIDEBAR GRID ===== -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      
+      <!-- ===== LEFT DETAILS AREA ===== -->
+      <div class="lg:col-span-2 space-y-10">
+        
+        <!-- Key Specs -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm grid grid-cols-3 gap-4 text-center">
+          <div class="spec-item p-2 rounded-xl">
+            <i class="fa-solid fa-bed text-emerald-800 text-lg mb-1 block"></i>
+            <span class="block text-slate-400 text-[10px] uppercase font-bold tracking-wider">Bedrooms</span>
+            <span id="spec-beds" class="font-bold text-slate-900 text-sm mt-0.5 block">4 Beds</span>
+          </div>
+          <div class="spec-item p-2 rounded-xl">
+            <i class="fa-solid fa-bath text-emerald-800 text-lg mb-1 block"></i>
+            <span class="block text-slate-400 text-[10px] uppercase font-bold tracking-wider">Bathrooms</span>
+            <span id="spec-baths" class="font-bold text-slate-900 text-sm mt-0.5 block">5 Baths</span>
+          </div>
+          <div class="spec-item p-2 rounded-xl">
+            <i class="fa-solid fa-ruler-combined text-emerald-800 text-lg mb-1 block"></i>
+            <span class="block text-slate-400 text-[10px] uppercase font-bold tracking-wider">Area</span>
+            <span id="spec-sqm" class="font-bold text-slate-900 text-sm mt-0.5 block">420 sqm</span>
+          </div>
+        </div>
+
+        <!-- Property Overview -->
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <h2 class="text-xl font-serif font-bold text-slate-900 flex items-center gap-2">
+            <i class="fa-regular fa-file-lines text-brand-800"></i>
+            Property Overview
+          </h2>
+          <p id="prop-description" class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Designed for modern living, this architectural listing combines high-end finishing with functional space layout.
+          </p>
+        </div>
+
+        <!-- Highlights -->
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+          <h2 class="text-xl font-serif font-bold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-brand-800"></i>
+            Amenities &amp; Highlights
+          </h2>
+          <div id="prop-highlights-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700">
+          </div>
+        </div>
+
+        <!-- Agent Information -->
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm">
+          <h2 class="text-xl font-serif font-bold text-slate-900 flex items-center gap-2 mb-4">
+            <i class="fa-regular fa-user text-brand-800"></i>
+            Listing Agent
+          </h2>
+          <div id="agent-info-container" class="agent-card">
+            <div class="agent-avatar">
+              <i class="fa-regular fa-user"></i>
+            </div>
+            <div>
+              <p id="agent-name" class="text-sm font-bold text-slate-900">Agent Name</p>
+              <a id="agent-email" href="mailto:agent@homescape.co.ke" class="text-xs text-emerald-700 hover:underline">agent@homescape.co.ke</a>
+              <p id="agent-agency" class="text-[10px] text-emerald-700 font-semibold">HomeScape Real Estate</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mortgage Calculator -->
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-6">
+          <div>
+            <span class="text-emerald-800 font-bold text-[10px] uppercase tracking-widest">Financial Planning</span>
+            <h2 class="text-xl font-serif font-bold text-slate-900 mt-0.5 flex items-center gap-2">
+              <i class="fa-solid fa-calculator text-brand-800"></i>
+              Mortgage Calculator
+            </h2>
+          </div>
+
+          <div class="space-y-4 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>Down Payment:</span>
+                <span id="calc-deposit-text" class="text-emerald-800 font-bold">KSh 7,600,000</span>
+              </div>
+              <input type="range" id="deposit-slider" min="10" max="50" value="20" class="w-full accent-emerald-800" />
+              <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
+                <span>10%</span>
+                <span>50%</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>Loan Term:</span>
+                <span id="calc-months-text" class="text-emerald-800 font-bold">3 Months</span>
+              </div>
+              <input type="range" id="months-slider" min="1" max="6" value="3" step="1" class="w-full accent-emerald-800" />
+              <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
+                <span>1 Month</span>
+                <span>6 Months</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between font-semibold mb-1">
+                <span>Interest Rate:</span>
+                <span id="calc-rate-text" class="text-emerald-800 font-bold">12.5% p.a.</span>
+              </div>
+              <input type="range" id="rate-slider" min="8" max="18" value="12.5" step="0.5" class="w-full accent-emerald-800" />
+              <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
+                <span>8%</span>
+                <span>18%</span>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center mt-4">
+              <div>
+                <span class="block text-[10px] font-bold uppercase text-slate-400">Estimated Monthly Payment</span>
+                <span id="calc-monthly-text" class="text-lg font-bold text-slate-900">KSh 285,000 / month</span>
+              </div>
+              <span class="text-[10px] text-slate-400 italic">*Approximate</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Properties -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-serif font-bold text-slate-900 flex items-center gap-2">
+              <i class="fa-regular fa-building text-brand-800"></i>
+              Similar Properties
+            </h2>
+            <a href="/properties.html" class="text-xs font-bold text-brand-800 hover:text-accent-600 transition">View All</a>
+          </div>
+          <div id="related-properties-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== RIGHT SIDEBAR ===== -->
+      <div class="space-y-6">
+        
+        <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4 sticky top-28">
+          <h3 class="text-lg font-serif font-bold text-slate-900">Interested in this Property?</h3>
+          <p class="text-xs text-slate-600">Send us a message to schedule a private viewing or request more details.</p>
+
+          <!-- WhatsApp Button -->
+          <a id="btn-whatsapp-inquire" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+            <i class="fa-brands fa-whatsapp text-base"></i>
+            <span>Chat on WhatsApp</span>
+          </a>
+
+          <!-- View on Map Button -->
+          <a id="btn-map-view" href="#" target="_blank" rel="noopener noreferrer" class="w-full map-btn font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+            <i class="fa-solid fa-location-dot text-sm"></i>
+            <span>Get Directions</span>
+          </a>
+
+          <div class="relative flex py-1 items-center">
+            <div class="flex-grow border-t border-slate-200"></div>
+            <span class="flex-shrink mx-2 text-[10px] font-bold text-slate-400 uppercase">Or Book a Visit</span>
+            <div class="flex-grow border-t border-slate-200"></div>
+          </div>
+
+          <!-- Schedule Visit Form -->
+          <form id="scheduleVisitForm" class="space-y-3">
+            <div>
+              <label class="form-label">Your Full Name</label>
+              <input type="text" id="visit-name" placeholder="e.g. Jane Doe" required class="form-input" />
+            </div>
+            <div>
+              <label class="form-label">Phone Number</label>
+              <input type="tel" id="visit-phone" placeholder="+254 722 987 654" required class="form-input" />
+            </div>
+            <div>
+              <label class="form-label">Email Address</label>
+              <input type="email" id="visit-email" placeholder="jane@example.com" required class="form-input" />
+            </div>
+            <div>
+              <label class="form-label">Preferred Date</label>
+              <input type="date" id="visit-date" required class="form-input" />
+            </div>
+            <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition shadow-sm hover:shadow-md">
+              Book a Site Visit
+            </button>
+          </form>
+          <p id="form-success-msg" class="hidden success-message text-xs text-emerald-800 font-bold text-center mt-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200" role="alert">
+            <i class="fa-solid fa-circle-check mr-1"></i> Request received! We'll contact you within 2 hours.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div id="footer">
+    <!-- Fallback -->
+    <footer class="bg-slate-950 text-slate-400 py-8 text-xs text-center">
+      <p>&copy; <span id="footerYear">2026</span> HomeScape Group. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- ==================== BACK TO TOP ==================== -->
+  <button 
+    type="button"
+    id="backToTopBtn" 
+    class="fixed bottom-6 right-6 z-40 bg-slate-900 hover:bg-brand-800 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-xl opacity-0 pointer-events-none transition-all duration-300 border border-slate-700"
+    aria-label="Back to top"
+  >
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- ==================== PROPERTY VIDEO MODAL ==================== -->
+  <div id="propertyVideoModal" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative max-w-5xl w-full bg-black rounded-2xl overflow-hidden">
+      <button type="button" onclick="closePropertyVideo()" aria-label="Close video" class="absolute top-4 right-4 z-10 bg-white/20 hover:bg-white/30 text-white w-10 h-10 rounded-full flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-2xl"></i>
+      </button>
+      <video id="propertyVideoPlayer" class="w-full aspect-video" controls playsinline preload="metadata">
+        <source src="" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+      <div class="p-4 bg-slate-950 text-white">
+        <h3 id="propertyVideoTitle" class="font-serif font-bold text-lg">Property Tour</h3>
+        <p class="text-xs text-slate-400">Virtual Tour in 4K</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // 1. DATA - MATCHES properties.html
+      // ============================================================
+      var locations = ['Kilimani', 'Westlands', 'Karen', 'Lavington', 'Runda', 'Kileleshwa', 'Parklands'];
+      var types = ['Residential', 'Commercial', 'Townhouse'];
+
+      var locationCoords = {
+        'Kilimani': { lat: -1.2921, lng: 36.7895 },
+        'Westlands': { lat: -1.2673, lng: 36.8045 },
+        'Karen': { lat: -1.3285, lng: 36.7060 },
+        'Lavington': { lat: -1.2818, lng: 36.7771 },
+        'Runda': { lat: -1.2420, lng: 36.8060 },
+        'Kileleshwa': { lat: -1.2880, lng: 36.7720 },
+        'Parklands': { lat: -1.2580, lng: 36.8220 }
+      };
+
+      var agentNames = [
+        'John Mwangi', 'Sarah Wanjiru', 'David Ochieng', 
+        'Grace Akinyi', 'Michael Kiprop', 'Faith Auma',
+        'Peter Njoroge', 'Mary Wambui', 'James Otieno',
+        'Ann Njeri', 'Robert Kiplagat', 'Catherine Muthoni',
+        'Stephen Omondi', 'Jane Wairimu', 'Philip Kariuki',
+        'Esther Nyokabi', 'Samuel Kipkorir', 'Margaret Atieno',
+        'Daniel Kariuki', 'Susan Wanjiru'
+      ];
+
+      var agentAssignments = {};
+
+      function getAgentForProperty(propertyIndex) {
+        var agentKey = Math.floor(propertyIndex / 3);
+        if (!agentAssignments[agentKey]) {
+          var nameIndex = agentKey % agentNames.length;
+          var firstName = agentNames[nameIndex].split(' ')[0].toLowerCase();
+          var lastName = agentNames[nameIndex].split(' ')[1].toLowerCase();
+          agentAssignments[agentKey] = {
+            name: agentNames[nameIndex],
+            email: firstName + '.' + lastName + '@homescape.co.ke',
+            agency: 'HomeScape Real Estate'
+          };
+        }
+        return agentAssignments[agentKey];
+      }
+
+      var templates = {
+        Residential: [
+          { title: 'Luxury Villa', beds: [3,4,5,6], baths: [3,4,5,6], sqm: [250, 350, 450, 600],
+            highlights: ['Private Pool', 'Landscaped Garden', '24/7 Security', 'Parking for 4 Cars', 'Smart Home'] },
+          { title: 'Modern Apartment', beds: [2,3,4], baths: [2,3,4], sqm: [120, 180, 220],
+            highlights: ['Gym Access', 'Swimming Pool', '24/7 Security', 'Elevator', 'Concierge'] },
+          { title: 'Penthouse Suite', beds: [3,4,5], baths: [3,4,5], sqm: [280, 400, 550],
+            highlights: ['Rooftop Terrace', 'Panoramic Views', 'Smart Home System', 'Private Lift', 'Jacuzzi'] },
+          { title: 'Executive Home', beds: [4,5,6], baths: [4,5,6], sqm: [350, 500, 700],
+            highlights: ['Home Office', 'Double Garage', 'Large Garden', 'Solar Panels', 'Staff Quarters'] },
+          { title: 'Contemporary Mansion', beds: [5,6,7], baths: [5,6,7], sqm: [600, 800, 1000],
+            highlights: ['Home Cinema', 'Wine Cellar', 'Gym', 'Tennis Court', 'Helipad'] },
+          { title: 'Garden Estate', beds: [4,5], baths: [4,5], sqm: [400, 550, 750],
+            highlights: ['Mature Gardens', 'Orchard', 'Swimming Pool', 'Guest House', 'Solar'] },
+        ],
+        Commercial: [
+          { title: 'Office Tower', beds: [0], baths: [4,6,8], sqm: [500, 800, 1200],
+            highlights: ['High-speed Elevators', 'CCTV Monitoring', 'Basement Parking', 'Fiber Optic', 'Generator'] },
+          { title: 'Retail Space', beds: [0], baths: [2,3,4], sqm: [200, 350, 500],
+            highlights: ['High Footfall Area', 'Glass Shopfront', 'Storage Room', 'Customer Parking', 'Signage'] },
+          { title: 'Business Hub', beds: [0], baths: [6,8,10], sqm: [800, 1200, 2000],
+            highlights: ['Conference Rooms', 'Cafeteria', '24/7 Access', 'Generator Backup', 'Data Center'] },
+          { title: 'Corporate Plaza', beds: [0], baths: [5,7,9], sqm: [600, 900, 1500],
+            highlights: ['Reception Area', 'Boardrooms', 'Kitchenette', 'Secure Parking', 'Backup Power'] },
+        ],
+        Townhouse: [
+          { title: 'Family Townhouse', beds: [3,4,5], baths: [3,4,5], sqm: [200, 280, 350],
+            highlights: ['Gated Community', 'Children Playground', 'Clubhouse', 'Swimming Pool', '24/7 Security'] },
+          { title: 'Luxury Row House', beds: [4,5,6], baths: [4,5,6], sqm: [300, 400, 500],
+            highlights: ['Rooftop Terrace', 'Private Garden', 'Double Garage', 'Smart Intercom', 'Solar'] },
+          { title: 'Premium Townhouse', beds: [3,4], baths: [3,4], sqm: [220, 300, 380],
+            highlights: ['Balcony', 'Parking', 'Gym Access', 'Swimming Pool', 'Landscaped Gardens'] },
+        ]
+      };
+
+      var imagePool = [
+        'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1568605117036-5f5e40b6f3d9?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80',
+      ];
+
+      function generateProperties() {
+        var props = [];
+        var id = 1;
+        var basePrices = {
+          Residential: { min: 2000000, max: 15000000 },
+          Commercial: { min: 3000000, max: 15000000 },
+          Townhouse: { min: 2500000, max: 14000000 }
+        };
+
+        var usedImages = [];
+        
+        function getUniqueImage() {
+          var available = [];
+          for (var i = 0; i < imagePool.length; i++) {
+            if (usedImages.indexOf(i) === -1) {
+              available.push(i);
+            }
+          }
+          if (available.length === 0) {
+            usedImages = [];
+            return getUniqueImage();
+          }
+          var randomIndex = available[Math.floor(Math.random() * available.length)];
+          usedImages.push(randomIndex);
+          return randomIndex;
+        }
+
+        types.forEach(function(type) {
+          var tpls = templates[type] || templates.Residential;
+          var countPerType = 50;
+          
+          for (var i = 0; i < countPerType; i++) {
+            var tpl = tpls[i % tpls.length];
+            var loc = locations[i % locations.length];
+            var beds = tpl.beds[i % tpl.beds.length];
+            var baths = tpl.baths[i % tpl.baths.length];
+            var sqm = tpl.sqm[i % tpl.sqm.length];
+            var min = basePrices[type].min;
+            var max = basePrices[type].max;
+            var price = Math.floor(Math.random() * (max - min + 1)) + min;
+            var priceFormatted = 'KSh ' + price.toLocaleString();
+            var title = tpl.title + ' ' + (i + 1);
+            
+            var extIdx = getUniqueImage();
+            var intIdx = getUniqueImage();
+            var planIdx = getUniqueImage();
+            
+            var descriptions = [
+              'This stunning property offers modern living with premium finishes. Located in a prime neighborhood with easy access to schools, shopping, and transport.',
+              'A masterpiece of contemporary design, this property features spacious interiors, high-end appliances, and breathtaking views.',
+              'Perfect for families or investors, this property combines comfort, security, and convenience in one of the most sought-after locations.',
+              'Experience luxury living at its finest with this meticulously designed property featuring top-of-the-line amenities and finishes.',
+              'An exceptional opportunity to own this beautiful property in a prestigious neighborhood. Features include modern finishes and spacious living areas.'
+            ];
+            var desc = descriptions[i % descriptions.length];
+
+            var agent = getAgentForProperty(id - 1);
+
+            var priceCategory = 'medium';
+            if (price >= 10000000) priceCategory = 'high-end';
+            else if (price >= 5000000) priceCategory = 'medium';
+            else priceCategory = 'low';
+
+            props.push({
+              id: 'prop-' + id++,
+              title: title,
+              type: type,
+              location: loc,
+              coords: locationCoords[loc] || { lat: -1.2921, lng: 36.7895 },
+              price: price,
+              priceFormatted: priceFormatted,
+              beds: beds,
+              baths: baths,
+              sqm: sqm + ' sqm',
+              status: 'For Sale',
+              description: desc,
+              priceCategory: priceCategory,
+              images: { 
+                exterior: imagePool[extIdx], 
+                interior: imagePool[intIdx], 
+                floorPlan: imagePool[planIdx] 
+              },
+              highlights: tpl.highlights.slice(0, 4),
+              agent: agent,
+              hasVirtualTour: true
+            });
+          }
+        });
+
+        return props;
+      }
+
+      var allProperties = generateProperties();
+
+      // ============================================================
+      // 2. STATE & UTILITY
+      // ============================================================
+      var currentProperty = null;
+
+      function getPropertyById(id) {
+        for (var i = 0; i < allProperties.length; i++) {
+          if (allProperties[i].id === id) {
+            return allProperties[i];
+          }
+        }
+        return allProperties[0];
+      }
+
+      function getRelatedProperties(property, count) {
+        count = count || 3;
+        var related = [];
+        
+        for (var i = 0; i < allProperties.length; i++) {
+          var p = allProperties[i];
+          if (p.id === property.id) continue;
+          if (p.location === property.location && related.length < count) {
+            related.push(p);
+          }
+        }
+        
+        if (related.length < count) {
+          for (var j = 0; j < allProperties.length; j++) {
+            var p2 = allProperties[j];
+            if (p2.id === property.id) continue;
+            if (related.indexOf(p2) !== -1) continue;
+            if (p2.type === property.type && related.length < count) {
+              related.push(p2);
+            }
+          }
+        }
+        
+        if (related.length < count) {
+          for (var k = 0; k < allProperties.length; k++) {
+            var p3 = allProperties[k];
+            if (p3.id === property.id) continue;
+            if (related.indexOf(p3) !== -1) continue;
+            if (p3.priceCategory === property.priceCategory && related.length < count) {
+              related.push(p3);
+            }
+          }
+        }
+        
+        while (related.length < count) {
+          var random = allProperties[Math.floor(Math.random() * allProperties.length)];
+          if (random.id === property.id) continue;
+          if (related.indexOf(random) !== -1) continue;
+          related.push(random);
+        }
+        
+        return related;
+      }
+
+      // ============================================================
+      // 3. GALLERY SWITCHER
+      // ============================================================
+      function switchMainImage(view) {
+        if (!currentProperty) return;
+        var mainImg = document.getElementById('main-gallery-img');
+        var btns = document.querySelectorAll('.gallery-thumb');
+
+        btns.forEach(function(btn) {
+          btn.classList.remove('border-brand-800');
+          btn.classList.add('border-transparent');
+        });
+
+        if (view === 'exterior') {
+          mainImg.src = currentProperty.images.exterior;
+          btns[0].classList.add('border-brand-800');
+          btns[0].classList.remove('border-transparent');
+        } else if (view === 'interior') {
+          mainImg.src = currentProperty.images.interior;
+          btns[1].classList.add('border-brand-800');
+          btns[1].classList.remove('border-transparent');
+        } else if (view === 'floorPlan') {
+          mainImg.src = currentProperty.images.floorPlan;
+          btns[2].classList.add('border-brand-800');
+          btns[2].classList.remove('border-transparent');
+        }
+      }
+
+      // ============================================================
+      // 4. PAYMENT CALCULATOR
+      // ============================================================
+      function updatePayment() {
+        if (!currentProperty) return;
+        var depositPct = parseInt(document.getElementById('deposit-slider').value, 10);
+        var months = parseInt(document.getElementById('months-slider').value, 10);
+        var rate = parseFloat(document.getElementById('rate-slider').value);
+
+        var depositVal = (currentProperty.price * depositPct) / 100;
+        var loanAmount = currentProperty.price - depositVal;
+        var monthlyRate = (rate / 100) / 12;
+
+        var monthlyPayment = 0;
+        if (months > 0 && loanAmount > 0) {
+          monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                           (Math.pow(1 + monthlyRate, months) - 1);
+        }
+
+        document.getElementById('calc-deposit-text').textContent = 'KSh ' + depositVal.toLocaleString();
+        document.getElementById('calc-months-text').textContent = months + ' Month' + (months > 1 ? 's' : '');
+        document.getElementById('calc-rate-text').textContent = rate + '% p.a.';
+        document.getElementById('calc-monthly-text').textContent = monthlyPayment > 0 
+          ? 'KSh ' + Math.round(monthlyPayment).toLocaleString() + ' / month'
+          : 'KSh 0 / month';
+      }
+
+      // ============================================================
+      // 5. RENDER PROPERTY DETAILS
+      // ============================================================
+      function renderPropertyDetails(property) {
+        currentProperty = property;
+
+        // Header - Top Badge with dynamic status
+        var badgeEl = document.getElementById('prop-badge-top');
+        if (badgeEl) {
+          var status = property.status || 'For Sale';
+          badgeEl.textContent = status;
+          
+          if (status === 'Sold') {
+            badgeEl.className = 'badge bg-rose-600';
+          } else if (status === 'Under Offer') {
+            badgeEl.className = 'badge bg-amber-600';
+          } else if (status === 'For Rent') {
+            badgeEl.className = 'badge bg-blue-600';
+          } else {
+            badgeEl.className = 'badge bg-slate-900';
+          }
+        }
+
+        // Inline status badge
+        var statusBadge = document.getElementById('prop-status-badge');
+        if (statusBadge) {
+          var statusText = property.status || 'For Sale';
+          statusBadge.textContent = statusText;
+          
+          if (statusText === 'Sold') {
+            statusBadge.className = 'inline-block bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded-full';
+          } else if (statusText === 'Under Offer') {
+            statusBadge.className = 'inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full';
+          } else if (statusText === 'For Rent') {
+            statusBadge.className = 'inline-block bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full';
+          } else {
+            statusBadge.className = 'inline-block bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full';
+          }
+        }
+
+        document.getElementById('prop-type-loc').textContent = property.type + ' • ' + property.location;
+        document.getElementById('prop-title').textContent = property.title;
+        document.getElementById('prop-price').textContent = property.priceFormatted;
+
+        // Gallery
+        document.getElementById('main-gallery-img').src = property.images.exterior;
+        document.getElementById('thumb-ext').src = property.images.exterior;
+        document.getElementById('thumb-int').src = property.images.interior;
+        document.getElementById('thumb-plan').src = property.images.floorPlan;
+
+        // Specs
+        document.getElementById('spec-beds').textContent = property.beds > 0 ? property.beds + ' Beds' : 'Commercial';
+        document.getElementById('spec-baths').textContent = property.baths + ' Baths';
+        document.getElementById('spec-sqm').textContent = property.sqm;
+
+        // Description
+        document.getElementById('prop-description').textContent = property.description;
+
+        // Highlights
+        var highlightsContainer = document.getElementById('prop-highlights-list');
+        var highlightsHtml = '';
+        for (var h = 0; h < property.highlights.length; h++) {
+          highlightsHtml += '<div class="flex items-center gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100"><i class="fa-solid fa-circle-check text-emerald-800 text-xs"></i><span>' + property.highlights[h] + '</span></div>';
+        }
+        highlightsContainer.innerHTML = highlightsHtml;
+
+        // Agent Info
+        document.getElementById('agent-name').textContent = property.agent.name;
+        var emailEl = document.getElementById('agent-email');
+        if (emailEl) {
+          emailEl.textContent = property.agent.email;
+          emailEl.href = 'mailto:' + property.agent.email;
+        }
+        document.getElementById('agent-agency').textContent = property.agent.agency;
+
+        // WhatsApp Link
+        var whatsappMsg = encodeURIComponent('Hi HomeScape, I am inquiring about "' + property.title + '" listed for ' + property.priceFormatted + ' in ' + property.location + '.');
+        document.getElementById('btn-whatsapp-inquire').href = 'https://wa.me/254722987654?text=' + whatsappMsg;
+
+        // Map Link
+        var mapUrl = 'https://www.google.com/maps?q=' + property.coords.lat + ',' + property.coords.lng;
+        document.getElementById('btn-map-view').href = mapUrl;
+
+        // Update payment calculator
+        updatePayment();
+
+        // Related properties
+        renderRelatedProperties(property);
+      }
+
+      // ============================================================
+      // 6. RENDER RELATED PROPERTIES
+      // ============================================================
+      function renderRelatedProperties(property) {
+        var related = getRelatedProperties(property, 3);
+        var container = document.getElementById('related-properties-grid');
+
+        if (related.length === 0) {
+          container.innerHTML = '<p class="text-xs text-slate-400 col-span-full">No similar properties found.</p>';
+          return;
+        }
+
+        var html = '';
+        for (var i = 0; i < related.length; i++) {
+          var p = related[i];
+          html += '<a href="/property-details.html?id=' + p.id + '" class="related-card bg-white rounded-xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition flex">' +
+            '<img src="' + p.images.exterior + '" alt="' + p.title + '" class="w-24 h-24 object-cover" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80\'" />' +
+            '<div class="p-3 flex-1 flex flex-col justify-between">' +
+              '<div>' +
+                '<span class="text-[9px] font-bold uppercase tracking-widest text-emerald-800">' + p.type + '</span>' +
+                '<h4 class="text-xs font-serif font-bold text-slate-900 line-clamp-1">' + p.title + '</h4>' +
+              '</div>' +
+              '<p class="text-xs font-bold text-brand-800">' + p.priceFormatted + '</p>' +
+            '</div>' +
+          '</a>';
+        }
+        container.innerHTML = html;
+      }
+
+      // ============================================================
+      // 7. INITIALIZATION
+      // ============================================================
+      document.addEventListener('DOMContentLoaded', function() {
+        // Set date picker minimum to today
+        var dateInput = document.getElementById('visit-date');
+        var today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        // Get property ID from URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var propId = urlParams.get('id') || 'prop-1';
+
+        // Find and render property
+        var property = getPropertyById(propId);
+        renderPropertyDetails(property);
+
+        // Payment calculator listeners
+        document.getElementById('deposit-slider').addEventListener('input', updatePayment);
+        document.getElementById('months-slider').addEventListener('input', updatePayment);
+        document.getElementById('rate-slider').addEventListener('input', updatePayment);
+
+        // Form submission
+        document.getElementById('scheduleVisitForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          var msg = document.getElementById('form-success-msg');
+          msg.classList.remove('hidden');
+          this.reset();
+          document.getElementById('visit-date').setAttribute('min', new Date().toISOString().split('T')[0]);
+          setTimeout(function() { msg.classList.add('hidden'); }, 6000);
+        });
+
+        // Back to top
+        var backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 300) {
+            backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            backToTopBtn.classList.add('opacity-100');
+          } else {
+            backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            backToTopBtn.classList.remove('opacity-100');
+          }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Expose functions globally
+        window.switchMainImage = switchMainImage;
+        window.updatePayment = updatePayment;
+      });
+
+      // ============================================================
+      // 8. VIDEO MODAL FUNCTIONS
+      // ============================================================
+      window.openPropertyVideo = function() {
+        if (!currentProperty) return;
+        
+        var modal = document.getElementById('propertyVideoModal');
+        var video = document.getElementById('propertyVideoPlayer');
+        var source = video.querySelector('source');
+        
+        // Set video source path
+        var videoSrc = '/assets/videos/property-tours/' + currentProperty.id + '-tour.mp4';
+        source.src = videoSrc;
+        video.load();
+        
+        document.getElementById('propertyVideoTitle').textContent = currentProperty.title;
+        
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = 'hidden';
+        
+        setTimeout(function() {
+          video.play().catch(function(e) { console.log('Autoplay blocked:', e); });
+        }, 300);
+      };
+
+      window.closePropertyVideo = function() {
+        var modal = document.getElementById('propertyVideoModal');
+        var video = document.getElementById('propertyVideoPlayer');
+        video.pause();
+        video.currentTime = 0;
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = '';
+      };
+
+      // Close on ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          var modal = document.getElementById('propertyVideoModal');
+          if (modal && !modal.classList.contains('opacity-0')) {
+            closePropertyVideo();
+          }
+        }
+      });
+
+      // Close on backdrop click
+      document.addEventListener('click', function(e) {
+        var modal = document.getElementById('propertyVideoModal');
+        if (e.target === modal) closePropertyVideo();
+      });
+
+    })();
+  </script>
+
+  <!-- Mobile Menu Toggle -->
+  <script>
+    (function() {
+      var btn = document.getElementById('mobileMenuBtn');
+      var menu = document.getElementById('mobileMenu');
+      
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function() {
+        menu.classList.toggle('hidden');
+        var icon = btn.querySelector('i');
+        if (icon) {
+          icon.className = menu.classList.contains('hidden') 
+            ? 'fa-solid fa-bars text-lg' 
+            : 'fa-solid fa-xmark text-lg';
+        }
+      });
+
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.add('hidden');
+          var icon = btn.querySelector('i');
+          if (icon) icon.className = 'fa-solid fa-bars text-lg';
+        });
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!menu.classList.contains('hidden')) {
+          var isClickInside = menu.contains(e.target) || btn.contains(e.target);
+          if (!isClickInside) {
+            menu.classList.add('hidden');
+            var icon = btn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars text-lg';
+          }
+        }
+      });
+    })();
+  </script>
+
+  <!-- Load Footer Component -->
+  <script>
+    (function() {
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      var container = document.getElementById('footer');
+      if (container) {
+        fetch('/components/footer.html')
+          .then(function(response) {
+            if (!response.ok) throw new Error('Footer not found');
+            return response.text();
+          })
+          .then(function(data) {
+            container.innerHTML = data;
+          })
+          .catch(function(error) {
+            console.error('Error loading footer:', error);
+          });
+      }
+    })();
+  </script>
+
+</body>
+</html>

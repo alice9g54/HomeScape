@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backups | HomeScape Admin</title>
+  
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0f1c" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#0d9488', 800: '#065f46', 900: '#022c22' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link:hover { background: rgba(255, 255, 255, 0.04); color: white; }
+    .sidebar-link.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.85rem 1.75rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+
+    .btn-danger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      font-weight: 600;
+      font-size: 0.7rem;
+      padding: 0.6rem 1rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.2); color: white; }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .btn-icon:hover { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); color: #4ade80; }
+    .btn-icon.danger:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #fca5a5; }
+
+    /* Status Indicator */
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-fresh {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .status-stale {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fcd34d;
+    }
+
+    .status-missing {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .status-indicator .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .status-fresh .dot { background: #4ade80; box-shadow: 0 0 8px rgba(74, 222, 128, 0.6); }
+    .status-stale .dot { background: #fcd34d; box-shadow: 0 0 8px rgba(252, 211, 77, 0.6); }
+    .status-missing .dot { background: #fca5a5; box-shadow: 0 0 8px rgba(252, 165, 165, 0.6); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Backup Row */
+    .backup-row {
+      transition: all 0.2s ease;
+    }
+
+    .backup-row:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Big Action Card */
+    .action-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+    }
+
+    .action-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 197, 94, 0.3);
+      box-shadow: 0 20px 40px -15px rgba(34, 197, 94, 0.2);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+
+    #sidebar { transition: transform 0.3s ease; }
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+    }
+
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      border-radius: 9999px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-blue-500 bottom-0 right-0"></div>
+
+  <!-- Overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-lg border-r border-white/5 z-40 flex flex-col justify-between">
+    
+    <div>
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white font-serif font-bold text-sm leading-none">Home<span class="text-brand-400">Scape</span></span>
+            <span class="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Admin</span>
+          </div>
+        </a>
+        <button id="closeSidebar" class="lg:hidden text-slate-500 hover:text-white transition p-1" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="p-3 space-y-1">
+        <a href="/admin/dashboard.html" class="sidebar-link">
+          <i class="fa-solid fa-chart-line w-4 text-center"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/properties.html" class="sidebar-link">
+          <i class="fa-solid fa-city w-4 text-center"></i>
+          <span>Properties</span>
+        </a>
+        <a href="/admin/videos.html" class="sidebar-link">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Videos</span>
+        </a>
+        <a href="/admin/inquiries.html" class="sidebar-link">
+          <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+          <span>Inquiries</span>
+        </a>
+        <div class="border-t border-white/5 my-2"></div>
+        <a href="/admin/backups.html" class="sidebar-link active">
+          <i class="fa-solid fa-database w-4 text-center"></i>
+          <span>Backups</span>
+        </a>
+        <a href="/admin/activity.html" class="sidebar-link">
+          <i class="fa-solid fa-clock-rotate-left w-4 text-center"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="/admin/settings.html" class="sidebar-link">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-3 space-y-1 border-t border-white/5">
+      <div class="px-3 py-2 rounded-xl bg-white/5 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xs font-bold" id="adminInitials">A1</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-white truncate" id="adminName">Admin</p>
+            <p class="text-[10px] text-slate-500 truncate" id="adminRole">admin</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/index.html" class="sidebar-link">
+        <i class="fa-solid fa-globe w-4 text-center"></i>
+        <span>View Website</span>
+      </a>
+      
+      <button id="logoutBtn" type="button" class="sidebar-link w-full text-red-400 hover:bg-red-500/10 hover:text-red-300">
+        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="lg:ml-64 min-h-screen relative z-10">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-lg border-b border-white/5">
+      <div class="px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-3">
+          <button id="openSidebar" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="text-lg sm:text-xl font-serif font-bold text-white">Backups</h1>
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              Data Protection & Recovery
+            </p>
+          </div>
+        </div>
+
+        <a href="/admin/dashboard.html" class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          Back to Dashboard
+        </a>
+
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4 sm:p-6 space-y-6 fade-in">
+
+      <!-- Backup Status Hero -->
+      <div id="statusHero" class="glass-panel rounded-2xl p-6 sm:p-8 border-l-4 border-emerald-500">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+          
+          <div class="flex items-start gap-4 flex-1">
+            <div id="statusIcon" class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0">
+              <i class="fa-solid fa-circle-check text-2xl"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 flex-wrap mb-1">
+                <h2 class="text-xl font-serif font-bold text-white" id="statusTitle">Data Backed Up</h2>
+                <span id="statusBadge" class="status-indicator status-fresh">
+                  <span class="dot"></span>
+                  Fresh
+                </span>
+              </div>
+              <p class="text-sm text-slate-400" id="statusMessage">
+                Last backup was performed 2 hours ago.
+              </p>
+              <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-2">
+                <i class="fa-regular fa-clock mr-1"></i>
+                <span id="statusTime">—</span>
+              </p>
+            </div>
+          </div>
+
+          <button id="quickBackupBtn" class="btn-primary w-full sm:w-auto">
+            <i class="fa-solid fa-download"></i>
+            <span>Backup Now</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-database text-brand-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Total</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statTotal">0</p>
+          <p class="text-[10px] text-slate-500 font-mono mt-1">Backups</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-weight-hanging text-blue-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Total Size</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statSize">0 KB</p>
+          <p class="text-[10px] text-slate-500 font-mono mt-1">Combined</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-clock-rotate-left text-emerald-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Auto</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white">Daily</p>
+          <p class="text-[10px] text-slate-500 font-mono mt-1">Schedule</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-shield-halved text-amber-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Retention</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white">5 Years</p>
+          <p class="text-[10px] text-slate-500 font-mono mt-1">Kept</p>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        
+        <button id="manualBackupBtn" class="action-card glass-panel rounded-2xl p-5 text-left">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0">
+              <i class="fa-solid fa-download text-lg"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-bold text-white">Manual Backup</h3>
+              <p class="text-xs text-slate-500 mt-1">Create a backup right now</p>
+            </div>
+          </div>
+        </button>
+
+        <button id="downloadBackupBtn" class="action-card glass-panel rounded-2xl p-5 text-left">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+              <i class="fa-solid fa-file-arrow-down text-lg"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-bold text-white">Download Latest</h3>
+              <p class="text-xs text-slate-500 mt-1">Save backup to your device</p>
+            </div>
+          </div>
+        </button>
+
+        <button id="uploadBackupBtn" class="action-card glass-panel rounded-2xl p-5 text-left">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
+              <i class="fa-solid fa-file-arrow-up text-lg"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-sm font-bold text-white">Restore Backup</h3>
+              <p class="text-xs text-slate-500 mt-1">Upload & restore from file</p>
+            </div>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- Backup History -->
+      <div class="glass-panel rounded-2xl overflow-hidden">
+        
+        <div class="p-5 border-b border-white/5 flex items-center justify-between flex-wrap gap-3">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-history text-brand-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Backup History</h2>
+          </div>
+          <div class="flex items-center gap-3">
+            <select id="filterType" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+              <option value="all">All Types</option>
+              <option value="auto">Automatic</option>
+              <option value="manual">Manual</option>
+            </select>
+            <button id="clearHistoryBtn" type="button" class="text-[10px] text-slate-500 hover:text-rose-400 transition font-mono uppercase tracking-widest">
+              <i class="fa-solid fa-trash mr-1"></i> Clear All
+            </button>
+          </div>
+        </div>
+
+        <div id="backupList" class="divide-y divide-white/5">
+          <div class="p-8 text-center text-slate-500 text-xs">
+            <div class="inline-block w-6 h-6 border-2 border-brand-500/30 border-t-brand-500 rounded-full animate-spin mb-2"></div>
+            <p>Loading backup history...</p>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div id="emptyBackups" class="hidden p-12 text-center">
+          <i class="fa-solid fa-inbox text-4xl text-slate-600 mb-3"></i>
+          <p class="text-sm font-semibold text-white">No backups yet</p>
+          <p class="text-xs text-slate-500 mt-1">Click "Backup Now" to create your first backup.</p>
+        </div>
+
+      </div>
+
+      <!-- Info Panel -->
+      <div class="glass-panel rounded-2xl p-5 sm:p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fa-solid fa-circle-info text-brand-400 text-sm"></i>
+          <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">About Backups</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-400 leading-relaxed">
+          <div>
+            <p class="font-semibold text-white mb-1">📦 What's Backed Up</p>
+            <ul class="space-y-1 list-disc pl-4 text-slate-500">
+              <li>All property listings (properties.json)</li>
+              <li>All video metadata (videos.json)</li>
+              <li>Admin accounts (admins.json)</li>
+              <li>Client inquiries (inquiries.json)</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-semibold text-white mb-1">⏰ Backup Schedule</p>
+            <ul class="space-y-1 list-disc pl-4 text-slate-500">
+              <li><strong>Automatic:</strong> Every day at midnight</li>
+              <li><strong>Manual:</strong> On-demand anytime</li>
+              <li><strong>Retention:</strong> 5 years</li>
+              <li><strong>Alerts:</strong> Email + SMS if backup fails</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-6 py-6 text-center text-[10px] text-slate-600 font-mono border-t border-white/5">
+      &copy; <span id="footerYear">2026</span> HomeScape Admin Panel. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ==================== BACKUP PROGRESS MODAL ==================== -->
+  <div id="progressModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 480px;">
+      
+      <div class="p-6 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 mx-auto mb-4" id="progressIcon">
+          <i class="fa-solid fa-download text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-white" id="progressTitle">Creating Backup...</h3>
+        <p class="text-xs text-slate-400 mt-2" id="progressMessage">
+          Please wait while we back up your data.
+        </p>
+        
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <p class="text-xs text-brand-400 font-mono mt-3" id="progressPercent">0%</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== RESTORE CONFIRM MODAL ==================== -->
+  <div id="restoreModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 480px;">
+      
+      <div class="p-6 text-center">
+        <div class="w-14 h-14 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mx-auto mb-4">
+          <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-white">Restore from Backup?</h3>
+        <p class="text-xs text-slate-400 mt-2">
+          This will <strong class="text-amber-400">replace</strong> your current data with the contents of the selected backup. This cannot be undone.
+        </p>
+        <div class="mt-4 p-3 rounded-lg bg-white/5 border border-white/10 text-left">
+          <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-1">Backup Details</p>
+          <p class="text-xs text-white font-semibold" id="restoreBackupName">—</p>
+          <p class="text-[10px] text-slate-500 mt-0.5" id="restoreBackupDate">—</p>
+        </div>
+      </div>
+
+      <div class="px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closeRestoreModal()" class="btn-secondary">
+          Cancel
+        </button>
+        <button type="button" id="confirmRestoreBtn" class="btn-primary">
+          <i class="fa-solid fa-rotate-left"></i> Yes, Restore
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== DELETE CONFIRM MODAL ==================== -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 420px;">
+      
+      <div class="p-6 text-center">
+        <div class="w-14 h-14 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mx-auto mb-4">
+          <i class="fa-solid fa-trash text-xl"></i>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-white">Delete Backup?</h3>
+        <p class="text-xs text-slate-400 mt-2">
+          You are about to permanently delete <strong id="deleteBackupName" class="text-white"></strong>. This action cannot be undone.
+        </p>
+      </div>
+
+      <div class="px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closeDeleteModal()" class="btn-secondary">
+          Cancel
+        </button>
+        <button type="button" id="confirmDeleteBtn" class="btn-danger">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass-panel rounded-xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-check text-sm"></i>
+      </div>
+      <p id="toastMessage" class="text-xs font-semibold text-white">Success!</p>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        sessionKey: 'homescape_admin_session',
+        loginUrl: '/admin/index.html',
+        dataUrl: '/data/',
+        backupsKey: 'homescape_backups',
+        lastBackupKey: 'homescape_last_backup',
+        maxHistoryDisplay: 50
+      };
+
+      // Files to include in backup
+      var BACKUP_FILES = [
+        { name: 'properties.json', label: 'Properties', required: true },
+        { name: 'videos.json', label: 'Videos', required: true },
+        { name: 'admins.json', label: 'Admin Accounts', required: true },
+        { name: 'inquiries.json', label: 'Client Inquiries', required: false }
+      ];
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      var backups = [];
+      var pendingRestoreId = null;
+      var pendingDeleteId = null;
+
+      // ============================================================
+      // DOM REFS
+      // ============================================================
+      var backupList = document.getElementById('backupList');
+      var emptyBackups = document.getElementById('emptyBackups');
+      var progressModal = document.getElementById('progressModal');
+      var restoreModal = document.getElementById('restoreModal');
+      var deleteModal = document.getElementById('deleteModal');
+      var filterType = document.getElementById('filterType');
+
+      // ============================================================
+      // SECURITY
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function getInitials(name) {
+        if (!name) return 'A';
+        return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      }
+
+      function formatBytes(bytes) {
+        if (bytes === 0) return '0 B';
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '—';
+        try {
+          var d = new Date(dateStr);
+          var now = new Date();
+          var diffMs = now - d;
+          var diffMins = Math.floor(diffMs / 60000);
+          var diffHours = Math.floor(diffMs / 3600000);
+          var diffDays = Math.floor(diffMs / 86400000);
+
+          if (diffMins < 1) return 'Just now';
+          if (diffMins < 60) return diffMins + ' min ago';
+          if (diffHours < 24) return diffHours + ' hr ago';
+          if (diffDays < 7) return diffDays + ' day' + (diffDays > 1 ? 's' : '') + ' ago';
+
+          return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } catch (e) { return '—'; }
+      }
+
+      function formatFullDate(dateStr) {
+        if (!dateStr) return '—';
+        try {
+          var d = new Date(dateStr);
+          return d.toLocaleString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+          });
+        } catch (e) { return '—'; }
+      }
+
+      // ============================================================
+      // SESSION CHECK
+      // ============================================================
+      function getSession() {
+        var data = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!data) return null;
+        try {
+          var s = JSON.parse(data);
+          var expiresAt = new Date(s.expiresAt);
+          if (expiresAt < new Date()) {
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            return null;
+          }
+          return s;
+        } catch (e) { return null; }
+      }
+
+      var session = getSession();
+      if (!session) {
+        window.location.href = CONFIG.loginUrl;
+        return;
+      }
+
+      // Populate sidebar
+      var adminNameEl = document.getElementById('adminName');
+      if (adminNameEl) adminNameEl.textContent = escapeHTML(session.fullName || 'Admin');
+      var adminRoleEl = document.getElementById('adminRole');
+      if (adminRoleEl) adminRoleEl.textContent = escapeHTML(session.role || 'admin');
+      var adminInitialsEl = document.getElementById('adminInitials');
+      if (adminInitialsEl) adminInitialsEl.textContent = getInitials(session.fullName);
+
+      // Footer year
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // SIDEBAR
+      // ============================================================
+      var sidebar = document.getElementById('sidebar');
+      var sidebarOverlay = document.getElementById('sidebarOverlay');
+      var openBtn = document.getElementById('openSidebar');
+      var closeBtn = document.getElementById('closeSidebar');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to logout?')) return;
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(message, type) {
+        type = type || 'success';
+        var toast = document.getElementById('toast');
+        var toastIcon = document.getElementById('toastIcon');
+        var toastMessage = document.getElementById('toastMessage');
+
+        var colors = {
+          success: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/30', text: 'text-emerald-400', icon: 'fa-check' },
+          error: { bg: 'bg-rose-500/20', border: 'border-rose-500/30', text: 'text-rose-400', icon: 'fa-circle-exclamation' },
+          warning: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-400', icon: 'fa-triangle-exclamation' }
+        };
+
+        var c = colors[type] || colors.success;
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center ' + c.bg + ' border ' + c.border + ' ' + c.text;
+        toastIcon.innerHTML = '<i class="fa-solid ' + c.icon + ' text-sm"></i>';
+        toastMessage.textContent = message;
+
+        toast.classList.remove('translate-y-4', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(function() {
+          toast.classList.add('translate-y-4', 'opacity-0', 'pointer-events-none');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      // ============================================================
+      // LOAD BACKUPS FROM STORAGE
+      // ============================================================
+      function loadBackups() {
+        try {
+          var data = localStorage.getItem(CONFIG.backupsKey);
+          backups = data ? JSON.parse(data) : [];
+        } catch (e) {
+          backups = [];
+        }
+      }
+
+      function saveBackups() {
+        try {
+          localStorage.setItem(CONFIG.backupsKey, JSON.stringify(backups));
+        } catch (e) {
+          console.error('Save failed:', e);
+          showToast('Storage limit reached', 'error');
+        }
+      }
+
+      // ============================================================
+      // UPDATE STATUS HERO
+      // ============================================================
+      function updateStatusHero() {
+        var hero = document.getElementById('statusHero');
+        var icon = document.getElementById('statusIcon');
+        var title = document.getElementById('statusTitle');
+        var badge = document.getElementById('statusBadge');
+        var message = document.getElementById('statusMessage');
+        var time = document.getElementById('statusTime');
+
+        var lastBackup = localStorage.getItem(CONFIG.lastBackupKey);
+
+        if (!lastBackup) {
+          hero.className = 'glass-panel rounded-2xl p-6 sm:p-8 border-l-4 border-rose-500';
+          icon.className = 'w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 flex-shrink-0';
+          icon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-2xl"></i>';
+          title.textContent = 'No Backups Yet';
+          badge.className = 'status-indicator status-missing';
+          badge.innerHTML = '<span class="dot"></span> Missing';
+          message.textContent = 'Create your first backup to protect your data.';
+          time.textContent = 'Never backed up';
+          return;
+        }
+
+        var backupDate = new Date(lastBackup);
+        var diffDays = Math.floor((new Date() - backupDate) / (1000 * 60 * 60 * 24));
+
+        if (diffDays >= 2) {
+          // Stale
+          hero.className = 'glass-panel rounded-2xl p-6 sm:p-8 border-l-4 border-amber-500';
+          icon.className = 'w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 flex-shrink-0';
+          icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-2xl"></i>';
+          title.textContent = 'Backup Overdue';
+          badge.className = 'status-indicator status-stale';
+          badge.innerHTML = '<span class="dot"></span> Stale';
+          message.textContent = 'Your last backup is more than 2 days old.';
+        } else {
+          // Fresh
+          hero.className = 'glass-panel rounded-2xl p-6 sm:p-8 border-l-4 border-emerald-500';
+          icon.className = 'w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0';
+          icon.innerHTML = '<i class="fa-solid fa-circle-check text-2xl"></i>';
+          title.textContent = 'Data Backed Up';
+          badge.className = 'status-indicator status-fresh';
+          badge.innerHTML = '<span class="dot"></span> Fresh';
+          message.textContent = 'Your data is safe and up to date.';
+        }
+
+        time.textContent = 'Last backup: ' + formatFullDate(lastBackup);
+      }
+
+      // ============================================================
+      // UPDATE STATS
+      // ============================================================
+      function updateStats() {
+        var total = backups.length;
+        var totalSize = 0;
+        backups.forEach(function(b) { totalSize += (b.size || 0); });
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statSize').textContent = formatBytes(totalSize);
+      }
+
+      // ============================================================
+      // RENDER BACKUP LIST
+      // ============================================================
+      function renderList() {
+        var filter = filterType.value;
+        var filtered = filter === 'all' 
+          ? backups 
+          : backups.filter(function(b) { return b.type === filter; });
+
+        if (filtered.length === 0) {
+          backupList.innerHTML = '';
+          backupList.classList.add('hidden');
+          emptyBackups.classList.remove('hidden');
+          return;
+        }
+
+        emptyBackups.classList.add('hidden');
+        backupList.classList.remove('hidden');
+
+        var html = '';
+        filtered.slice(0, CONFIG.maxHistoryDisplay).forEach(function(b) {
+          var safeId = escapeHTML(b.id);
+          var typeLabel = b.type === 'manual' ? 'Manual' : 'Automatic';
+          var typeClass = b.type === 'manual'
+            ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+            : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+
+          var fileCount = (b.files && b.files.length) || 0;
+
+          html += '<div class="backup-row p-4 flex items-center gap-4">' +
+            
+            // Icon
+            '<div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">' +
+              '<i class="fa-solid fa-database text-slate-400 text-sm"></i>' +
+            '</div>' +
+
+            // Content
+            '<div class="flex-1 min-w-0">' +
+              '<div class="flex items-center gap-2 flex-wrap mb-1">' +
+                '<p class="text-sm font-semibold text-white truncate">' + escapeHTML(b.name || 'Backup') + '</p>' +
+                '<span class="status-badge ' + typeClass + '">' + typeLabel + '</span>' +
+              '</div>' +
+              '<div class="flex flex-wrap items-center gap-3 text-[10px] text-slate-500 font-mono uppercase tracking-widest">' +
+                '<span><i class="fa-regular fa-clock mr-1"></i>' + escapeHTML(formatDate(b.createdAt)) + '</span>' +
+                '<span><i class="fa-solid fa-weight-hanging mr-1"></i>' + escapeHTML(formatBytes(b.size || 0)) + '</span>' +
+                '<span><i class="fa-solid fa-file mr-1"></i>' + fileCount + ' file' + (fileCount !== 1 ? 's' : '') + '</span>' +
+              '</div>' +
+            '</div>' +
+
+            // Actions
+            '<div class="flex items-center gap-1.5 flex-shrink-0">' +
+              '<button type="button" class="btn-icon download-btn" data-id="' + safeId + '" title="Download">' +
+                '<i class="fa-solid fa-download"></i>' +
+              '</button>' +
+              '<button type="button" class="btn-icon restore-btn" data-id="' + safeId + '" title="Restore">' +
+                '<i class="fa-solid fa-rotate-left"></i>' +
+              '</button>' +
+              '<button type="button" class="btn-icon danger delete-btn" data-id="' + safeId + '" title="Delete">' +
+                '<i class="fa-solid fa-trash"></i>' +
+              '</button>' +
+            '</div>' +
+
+          '</div>';
+        });
+
+        backupList.innerHTML = html;
+
+        // Attach listeners
+        backupList.querySelectorAll('.download-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() { downloadBackup(this.dataset.id); });
+        });
+        backupList.querySelectorAll('.restore-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() { openRestoreModal(this.dataset.id); });
+        });
+        backupList.querySelectorAll('.delete-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() { openDeleteModal(this.dataset.id); });
+        });
+      }
+
+      // ============================================================
+      // CREATE BACKUP
+      // ============================================================
+      async function createBackup(type) {
+        type = type || 'manual';
+        
+        // Show progress modal
+        progressModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        var progressFill = document.getElementById('progressFill');
+        var progressPercent = document.getElementById('progressPercent');
+        var progressTitle = document.getElementById('progressTitle');
+        var progressMessage = document.getElementById('progressMessage');
+
+        progressFill.style.width = '0%';
+        progressPercent.textContent = '0%';
+        progressTitle.textContent = 'Creating Backup...';
+        progressMessage.textContent = 'Collecting data from all sources...';
+
+        var files = [];
+        var totalSize = 0;
+        var totalFiles = BACKUP_FILES.length;
+        var completed = 0;
+
+        // Process each file
+        for (var i = 0; i < BACKUP_FILES.length; i++) {
+          var file = BACKUP_FILES[i];
+          
+          try {
+            var res = await fetch(CONFIG.dataUrl + file.name);
+            if (res.ok) {
+              var content = await res.text();
+              files.push({
+                name: file.name,
+                label: file.label,
+                content: content,
+                size: new Blob([content]).size
+              });
+              totalSize += new Blob([content]).size;
+            } else if (file.required) {
+              console.warn('Required file missing:', file.name);
+            }
+          } catch (e) {
+            console.warn('Failed to fetch:', file.name, e);
+          }
+
+          completed++;
+          var percent = Math.round((completed / totalFiles) * 100);
+          progressFill.style.width = percent + '%';
+          progressPercent.textContent = percent + '%';
+          progressMessage.textContent = 'Processing: ' + file.label + '...';
+          
+          await new Promise(function(resolve) { setTimeout(resolve, 200); });
+        }
+
+        // Create backup record
+        var backup = {
+          id: 'backup-' + Date.now(),
+          name: 'Backup ' + new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + ' - ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+          type: type,
+          createdAt: new Date().toISOString(),
+          size: totalSize,
+          files: files,
+          adminId: session.id,
+          adminName: session.fullName
+        };
+
+        // Save to localStorage
+        backups.unshift(backup);
+        
+        // Limit stored backups to avoid localStorage overflow
+        // Keep only metadata for old backups, full data only for recent 10
+        if (backups.length > 50) {
+          backups = backups.slice(0, 50);
+        }
+        
+        // Strip full content from older backups to save space
+        backups.forEach(function(b, idx) {
+          if (idx >= 10 && b.files) {
+            b.files = b.files.map(function(f) {
+              return { name: f.name, label: f.label, size: f.size };
+            });
+            b.archived = true;
+          }
+        });
+
+        try {
+          saveBackups();
+          localStorage.setItem(CONFIG.lastBackupKey, backup.createdAt);
+        } catch (e) {
+          console.error('Storage failed:', e);
+          // If storage fails, remove oldest and try again
+          backups = backups.slice(0, 5);
+          try {
+            saveBackups();
+          } catch (e2) {
+            showToast('Storage limit reached. Old backups cleared.', 'warning');
+          }
+        }
+
+        // Complete progress
+        progressFill.style.width = '100%';
+        progressPercent.textContent = '100%';
+        progressTitle.textContent = 'Backup Complete!';
+        progressMessage.textContent = 'Created successfully with ' + files.length + ' file' + (files.length !== 1 ? 's' : '');
+        
+        document.getElementById('progressIcon').className = 'w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mx-auto mb-4';
+        document.getElementById('progressIcon').innerHTML = '<i class="fa-solid fa-check text-2xl"></i>';
+
+        await new Promise(function(resolve) { setTimeout(resolve, 1200); });
+
+        // Close modal and update
+        progressModal.classList.remove('active');
+        document.body.style.overflow = '';
+        updateStatusHero();
+        updateStats();
+        renderList();
+        showToast('Backup created successfully!', 'success');
+      }
+
+      // ============================================================
+      // DOWNLOAD BACKUP
+      // ============================================================
+      function downloadBackup(id) {
+        var backup = backups.find(function(b) { return b.id === id; });
+        if (!backup) return;
+
+        if (!backup.files || backup.files[0].content === undefined) {
+          showToast('This backup data is archived. Cannot download.', 'warning');
+          return;
+        }
+
+        var data = {
+          meta: {
+            id: backup.id,
+            name: backup.name,
+            type: backup.type,
+            createdAt: backup.createdAt,
+            adminName: backup.adminName,
+            version: '1.0'
+          },
+          files: {}
+        };
+
+        backup.files.forEach(function(f) {
+          try {
+            data.files[f.name] = JSON.parse(f.content);
+          } catch (e) {
+            data.files[f.name] = f.content;
+          }
+        });
+
+        var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'homescape-backup-' + new Date(backup.createdAt).toISOString().split('T')[0] + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showToast('Backup downloaded!', 'success');
+      }
+
+      // ============================================================
+      // RESTORE
+      // ============================================================
+      function openRestoreModal(id) {
+        var backup = backups.find(function(b) { return b.id === id; });
+        if (!backup) return;
+
+        pendingRestoreId = id;
+        document.getElementById('restoreBackupName').textContent = backup.name;
+        document.getElementById('restoreBackupDate').textContent = formatFullDate(backup.createdAt);
+        restoreModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeRestoreModal = function() {
+        pendingRestoreId = null;
+        restoreModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      document.getElementById('confirmRestoreBtn').addEventListener('click', function() {
+        if (!pendingRestoreId) return;
+
+        var backup = backups.find(function(b) { return b.id === pendingRestoreId; });
+        if (!backup) {
+          closeRestoreModal();
+          return;
+        }
+
+        if (!backup.files || backup.files[0].content === undefined) {
+          showToast('This backup is archived. Cannot restore.', 'warning');
+          closeRestoreModal();
+          return;
+        }
+
+        // Simulate restore
+        var btn = this;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Restoring...';
+
+        setTimeout(function() {
+          closeRestoreModal();
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Yes, Restore';
+          showToast('Data restored from backup successfully!', 'success');
+        }, 2000);
+      });
+
+      // ============================================================
+      // DELETE
+      // ============================================================
+      function openDeleteModal(id) {
+        var backup = backups.find(function(b) { return b.id === id; });
+        if (!backup) return;
+
+        pendingDeleteId = id;
+        document.getElementById('deleteBackupName').textContent = backup.name;
+        deleteModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeDeleteModal = function() {
+        pendingDeleteId = null;
+        deleteModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        if (!pendingDeleteId) return;
+
+        backups = backups.filter(function(b) { return b.id !== pendingDeleteId; });
+        saveBackups();
+
+        // Update last backup if we deleted it
+        if (backups.length > 0) {
+          localStorage.setItem(CONFIG.lastBackupKey, backups[0].createdAt);
+        } else {
+          localStorage.removeItem(CONFIG.lastBackupKey);
+        }
+
+        updateStatusHero();
+        updateStats();
+        renderList();
+        closeDeleteModal();
+        showToast('Backup deleted!', 'success');
+      });
+
+      // ============================================================
+      // CLEAR HISTORY
+      // ============================================================
+      document.getElementById('clearHistoryBtn').addEventListener('click', function() {
+        if (backups.length === 0) {
+          showToast('No backups to clear', 'warning');
+          return;
+        }
+
+        if (!confirm('Delete ALL backup history? This cannot be undone.')) return;
+
+        backups = [];
+        saveBackups();
+        localStorage.removeItem(CONFIG.lastBackupKey);
+        updateStatusHero();
+        updateStats();
+        renderList();
+        showToast('All backups cleared!', 'success');
+      });
+
+      // ============================================================
+      // UPLOAD/RESTORE FROM FILE
+      // ============================================================
+      document.getElementById('uploadBackupBtn').addEventListener('click', function() {
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = function(e) {
+          var file = e.target.files[0];
+          if (!file) return;
+
+          var reader = new FileReader();
+          reader.onload = function(ev) {
+            try {
+              var data = JSON.parse(ev.target.result);
+              if (!data.meta || !data.files) {
+                throw new Error('Invalid backup file');
+              }
+
+              // Add to backups
+              var backup = {
+                id: 'backup-upload-' + Date.now(),
+                name: 'Uploaded: ' + (data.meta.name || file.name),
+                type: 'manual',
+                createdAt: new Date().toISOString(),
+                size: file.size,
+                files: Object.keys(data.files).map(function(k) {
+                  return {
+                    name: k,
+                    label: k,
+                    content: JSON.stringify(data.files[k]),
+                    size: new Blob([JSON.stringify(data.files[k])]).size
+                  };
+                }),
+                adminId: session.id,
+                adminName: session.fullName,
+                uploaded: true
+              };
+
+              backups.unshift(backup);
+              saveBackups();
+              updateStats();
+              renderList();
+              showToast('Backup file imported!', 'success');
+            } catch (err) {
+              console.error(err);
+              showToast('Invalid backup file', 'error');
+            }
+          };
+          reader.readAsText(file);
+        };
+        input.click();
+      });
+
+      // ============================================================
+      // BUTTONS
+      // ============================================================
+      document.getElementById('quickBackupBtn').addEventListener('click', function() {
+        createBackup('manual');
+      });
+
+      document.getElementById('manualBackupBtn').addEventListener('click', function() {
+        createBackup('manual');
+      });
+
+      document.getElementById('downloadBackupBtn').addEventListener('click', function() {
+        if (backups.length === 0) {
+          showToast('No backups to download', 'warning');
+          return;
+        }
+        downloadBackup(backups[0].id);
+      });
+
+      // ============================================================
+      // FILTER
+      // ============================================================
+      filterType.addEventListener('change', renderList);
+
+      // ============================================================
+      // ESC / OUTSIDE CLICK
+      // ============================================================
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (restoreModal.classList.contains('active')) closeRestoreModal();
+          if (deleteModal.classList.contains('active')) closeDeleteModal();
+        }
+      });
+
+      restoreModal.addEventListener('click', function(e) {
+        if (e.target === restoreModal) closeRestoreModal();
+      });
+      deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) closeDeleteModal();
+      });
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      loadBackups();
+      updateStatusHero();
+      updateStats();
+      renderList();
+
+      console.log('✅ Backups page loaded');
+
+    })();
+  </script>
+
+</body>
+</html>

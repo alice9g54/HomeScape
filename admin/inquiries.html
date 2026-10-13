@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Inquiries | HomeScape Admin</title>
+  
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0f1c" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#0d9488', 800: '#065f46', 900: '#022c22' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link:hover { background: rgba(255, 255, 255, 0.04); color: white; }
+    .sidebar-link.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      color: #f3f4f6;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input::placeholder { color: #4b5563; }
+    .form-input:focus {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .btn-icon:hover { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); color: #4ade80; }
+    .btn-icon.danger:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #fca5a5; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Inquiry Card */
+    .inquiry-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .inquiry-card:hover {
+      border-color: rgba(34, 197, 94, 0.3);
+      box-shadow: 0 20px 40px -15px rgba(34, 197, 94, 0.15);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+
+    #sidebar { transition: transform 0.3s ease; }
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+    }
+
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tabs */
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover { background: rgba(255, 255, 255, 0.04); color: white; }
+    .tab-btn.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .tab-btn .count {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.05rem 0.4rem;
+      border-radius: 9999px;
+      font-size: 0.6rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tab-btn.active .count { background: rgba(34, 197, 94, 0.3); color: white; }
+
+    /* Unread indicator */
+    .unread-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-purple-500 bottom-0 right-0"></div>
+
+  <!-- Overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-lg border-r border-white/5 z-40 flex flex-col justify-between">
+    
+    <div>
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white font-serif font-bold text-sm leading-none">Home<span class="text-brand-400">Scape</span></span>
+            <span class="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Admin</span>
+          </div>
+        </a>
+        <button id="closeSidebar" class="lg:hidden text-slate-500 hover:text-white transition p-1" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="p-3 space-y-1">
+        <a href="/admin/dashboard.html" class="sidebar-link">
+          <i class="fa-solid fa-chart-line w-4 text-center"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/properties.html" class="sidebar-link">
+          <i class="fa-solid fa-city w-4 text-center"></i>
+          <span>Properties</span>
+        </a>
+        <a href="/admin/videos.html" class="sidebar-link">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Videos</span>
+        </a>
+        <a href="/admin/inquiries.html" class="sidebar-link active">
+          <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+          <span>Inquiries</span>
+          <span class="ml-auto bg-rose-500/20 text-rose-400 text-[9px] font-mono px-1.5 py-0.5 rounded-full hidden" id="sidebarBadge">0</span>
+        </a>
+        <div class="border-t border-white/5 my-2"></div>
+        <a href="/admin/backups.html" class="sidebar-link">
+          <i class="fa-solid fa-database w-4 text-center"></i>
+          <span>Backups</span>
+        </a>
+        <a href="/admin/activity.html" class="sidebar-link">
+          <i class="fa-solid fa-clock-rotate-left w-4 text-center"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="/admin/settings.html" class="sidebar-link">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-3 space-y-1 border-t border-white/5">
+      <div class="px-3 py-2 rounded-xl bg-white/5 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xs font-bold" id="adminInitials">A1</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-white truncate" id="adminName">Admin</p>
+            <p class="text-[10px] text-slate-500 truncate" id="adminRole">admin</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/index.html" class="sidebar-link">
+        <i class="fa-solid fa-globe w-4 text-center"></i>
+        <span>View Website</span>
+      </a>
+      
+      <button id="logoutBtn" type="button" class="sidebar-link w-full text-red-400 hover:bg-red-500/10 hover:text-red-300">
+        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="lg:ml-64 min-h-screen relative z-10">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-lg border-b border-white/5">
+      <div class="px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-3">
+          <button id="openSidebar" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="text-lg sm:text-xl font-serif font-bold text-white">Client Inquiries</h1>
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              <span id="inquiryCount">0</span> total · <span id="unreadCount" class="text-brand-400">0</span> unread
+            </p>
+          </div>
+        </div>
+
+        <button id="refreshBtn" type="button" class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition border border-white/10">
+          <i class="fa-solid fa-rotate text-[10px]"></i>
+          <span class="hidden sm:inline">Refresh</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4 sm:p-6 space-y-6 fade-in">
+
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-inbox text-brand-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Total</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statTotal">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-envelope text-emerald-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Unread</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statUnread">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-reply text-blue-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Replied</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statReplied">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-calendar-day text-amber-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Today</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statToday">0</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="glass-panel rounded-2xl p-4 sm:p-5">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          
+          <div class="sm:col-span-2">
+            <label for="searchInput" class="form-label">Search</label>
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search by name, email, phone, or message..." 
+                class="form-input pl-10"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="statusFilter" class="form-label">Status</label>
+            <select id="statusFilter" class="form-input">
+              <option value="all">All Statuses</option>
+              <option value="unread">Unread</option>
+              <option value="read">Read</option>
+              <option value="replied">Replied</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Sort:</span>
+            <select id="sortFilter" class="form-input !w-auto text-xs">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="unread">Unread First</option>
+            </select>
+          </div>
+          <button id="clearFilters" type="button" class="text-[10px] text-slate-500 hover:text-brand-400 transition font-mono uppercase tracking-widest">
+            <i class="fa-solid fa-xmark mr-1"></i> Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Inquiries List -->
+      <div id="inquiriesList" class="space-y-3">
+        <!-- Loaded dynamically -->
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="text-center py-12">
+        <div class="inline-block w-6 h-6 border-2 border-brand-500/30 border-t-brand-500 rounded-full animate-spin mb-2"></div>
+        <p class="text-xs text-slate-500">Loading inquiries...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden glass-panel rounded-2xl p-12 text-center">
+        <i class="fa-solid fa-inbox text-4xl text-slate-600 mb-3"></i>
+        <p class="text-sm font-semibold text-white">No inquiries found</p>
+        <p class="text-xs text-slate-500 mt-1">Client inquiries will appear here when they submit the contact forms.</p>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-6 py-6 text-center text-[10px] text-slate-600 font-mono border-t border-white/5">
+      &copy; <span id="footerYear">2026</span> HomeScape Admin Panel. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ==================== INQUIRY DETAIL MODAL ==================== -->
+  <div id="inquiryModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="sticky top-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-b border-white/5 flex items-center justify-between z-10">
+        <div>
+          <h2 class="text-base font-serif font-bold text-white">Inquiry Details</h2>
+          <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">
+            <i class="fa-solid fa-envelope mr-1"></i> Client Message
+          </p>
+        </div>
+        <button type="button" onclick="closeInquiryModal()" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 space-y-5">
+
+        <!-- Client Info -->
+        <div class="glass-panel rounded-xl p-4">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-lg font-bold flex-shrink-0" id="modalInitials">
+              JD
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-semibold text-white" id="modalName">Client Name</h3>
+              <p class="text-xs text-slate-400 mt-0.5" id="modalEmail">client@email.com</p>
+              <p class="text-xs text-slate-500 mt-0.5" id="modalPhone">+254 700 000 000</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Property Reference -->
+        <div id="modalPropertyWrapper" class="glass-panel rounded-xl p-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-slate-400 flex-shrink-0">
+              <i class="fa-solid fa-building text-sm"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Property Reference</p>
+              <p class="text-sm font-semibold text-white truncate" id="modalProperty">General Inquiry</p>
+            </div>
+            <a id="modalPropertyLink" href="#" class="text-xs text-brand-400 hover:text-brand-300 transition hidden">
+              View <i class="fa-solid fa-arrow-right text-[9px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div>
+          <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mb-2">
+            <i class="fa-solid fa-comment mr-1"></i> Message
+          </p>
+          <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+            <p class="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap" id="modalMessage">Message content...</p>
+          </div>
+        </div>
+
+        <!-- Meta -->
+        <div class="flex flex-wrap items-center gap-3 text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+          <span><i class="fa-regular fa-clock mr-1"></i><span id="modalDate">—</span></span>
+          <span id="modalStatusWrapper" class="hidden">
+            <span class="status-badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" id="modalStatus">Read</span>
+          </span>
+        </div>
+
+        <!-- Reply Actions -->
+        <div class="grid grid-cols-2 gap-3 pt-4 border-t border-white/5">
+          <a id="modalReplyEmail" href="#" class="btn-primary">
+            <i class="fa-regular fa-envelope"></i> Email Reply
+          </a>
+          <a id="modalReplyWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition shadow-md">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="sticky bottom-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-t border-white/5 flex items-center justify-between gap-3">
+        <button type="button" id="deleteInquiryBtn" class="btn-icon danger w-auto px-3 text-xs font-semibold uppercase tracking-wider">
+          <i class="fa-solid fa-trash text-[10px] mr-1"></i> Delete
+        </button>
+        <button type="button" onclick="closeInquiryModal()" class="btn-secondary">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== DELETE CONFIRM MODAL ==================== -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 420px;">
+      
+      <div class="p-6 text-center">
+        <div class="w-14 h-14 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mx-auto mb-4">
+          <i class="fa-solid fa-trash text-xl"></i>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-white">Delete Inquiry?</h3>
+        <p class="text-xs text-slate-400 mt-2">
+          You are about to delete the inquiry from <strong id="deleteInquiryName" class="text-white"></strong>. This action cannot be undone.
+        </p>
+      </div>
+
+      <div class="px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closeDeleteModal()" class="btn-secondary">
+          Cancel
+        </button>
+        <button type="button" id="confirmDeleteBtn" class="inline-flex items-center justify-center gap-2 bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 hover:text-white font-semibold text-[11px] uppercase tracking-wider px-4 py-3 rounded-xl transition">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass-panel rounded-xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-check text-sm"></i>
+      </div>
+      <p id="toastMessage" class="text-xs font-semibold text-white">Success!</p>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        sessionKey: 'homescape_admin_session',
+        loginUrl: '/admin/index.html',
+        dataUrl: '/data/',
+        inquiriesFile: 'inquiries.json',
+        whatsappNumber: '254700000000'
+      };
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      var allInquiries = [];
+      var filteredInquiries = [];
+      var currentInquiry = null;
+      var pendingDeleteId = null;
+
+      // ============================================================
+      // DOM REFS
+      // ============================================================
+      var list = document.getElementById('inquiriesList');
+      var loadingState = document.getElementById('loadingState');
+      var emptyState = document.getElementById('emptyState');
+      var searchInput = document.getElementById('searchInput');
+      var statusFilter = document.getElementById('statusFilter');
+      var sortFilter = document.getElementById('sortFilter');
+      var clearFilters = document.getElementById('clearFilters');
+      var inquiryModal = document.getElementById('inquiryModal');
+      var deleteModal = document.getElementById('deleteModal');
+
+      // ============================================================
+      // SECURITY
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function getInitials(name) {
+        if (!name) return 'A';
+        return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '—';
+        try {
+          var d = new Date(dateStr);
+          var now = new Date();
+          var diffMs = now - d;
+          var diffMins = Math.floor(diffMs / 60000);
+          var diffHours = Math.floor(diffMs / 3600000);
+          var diffDays = Math.floor(diffMs / 86400000);
+
+          if (diffMins < 1) return 'Just now';
+          if (diffMins < 60) return diffMins + ' min ago';
+          if (diffHours < 24) return diffHours + ' hr ago';
+          if (diffDays < 7) return diffDays + ' day' + (diffDays > 1 ? 's' : '') + ' ago';
+          
+          return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        } catch (e) { return '—'; }
+      }
+
+      function formatFullDate(dateStr) {
+        if (!dateStr) return '—';
+        try {
+          var d = new Date(dateStr);
+          return d.toLocaleString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          });
+        } catch (e) { return '—'; }
+      }
+
+      // ============================================================
+      // SESSION CHECK
+      // ============================================================
+      function getSession() {
+        var data = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!data) return null;
+        try {
+          var s = JSON.parse(data);
+          var expiresAt = new Date(s.expiresAt);
+          if (expiresAt < new Date()) {
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            return null;
+          }
+          return s;
+        } catch (e) { return null; }
+      }
+
+      var session = getSession();
+      if (!session) {
+        window.location.href = CONFIG.loginUrl;
+        return;
+      }
+
+      // Populate sidebar
+      var adminNameEl = document.getElementById('adminName');
+      if (adminNameEl) adminNameEl.textContent = escapeHTML(session.fullName || 'Admin');
+      var adminRoleEl = document.getElementById('adminRole');
+      if (adminRoleEl) adminRoleEl.textContent = escapeHTML(session.role || 'admin');
+      var adminInitialsEl = document.getElementById('adminInitials');
+      if (adminInitialsEl) adminInitialsEl.textContent = getInitials(session.fullName);
+
+      // Footer year
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // SIDEBAR
+      // ============================================================
+      var sidebar = document.getElementById('sidebar');
+      var sidebarOverlay = document.getElementById('sidebarOverlay');
+      var openBtn = document.getElementById('openSidebar');
+      var closeBtn = document.getElementById('closeSidebar');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to logout?')) return;
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(message, type) {
+        type = type || 'success';
+        var toast = document.getElementById('toast');
+        var toastIcon = document.getElementById('toastIcon');
+        var toastMessage = document.getElementById('toastMessage');
+
+        var colors = {
+          success: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/30', text: 'text-emerald-400', icon: 'fa-check' },
+          error: { bg: 'bg-rose-500/20', border: 'border-rose-500/30', text: 'text-rose-400', icon: 'fa-circle-exclamation' },
+          warning: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-400', icon: 'fa-triangle-exclamation' }
+        };
+
+        var c = colors[type] || colors.success;
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center ' + c.bg + ' border ' + c.border + ' ' + c.text;
+        toastIcon.innerHTML = '<i class="fa-solid ' + c.icon + ' text-sm"></i>';
+        toastMessage.textContent = message;
+
+        toast.classList.remove('translate-y-4', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(function() {
+          toast.classList.add('translate-y-4', 'opacity-0', 'pointer-events-none');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      // ============================================================
+      // LOAD INQUIRIES (with fallback data)
+      // ============================================================
+      function loadInquiries() {
+        fetch(CONFIG.dataUrl + CONFIG.inquiriesFile)
+          .then(function(res) {
+            if (!res.ok) throw new Error('No inquiries file');
+            return res.json();
+          })
+          .then(function(data) {
+            allInquiries = data.inquiries || data;
+            loadingState.classList.add('hidden');
+            updateStats();
+            applyFilters();
+            updateSidebarBadge();
+          })
+          .catch(function(e) {
+            // Use fallback sample data if file doesn't exist yet
+            console.warn('Using fallback inquiries:', e);
+            allInquiries = getFallbackInquiries();
+            loadingState.classList.add('hidden');
+            updateStats();
+            applyFilters();
+            updateSidebarBadge();
+          });
+      }
+
+      // ============================================================
+      // FALLBACK INQUIRIES (sample data)
+      // ============================================================
+      function getFallbackInquiries() {
+        return [
+          {
+            id: 'inq-001',
+            property_id: 'prop-1',
+            property_title: 'The Grand Horizon Estate',
+            client_name: 'Jane Mwangi',
+            client_email: 'jane.mwangi@example.com',
+            client_phone: '+254722111111',
+            message: 'Hi, I am very interested in The Grand Horizon Estate. Could you please share more details about the payment plans and site visit availability? I would love to schedule a viewing this weekend if possible.',
+            status: 'unread',
+            created_at: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+          },
+          {
+            id: 'inq-002',
+            property_id: 'prop-3',
+            property_title: 'Karen Sanctuary Villa',
+            client_name: 'Peter Kariuki',
+            client_email: 'peter.k@business.co.ke',
+            client_phone: '+254733222222',
+            message: 'We are looking for a large family home in Karen. This property looks perfect. Is it still available? What is the negotiation room on the price?',
+            status: 'read',
+            created_at: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString()
+          },
+          {
+            id: 'inq-003',
+            property_id: null,
+            property_title: 'General Inquiry',
+            client_name: 'Sarah Ochieng',
+            client_email: 's.ochieng@invest.com',
+            client_phone: '+254711333333',
+            message: 'I am an investor looking for commercial property in Nairobi with high rental yields. Could your team advise on the best options in Westlands and Kilimani?',
+            status: 'replied',
+            created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+          },
+          {
+            id: 'inq-004',
+            property_id: 'prop-10',
+            property_title: 'Westlands Skyline Ridge',
+            client_name: 'Michael Njoroge',
+            client_email: 'michael.n@corporate.com',
+            client_phone: '+254700444444',
+            message: 'Very interested in Westlands Skyline Ridge. Could you send me the full property brochure and floor plans? Also want to know if there is a gym and swimming pool.',
+            status: 'unread',
+            created_at: new Date(Date.now() - 15 * 60 * 1000).toISOString()
+          },
+          {
+            id: 'inq-005',
+            property_id: 'prop-6',
+            property_title: 'Kilimani Heights Penthouse',
+            client_name: 'Grace Akinyi',
+            client_email: 'grace.akinyi@mail.com',
+            client_phone: '+254722555555',
+            message: 'Hello, I would like to schedule a viewing for the Kilimani Heights Penthouse. Are viewings available on Saturday morning?',
+            status: 'read',
+            created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+          }
+        ];
+      }
+
+      // ============================================================
+      // UPDATE STATS
+      // ============================================================
+      function updateStats() {
+        var total = allInquiries.length;
+        var unread = 0, replied = 0, today = 0;
+        var todayStart = new Date();
+        todayStart.setHours(0, 0, 0, 0);
+
+        allInquiries.forEach(function(i) {
+          if (i.status === 'unread') unread++;
+          if (i.status === 'replied') replied++;
+          if (new Date(i.created_at) >= todayStart) today++;
+        });
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statUnread').textContent = unread;
+        document.getElementById('statReplied').textContent = replied;
+        document.getElementById('statToday').textContent = today;
+
+        document.getElementById('inquiryCount').textContent = total;
+        document.getElementById('unreadCount').textContent = unread;
+      }
+
+      // ============================================================
+      // UPDATE SIDEBAR BADGE
+      // ============================================================
+      function updateSidebarBadge() {
+        var unread = allInquiries.filter(function(i) { return i.status === 'unread'; }).length;
+        var badge = document.getElementById('sidebarBadge');
+        if (!badge) return;
+
+        if (unread > 0) {
+          badge.textContent = unread;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+
+      // ============================================================
+      // FILTERS
+      // ============================================================
+      function applyFilters() {
+        var search = (searchInput.value || '').toLowerCase().trim();
+        var status = statusFilter.value;
+        var sort = sortFilter.value;
+
+        filteredInquiries = allInquiries.filter(function(i) {
+          var matchSearch = !search ||
+            (i.client_name || '').toLowerCase().indexOf(search) !== -1 ||
+            (i.client_email || '').toLowerCase().indexOf(search) !== -1 ||
+            (i.client_phone || '').toLowerCase().indexOf(search) !== -1 ||
+            (i.message || '').toLowerCase().indexOf(search) !== -1 ||
+            (i.property_title || '').toLowerCase().indexOf(search) !== -1;
+          
+          var matchStatus = status === 'all' || i.status === status;
+          
+          return matchSearch && matchStatus;
+        });
+
+        // Sort
+        if (sort === 'oldest') {
+          filteredInquiries.sort(function(a, b) { return new Date(a.created_at) - new Date(b.created_at); });
+        } else if (sort === 'unread') {
+          filteredInquiries.sort(function(a, b) {
+            if (a.status === 'unread' && b.status !== 'unread') return -1;
+            if (a.status !== 'unread' && b.status === 'unread') return 1;
+            return new Date(b.created_at) - new Date(a.created_at);
+          });
+        } else {
+          filteredInquiries.sort(function(a, b) { return new Date(b.created_at) - new Date(a.created_at); });
+        }
+
+        renderList();
+      }
+
+      // ============================================================
+      // RENDER LIST
+      // ============================================================
+      function renderList() {
+        if (filteredInquiries.length === 0) {
+          list.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+
+        var html = '';
+        filteredInquiries.forEach(function(i) {
+          var safeId = escapeHTML(i.id);
+          var safeName = escapeHTML(i.client_name || 'Unknown');
+          var safeEmail = escapeHTML(i.client_email || '');
+          var safePhone = escapeHTML(i.client_phone || '');
+          var safeMessage = escapeHTML(i.message || '');
+          var safeProperty = escapeHTML(i.property_title || 'General Inquiry');
+          var initials = getInitials(i.client_name);
+
+          var statusClass = i.status === 'unread'
+            ? 'bg-brand-500/10 text-brand-400 border border-brand-500/20'
+            : i.status === 'replied'
+              ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+              : 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+
+          var statusLabel = i.status === 'unread' ? 'Unread' : i.status === 'replied' ? 'Replied' : 'Read';
+          var unreadDot = i.status === 'unread' ? '<span class="unread-dot"></span>' : '';
+
+          // Truncate message
+          var shortMessage = safeMessage.length > 120 ? safeMessage.substring(0, 120) + '...' : safeMessage;
+
+          html += '<article class="inquiry-card glass-panel rounded-2xl p-4 sm:p-5 cursor-pointer ' + (i.status === 'unread' ? 'border-l-4 !border-l-brand-500' : '') + '" data-id="' + safeId + '">' +
+            '<div class="flex items-start gap-3 sm:gap-4">' +
+              
+              // Avatar
+              '<div class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-sm font-bold flex-shrink-0">' +
+                escapeHTML(initials) +
+              '</div>' +
+              
+              // Content
+              '<div class="flex-1 min-w-0">' +
+                
+                // Top row
+                '<div class="flex items-start justify-between gap-3 mb-1">' +
+                  '<div class="min-w-0 flex-1">' +
+                    '<div class="flex items-center gap-2 flex-wrap">' +
+                      '<h3 class="text-sm font-semibold text-white truncate">' + safeName + '</h3>' +
+                      unreadDot +
+                    '</div>' +
+                    '<p class="text-[10px] text-slate-500 truncate mt-0.5">' + safeEmail + '</p>' +
+                  '</div>' +
+                  '<span class="status-badge ' + statusClass + ' flex-shrink-0">' + statusLabel + '</span>' +
+                '</div>' +
+
+                // Property tag
+                '<div class="flex items-center gap-1.5 mb-2 mt-2">' +
+                  '<i class="fa-solid fa-building text-[9px] text-slate-500"></i>' +
+                  '<span class="text-[10px] font-mono uppercase tracking-widest text-slate-500 truncate">' + safeProperty + '</span>' +
+                '</div>' +
+
+                // Message preview
+                '<p class="text-xs text-slate-400 leading-relaxed line-clamp-2">' + shortMessage + '</p>' +
+
+                // Footer row
+                '<div class="flex items-center justify-between mt-3 pt-3 border-t border-white/5">' +
+                  '<span class="text-[10px] text-slate-600 font-mono uppercase tracking-widest">' +
+                    '<i class="fa-regular fa-clock mr-1"></i>' + escapeHTML(formatDate(i.created_at)) +
+                  '</span>' +
+                  '<span class="text-[10px] text-brand-400 font-mono uppercase tracking-widest">' +
+                    'View <i class="fa-solid fa-arrow-right text-[8px]"></i>' +
+                  '</span>' +
+                '</div>' +
+
+              '</div>' +
+            '</div>' +
+          '</article>';
+        });
+
+        list.innerHTML = html;
+
+        // Attach listeners
+        list.querySelectorAll('.inquiry-card').forEach(function(card) {
+          card.addEventListener('click', function() {
+            openInquiryModal(this.dataset.id);
+          });
+        });
+      }
+
+      // ============================================================
+      // OPEN INQUIRY MODAL
+      // ============================================================
+      function openInquiryModal(id) {
+        var i = allInquiries.find(function(x) { return x.id === id; });
+        if (!i) return;
+
+        currentInquiry = i;
+
+        // Mark as read
+        if (i.status === 'unread') {
+          i.status = 'read';
+          updateStats();
+          updateSidebarBadge();
+          applyFilters();
+        }
+
+        // Populate modal
+        document.getElementById('modalInitials').textContent = getInitials(i.client_name);
+        document.getElementById('modalName').textContent = i.client_name || 'Unknown';
+        document.getElementById('modalEmail').textContent = i.client_email || '—';
+        document.getElementById('modalPhone').textContent = i.client_phone || '—';
+        document.getElementById('modalMessage').textContent = i.message || '';
+        document.getElementById('modalDate').textContent = formatFullDate(i.created_at);
+
+        // Property
+        if (i.property_title && i.property_id) {
+          document.getElementById('modalProperty').textContent = i.property_title;
+          var propLink = document.getElementById('modalPropertyLink');
+          propLink.href = '/property-details.html?id=' + i.property_id;
+          propLink.classList.remove('hidden');
+        } else {
+          document.getElementById('modalProperty').textContent = 'General Inquiry';
+          document.getElementById('modalPropertyLink').classList.add('hidden');
+        }
+
+        // Status badge
+        var statusWrapper = document.getElementById('modalStatusWrapper');
+        var statusEl = document.getElementById('modalStatus');
+        statusEl.textContent = i.status === 'unread' ? 'Unread' : i.status === 'replied' ? 'Replied' : 'Read';
+        statusEl.className = 'status-badge ' + (i.status === 'replied' 
+          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+          : 'bg-brand-500/10 text-brand-400 border border-brand-500/20');
+        statusWrapper.classList.remove('hidden');
+
+        // Reply actions
+        var subject = encodeURIComponent('Re: Your inquiry about ' + (i.property_title || 'HomeScape'));
+        var body = encodeURIComponent('Dear ' + (i.client_name || 'Client') + ',\n\nThank you for your interest in ' + (i.property_title || 'our properties') + '.\n\n[Your response here]\n\nBest regards,\nHomeScape Real Estate Team');
+        document.getElementById('modalReplyEmail').href = 'mailto:' + (i.client_email || '') + '?subject=' + subject + '&body=' + body;
+
+        var waMessage = encodeURIComponent('Hi ' + (i.client_name || '') + ', thank you for your inquiry about ' + (i.property_title || 'our properties') + '. How can we help you?');
+        var phone = (i.client_phone || '').replace(/[^0-9]/g, '');
+        document.getElementById('modalReplyWhatsapp').href = 'https://wa.me/' + (phone || CONFIG.whatsappNumber) + '?text=' + waMessage;
+
+        // Delete button
+        document.getElementById('deleteInquiryBtn').onclick = function() {
+          closeInquiryModal();
+          openDeleteModal(i.id);
+        };
+
+        // Show modal
+        inquiryModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeInquiryModal = function() {
+        currentInquiry = null;
+        inquiryModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      // ============================================================
+      // DELETE
+      // ============================================================
+      function openDeleteModal(id) {
+        var i = allInquiries.find(function(x) { return x.id === id; });
+        if (!i) return;
+
+        pendingDeleteId = id;
+        document.getElementById('deleteInquiryName').textContent = i.client_name || 'this inquiry';
+        deleteModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeDeleteModal = function() {
+        pendingDeleteId = null;
+        deleteModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        if (!pendingDeleteId) return;
+
+        allInquiries = allInquiries.filter(function(i) { return i.id !== pendingDeleteId; });
+        updateStats();
+        updateSidebarBadge();
+        applyFilters();
+        closeDeleteModal();
+        showToast('Inquiry deleted successfully!', 'success');
+      });
+
+      // ============================================================
+      // FILTER EVENTS
+      // ============================================================
+      searchInput.addEventListener('input', applyFilters);
+      statusFilter.addEventListener('change', applyFilters);
+      sortFilter.addEventListener('change', applyFilters);
+
+      clearFilters.addEventListener('click', function() {
+        searchInput.value = '';
+        statusFilter.value = 'all';
+        sortFilter.value = 'newest';
+        applyFilters();
+      });
+
+      // ============================================================
+      // REFRESH
+      // ============================================================
+      document.getElementById('refreshBtn').addEventListener('click', function() {
+        loadInquiries();
+        showToast('Refreshed!', 'success');
+      });
+
+      // ============================================================
+      // ESC / OUTSIDE CLICK
+      // ============================================================
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (inquiryModal.classList.contains('active')) closeInquiryModal();
+          if (deleteModal.classList.contains('active')) closeDeleteModal();
+        }
+      });
+
+      inquiryModal.addEventListener('click', function(e) {
+        if (e.target === inquiryModal) closeInquiryModal();
+      });
+      deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) closeDeleteModal();
+      });
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      loadInquiries();
+
+      console.log('✅ Inquiries page loaded');
+
+    })();
+  </script>
+
+</body>
+</html>

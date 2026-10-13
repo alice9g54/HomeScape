@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeScape | Luxury Real Estate & Property Advisory Kenya</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Curated luxury properties, prime commercial spaces, and investment portfolio management across Kenya. Find your dream home with HomeScape." />
+    <meta name="keywords" content="real estate Kenya, luxury homes Nairobi, commercial property, property investment, homes for sale Kenya" />
+    <link rel="canonical" href="https://homescape.co.ke/" />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="HomeScape | Luxury Real Estate & Property Advisory" />
+    <meta property="og:description" content="Curated luxury properties, prime commercial spaces, and investment portfolio management across Kenya." />
+    <meta property="og:url" content="https://homescape.co.ke/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/images/og-image.jpg" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HomeScape | Luxury Real Estate & Property Advisory" />
+    <meta name="twitter:description" content="Curated luxury properties, prime commercial spaces, and investment portfolio management across Kenya." />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            700: '#065f46',
+                            800: '#047857',
+                            900: '#022c22',
+                        },
+                        accent: {
+                            600: '#b45309',
+                            700: '#854d0e',
+                        },
+                        warmBg: '#fbfbf9',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    
+    <style>
+        /* Spinner */
+        .spinner {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid #e2e8f0;
+            border-top-color: #047857;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Navigation Links - Pill Style */
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #047857;
+            background: rgba(4, 120, 87, 0.06);
+            transform: translateY(-1px);
+        }
+
+        .nav-link.active {
+            color: white;
+            background: #047857;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+        }
+
+        .nav-link.active:hover {
+            background: #065f46;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.4);
+        }
+
+        /* Mobile Menu Links */
+        #mobileMenu a {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #64748b;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.25rem;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        #mobileMenu a:hover {
+            color: #047857;
+            background: rgba(4, 120, 87, 0.06);
+            transform: translateY(-1px);
+        }
+
+        #mobileMenu a.active {
+            color: white;
+            background: #047857;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+        }
+
+        /* CTA Buttons */
+        .cta-btn {
+            background: #047857;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .cta-btn:hover {
+            background: #065f46;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.3);
+        }
+
+        .cta-btn-mobile {
+            background: #047857;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(4, 120, 87, 0.2);
+        }
+
+        .cta-btn-mobile:hover {
+            background: #065f46;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(4, 120, 87, 0.3);
+        }
+
+        /* Mobile Menu Toggle */
+        #mobileMenuBtn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            color: #0f172a;
+            transition: color 0.2s ease;
+        }
+
+        #mobileMenuBtn:hover {
+            color: #047857;
+        }
+
+        #mobileMenuBtn.open i.fa-bars { display: none; }
+        #mobileMenuBtn.open i.fa-times { display: inline-block; }
+        #mobileMenuBtn i.fa-times { display: none; }
+
+        /* Fallback Footer */
+        .fallback-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+        .fallback-footer .brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+        }
+        .fallback-footer .brand span { color: #34d399; }
+        .fallback-footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 0.5rem 0;
+            flex-wrap: wrap;
+        }
+        .fallback-footer .links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .fallback-footer .links a:hover { color: white; }
+
+        /* Hero Slideshow */
+        .hero-slide {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-warmBg text-slate-900 font-sans antialiased relative">
+
+    <!-- ============================================================ -->
+    <!-- HEADER - Mobile-First Navigation -->
+    <!-- ============================================================ -->
+    <header class="bg-white border-b border-slate-200/80 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- LOGO -->
+                <a href="/index.html" class="flex items-center gap-2 text-2xl font-serif font-bold text-slate-900 hover:text-emerald-700 transition-colors">
+                    Home<span class="text-emerald-700">Scape</span>
+                </a>
+
+                <!-- DESKTOP NAVIGATION -->
+                <nav class="hidden md:flex items-center gap-1">
+                    <a href="/index.html" class="nav-link active">Home</a>
+                    <a href="/properties.html" class="nav-link">Properties</a>
+                    <a href="/experience.html" class="nav-link">Experience</a>
+                    <a href="/about.html" class="nav-link">About</a>
+                    <a href="/contact.html" class="nav-link">Contact</a>
+                </nav>
+
+                <!-- CTA BUTTON (Desktop) -->
+                <div class="hidden md:block">
+                    <a href="/contact.html" class="cta-btn">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        Book Consultation
+                    </a>
+                </div>
+
+                <!-- MOBILE MENU BUTTON -->
+                <button id="mobileMenuBtn" class="md:hidden" aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-slate-200 px-4 py-4 space-y-2">
+            <a href="/index.html" class="active">Home</a>
+            <a href="/properties.html">Properties</a>
+            <a href="/experience.html">Experience</a>
+            <a href="/about.html">About</a>
+            <a href="/contact.html">Contact</a>
+            <div class="pt-2">
+                <a href="/contact.html" class="cta-btn-mobile">
+                    <i class="fa-regular fa-calendar-check mr-2"></i>
+                    Book Consultation
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================================================ -->
+    <main>
+
+        <!-- ============================================================ -->
+        <!-- HERO SECTION -->
+        <!-- ============================================================ -->
+        <section id="top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-16 pb-16 sm:pb-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+                
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+                    <span class="text-emerald-800 bg-emerald-100/60 font-bold text-xs uppercase tracking-widest px-3 py-1.5 rounded-md inline-block border border-emerald-200/50">
+                        Luxury Collection
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-slate-900 leading-[1.15]">
+                        Curated Spaces for <br class="hidden sm:block" />
+                        <span class="text-emerald-700">Extraordinary Living</span>
+                    </h1>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
+                        Specializing in high-end residential listings, prime commercial properties, 
+                        and bespoke investment management across Kenya.
+                    </p>
+                    
+                    <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <a href="/properties.html" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition text-center shadow-md">
+                            View Property Catalog
+                        </a>
+                        <a href="/experience.html" class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition text-center">
+                            Watch Experience
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="lg:col-span-5">
+                    <div class="relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/80 bg-white">
+                        <img 
+                            src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1000&q=80" 
+                            alt="Featured Luxury Estate" 
+                            class="w-full h-[320px] sm:h-[460px] object-cover" 
+                            loading="lazy"
+                        />
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent p-5 sm:p-6 text-white">
+                            <span class="bg-emerald-800 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-md text-white">Featured Residence</span>
+                            <h3 class="text-base sm:text-lg font-serif font-bold mt-2">The Grand Horizon Estate</h3>
+                            <p class="text-xs text-slate-300">Kilimani, Nairobi • KSh 38,000,000</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PRIME LOCATIONS -->
+        <!-- ============================================================ -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 border-t border-slate-200/80">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-2">
+                <div>
+                    <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Regional Highlights</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Explore Prime Locations</h2>
+                </div>
+                <a href="/properties.html" class="text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-emerald-800 transition">
+                    View All Locations &rarr;
+                </a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Kilimani -->
+                <a href="/properties.html?location=Kilimani" class="group relative rounded-2xl overflow-hidden h-48 sm:h-56 shadow-sm border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80" alt="Kilimani" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-4 flex flex-col justify-end text-white">
+                        <span class="text-sm font-serif font-bold">Kilimani</span>
+                        <span class="text-[10px] text-slate-300">High-Yield Apartments</span>
+                    </div>
+                </a>
+
+                <!-- Westlands -->
+                <a href="/properties.html?location=Westlands" class="group relative rounded-2xl overflow-hidden h-48 sm:h-56 shadow-sm border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" alt="Westlands" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-4 flex flex-col justify-end text-white">
+                        <span class="text-sm font-serif font-bold">Westlands</span>
+                        <span class="text-[10px] text-slate-300">Commercial & Towers</span>
+                    </div>
+                </a>
+
+                <!-- Karen -->
+                <a href="/properties.html?location=Karen" class="group relative rounded-2xl overflow-hidden h-48 sm:h-56 shadow-sm border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" alt="Karen" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-4 flex flex-col justify-end text-white">
+                        <span class="text-sm font-serif font-bold">Karen</span>
+                        <span class="text-[10px] text-slate-300">Luxury Gated Villas</span>
+                    </div>
+                </a>
+
+                <!-- Lavington -->
+                <a href="/properties.html?location=Lavington" class="group relative rounded-2xl overflow-hidden h-48 sm:h-56 shadow-sm border border-slate-200">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" alt="Lavington" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent p-4 flex flex-col justify-end text-white">
+                        <span class="text-sm font-serif font-bold">Lavington</span>
+                        <span class="text-[10px] text-slate-300">Family Townhouses</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- CORE SERVICES -->
+        <!-- ============================================================ -->
+        <section class="bg-white py-16 sm:py-20 border-y border-slate-200/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+                <div class="max-w-xl mb-10 sm:mb-14">
+                    <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Our Expertise</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">Bespoke Real Estate Services</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Residential -->
+                    <div class="bg-warmBg p-6 sm:p-8 rounded-2xl border border-slate-200/80 flex flex-col justify-between hover:border-slate-400 transition">
+                        <div>
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center text-xl mb-6 border border-emerald-100">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <h3 class="text-lg font-serif font-bold text-slate-900 mb-2">Residential Sales</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed mb-6">
+                                Hand-picked villas, townhouses, and luxury city apartments in Kenya's most desirable locations.
+                            </p>
+                        </div>
+                        <a href="/properties.html?type=Residential" class="text-xs font-bold uppercase tracking-wider text-emerald-800 hover:text-accent-600 transition">
+                            Browse Residential &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Commercial -->
+                    <div class="bg-warmBg p-6 sm:p-8 rounded-2xl border border-slate-200/80 flex flex-col justify-between hover:border-slate-400 transition">
+                        <div>
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center text-xl mb-6 border border-emerald-100">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                            <h3 class="text-lg font-serif font-bold text-slate-900 mb-2">Commercial Leasing</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed mb-6">
+                                Corporate suites, high-traffic retail outlets, and prime developments in business hubs.
+                            </p>
+                        </div>
+                        <a href="/properties.html?type=Commercial" class="text-xs font-bold uppercase tracking-wider text-emerald-800 hover:text-accent-600 transition">
+                            Browse Commercial &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Advisory -->
+                    <div class="bg-warmBg p-6 sm:p-8 rounded-2xl border border-slate-200/80 flex flex-col justify-between hover:border-slate-400 transition">
+                        <div>
+                            <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center text-xl mb-6 border border-emerald-100">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h3 class="text-lg font-serif font-bold text-slate-900 mb-2">Property Advisory</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed mb-6">
+                                Full asset oversight, investment yield strategies, and property management solutions.
+                            </p>
+                        </div>
+                        <a href="/contact.html" class="text-xs font-bold uppercase tracking-wider text-emerald-800 hover:text-accent-600 transition">
+                            Book Advisory &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- ARCHITECTURAL EXCELLENCE -->
+        <!-- ============================================================ -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
+            <div class="relative bg-slate-900 text-white rounded-3xl overflow-hidden shadow-2xl">
+                <div class="absolute inset-0 z-0">
+                    <img 
+                        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" 
+                        alt="Architectural Excellence" 
+                        class="w-full h-full object-cover opacity-20 filter contrast-125" 
+                        loading="lazy"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-transparent"></div>
+                </div>
+
+                <div class="relative z-10 p-6 sm:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+                        <p class="text-emerald-400 font-bold text-xs uppercase tracking-[0.2em]">
+                            Precision & Design
+                        </p>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight text-white">
+                            Architectural Excellence & Strategic Investment
+                        </h2>
+                        <p class="text-slate-300 text-xs sm:text-base leading-relaxed max-w-xl">
+                            We bridge the gap between iconic modern architecture and high-yield real estate investments. 
+                            Every property in our portfolio is vetted for structural design, location value, and long-term appreciation.
+                        </p>
+                        
+                        <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+                            <a href="/contact.html" class="bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition text-center shadow-lg">
+                                Schedule Consultation
+                            </a>
+                            <a href="/experience.html" class="text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white transition flex items-center justify-center gap-2 py-2">
+                                Watch Experience <i class="fa-solid fa-arrow-right text-emerald-400"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="lg:col-span-5 bg-slate-950/70 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+                        <div class="border-b border-slate-800 pb-4">
+                            <span class="text-2xl font-serif font-bold text-white">100%</span>
+                            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Verified Titles & Due Diligence</p>
+                        </div>
+                        <div class="border-b border-slate-800 pb-4">
+                            <span class="text-2xl font-serif font-bold text-white">KSh 4.5B+</span>
+                            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Property Transactions Managed</p>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-serif font-bold text-white">15+ Years</span>
+                            <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Combined Advisory Experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- FEATURED PROPERTIES -->
+        <!-- ============================================================ -->
+        <section class="bg-white py-16 sm:py-20 border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+                <div class="flex justify-between items-end mb-10 sm:mb-12">
+                    <div>
+                        <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Featured Properties</span>
+                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Featured Listings</h2>
+                    </div>
+                    <a href="/properties.html" class="text-xs font-bold uppercase tracking-wider text-slate-800 hover:text-emerald-800 transition">
+                        View All Listings &rarr;
+                    </a>
+                </div>
+
+                <div id="homepage-properties-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                    <div class="col-span-full text-center py-12">
+                        <div class="spinner"></div>
+                        <p class="text-sm text-slate-500 mt-4">Loading featured properties...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PROPERTY OWNER BANNER -->
+        <!-- ============================================================ -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 sm:py-16">
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800 shadow-xl">
+                <div class="space-y-2 max-w-2xl text-center md:text-left">
+                    <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Property Owners</span>
+                    <h3 class="text-2xl sm:text-3xl font-serif font-bold">Planning to Sell or Lease Your Estate?</h3>
+                    <p class="text-slate-300 text-xs sm:text-sm">Connect with our advisory team to get an accurate market valuation and access our private client network.</p>
+                </div>
+                <a href="/contact.html" class="whitespace-nowrap bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition shadow-lg">
+                    Submit Your Listing
+                </a>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- FAQ SECTION -->
+        <!-- ============================================================ -->
+        <section class="bg-white py-16 border-t border-slate-200">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10">
+                <div class="text-center mb-10">
+                    <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Client Inquiry</span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">Frequently Asked Questions</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- FAQ 1 -->
+                    <details class="group bg-warmBg p-5 rounded-2xl border border-slate-200 cursor-pointer transition hover:border-slate-300">
+                        <summary class="font-bold text-sm text-slate-900 flex justify-between items-center list-none">
+                            <span>How do I arrange a private site visit?</span>
+                            <span class="text-emerald-800 group-open:rotate-180 transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                            You can request a site visit directly through any property listing page or by calling our advisory team. 
+                            We organize private transport and guided tours tailored to your schedule.
+                        </p>
+                    </details>
+
+                    <!-- FAQ 2 -->
+                    <details class="group bg-warmBg p-5 rounded-2xl border border-slate-200 cursor-pointer transition hover:border-slate-300">
+                        <summary class="font-bold text-sm text-slate-900 flex justify-between items-center list-none">
+                            <span>Are all property titles pre-verified?</span>
+                            <span class="text-emerald-800 group-open:rotate-180 transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                            Yes, every property listed on HomeScape undergoes thorough legal due diligence, 
+                            title searches, and physical verification prior to catalog inclusion.
+                        </p>
+                    </details>
+
+                    <!-- FAQ 3 -->
+                    <details class="group bg-warmBg p-5 rounded-2xl border border-slate-200 cursor-pointer transition hover:border-slate-300">
+                        <summary class="font-bold text-sm text-slate-900 flex justify-between items-center list-none">
+                            <span>Do you offer property management services for investors?</span>
+                            <span class="text-emerald-800 group-open:rotate-180 transition-transform duration-300">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                            Yes, our advisory branch handles end-to-end asset oversight, tenant screening, 
+                            rent collection, and routine maintenance for commercial and residential owners.
+                        </p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================================ -->
+    <div id="footer">
+        <div class="fallback-footer">
+            <div class="brand">Home<span>Scape</span></div>
+            <div class="links">
+                <a href="/properties.html">Properties</a>
+                <a href="/experience.html">Experience</a>
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+            </div>
+            <p>&copy; <span id="footerYear"></span> HomeScape Group. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- BACK TO TOP BUTTON -->
+    <!-- ============================================================ -->
+    <button 
+        id="backToTopBtn" 
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" 
+        class="fixed bottom-6 right-6 z-40 bg-slate-900 hover:bg-emerald-800 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-xl opacity-0 pointer-events-none transition-all duration-300 border border-slate-700"
+        aria-label="Back to top"
+    >
+        <i class="fa-solid fa-arrow-up text-sm"></i>
+    </button>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================================ -->
+
+    <!-- Mobile Menu Toggle -->
+    <script>
+        (function() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenu');
+
+            if (btn && menu) {
+                btn.addEventListener('click', function() {
+                    menu.classList.toggle('hidden');
+                    btn.classList.toggle('open');
+                });
+
+                menu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        menu.classList.add('hidden');
+                        btn.classList.remove('open');
+                    });
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!menu.classList.contains('hidden')) {
+                        const isClickInside = menu.contains(e.target) || btn.contains(e.target);
+                        if (!isClickInside) {
+                            menu.classList.add('hidden');
+                            btn.classList.remove('open');
+                        }
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <!-- Load Featured Properties -->
+    <script>
+        (function() {
+            'use strict';
+
+            // Security: escape HTML
+            function escapeHTML(str) {
+                if (!str) return '';
+                var div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            function sanitizeURL(url) {
+                if (!url) return '';
+                var s = String(url).trim();
+                if (s.startsWith('javascript:') || s.startsWith('data:')) return '';
+                return s;
+            }
+
+            async function loadFeaturedProperties() {
+                var grid = document.getElementById('homepage-properties-grid');
+                
+                try {
+                    var response = await fetch('/data/properties.json');
+                    if (!response.ok) throw new Error('Failed to load');
+
+                    var data = await response.json();
+                    var properties = data.properties || data;
+
+                    // Filter featured and NOT sold
+                    var featured = properties.filter(function(p) {
+                        return p.featured === true && p.status !== 'Sold';
+                    }).slice(0, 3);
+
+                    if (featured.length === 0) {
+                        grid.innerHTML = '<p class="col-span-full text-center text-slate-400 py-12">No featured properties available.</p>';
+                        return;
+                    }
+
+                    grid.innerHTML = featured.map(function(prop) {
+                        var safeImage = sanitizeURL(prop.image);
+                        var safeTitle = escapeHTML(prop.title);
+                        var safeType = escapeHTML(prop.type);
+                        var safeLocation = escapeHTML(prop.location);
+                        var safePrice = escapeHTML(prop.priceFormatted || '');
+                        
+                        var bedsHtml = prop.beds > 0 
+                            ? '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bed text-emerald-800"></i><span>' + prop.beds + ' Beds</span></div>'
+                            : '<div class="flex items-center gap-1.5"><i class="fa-solid fa-briefcase text-emerald-800"></i><span>Office</span></div>';
+
+                        return '<article class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between group">' +
+                            '<div>' +
+                                '<div class="relative overflow-hidden h-52 sm:h-60 bg-slate-100">' +
+                                    '<img src="' + safeImage + '" alt="' + safeTitle + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80\'" />' +
+                                    '<div class="absolute top-3 left-3">' +
+                                        '<span class="bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md">Featured</span>' +
+                                    '</div>' +
+                                    '<div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg shadow-sm border border-slate-200">' +
+                                        '<span class="text-xs font-bold text-slate-900">' + safePrice + '</span>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="p-5">' +
+                                    '<span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">' + safeType + ' • ' + safeLocation + '</span>' +
+                                    '<h3 class="text-base font-serif font-bold text-slate-900 mt-1 line-clamp-1 group-hover:text-emerald-800 transition">' + safeTitle + '</h3>' +
+                                    '<div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-slate-100 text-slate-600 text-xs">' +
+                                        bedsHtml +
+                                        '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bath text-emerald-800"></i><span>' + prop.baths + ' Baths</span></div>' +
+                                        '<div class="flex items-center gap-1.5"><i class="fa-solid fa-ruler-combined text-emerald-800"></i><span>' + escapeHTML(prop.sqm) + '</span></div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="px-5 pb-5 pt-1">' +
+                                '<a href="/property-details.html?id=' + escapeHTML(prop.id) + '" class="block text-center bg-slate-900 hover:bg-emerald-800 text-white font-bold text-[11px] uppercase tracking-wider py-2.5 rounded-xl transition">View Property</a>' +
+                            '</div>' +
+                        '</article>';
+                    }).join('');
+
+                } catch (error) {
+                    console.error('Error:', error);
+                    grid.innerHTML = '<div class="col-span-full text-center py-12">' +
+                        '<i class="fa-regular fa-circle-exclamation text-4xl text-slate-300 mb-3"></i>' +
+                        '<p class="text-sm text-slate-500">Unable to load featured properties.</p>' +
+                    '</div>';
+                }
+            }
+
+            loadFeaturedProperties();
+        })();
+    </script>
+
+    <!-- Load Footer -->
+    <script>
+        (function() {
+            const footerContainer = document.getElementById('footer');
+            if (footerContainer) {
+                fetch('/components/footer.html')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Footer not found');
+                        return response.text();
+                    })
+                    .then(data => {
+                        footerContainer.innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Error loading footer:', error);
+                        const yearEl = document.getElementById('footerYear');
+                        if (yearEl) yearEl.textContent = new Date().getFullYear();
+                    });
+            }
+        })();
+    </script>
+
+    <!-- Back to Top Visibility -->
+    <script>
+        (function() {
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 300) {
+                        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                        backToTopBtn.classList.add('opacity-100');
+                    } else {
+                        backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                        backToTopBtn.classList.remove('opacity-100');
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <script>
+        console.log('🏠 HomeScape Homepage loaded');
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgG512" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#047857"/>
+      <stop offset="100%" style="stop-color:#022c22"/>
+    </linearGradient>
+    <linearGradient id="rG512" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6ee7b7"/>
+      <stop offset="100%" style="stop-color:#34d399"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="512" height="512" fill="url(#bgG512)"/>
+  
+  <g transform="translate(256, 240) scale(0.75)">
+    <rect x="60" y="-95" width="32" height="70" fill="#022c22" stroke="#34d399" stroke-width="8" rx="4"/>
+    <circle cx="76" cy="-110" r="10" fill="#6ee7b7" opacity="0.5"/>
+    <circle cx="92" cy="-130" r="14" fill="#6ee7b7" opacity="0.35"/>
+    <path d="M 0,-125 L -135,-15 L -135,5 L 0,-105 L 135,5 L 135,-15 Z" fill="url(#rG512)" stroke="#34d399" stroke-width="8" stroke-linejoin="round"/>
+    <rect x="-105" y="-5" width="210" height="145" fill="#ffffff" stroke="#34d399" stroke-width="8" rx="10"/>
+    <rect x="-28" y="55" width="56" height="85" fill="#047857" stroke="#022c22" stroke-width="5" rx="8"/>
+    <circle cx="18" cy="100" r="4" fill="#6ee7b7"/>
+    <rect x="-85" y="15" width="50" height="60" fill="#022c22" stroke="#34d399" stroke-width="5" rx="5"/>
+    <line x1="-60" y1="15" x2="-60" y2="75" stroke="#34d399" stroke-width="4"/>
+    <line x1="-85" y1="45" x2="-35" y2="45" stroke="#34d399" stroke-width="4"/>
+    <rect x="35" y="15" width="50" height="60" fill="#022c22" stroke="#34d399" stroke-width="5" rx="5"/>
+    <line x1="60" y1="15" x2="60" y2="75" stroke="#34d399" stroke-width="4"/>
+    <line x1="35" y1="45" x2="85" y2="45" stroke="#34d399" stroke-width="4"/>
+  </g>
+  
+  <text x="256" y="455" font-family="'Playfair Display', Georgia, serif" font-size="48" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="4">HS</text>
+</svg>

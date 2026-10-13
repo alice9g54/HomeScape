@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | HomeScape Real Estate Kenya</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Learn about HomeScape Real Estate Group - Kenya's trusted partner for luxury properties, commercial spaces, and investment advisory services." />
+  <meta name="keywords" content="about homescape, real estate company Kenya, property advisory Nairobi, trusted realtors" />
+  <link rel="canonical" href="https://homescape.co.ke/about.html" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 700: '#065f46', 800: '#047857', 900: '#022c22' },
+            accent: { 600: '#b45309', 700: '#854d0e' },
+            warmBg: '#fbfbf9',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    html { scroll-behavior: smooth; }
+    
+    .nav-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:active { transform: scale(0.95); }
+    
+    .cta-btn {
+      background: #047857;
+      color: white;
+    }
+    .cta-btn:hover { background: #065f46; }
+    
+    .stat-card {
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(4, 120, 87, 0.15);
+    }
+    
+    .team-card {
+      transition: all 0.3s ease;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .value-card {
+      transition: all 0.3s ease;
+    }
+    .value-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(4, 120, 87, 0.15);
+      border-color: #047857;
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-left: 3rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      background: #047857;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2);
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 1.75rem;
+      bottom: -1.5rem;
+      width: 2px;
+      background: linear-gradient(to bottom, #047857, #e2e8f0);
+    }
+    .timeline-item:last-child::after {
+      display: none;
+    }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #065f46; }
+  </style>
+</head>
+<body class="bg-warmBg text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full">
+    <div class="bg-white/90 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-lg px-5 sm:px-7 h-20 flex items-center justify-between">
+      
+      <a href="/index.html" class="flex items-center gap-3.5 group">
+        <div class="relative overflow-hidden rounded-xl">
+          <img 
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&q=80" 
+            alt="HomeScape Logo" 
+            class="w-10 h-10 sm:w-11 sm:h-11 object-cover rounded-xl shadow-inner border border-slate-200 group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg sm:text-xl font-serif font-bold text-slate-900 leading-none tracking-tight">Home<span class="text-brand-800">Scape</span></span>
+          <span class="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase text-slate-400 mt-1">Real Estate Group</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 bg-slate-100/70 p-1.5 rounded-2xl border border-slate-200/50">
+        <a href="/index.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Home</a>
+        <a href="/properties.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Properties</a>
+        <a href="/video-tours.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
+          <span>Video Tours</span>
+          <span class="bg-amber-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-bold tracking-normal">4K</span>
+        </a>
+        <a href="/about.html" class="nav-btn px-4 py-2 rounded-xl text-brand-900 bg-white shadow-sm font-extrabold border border-slate-200/60">About</a>
+        <a href="/contact.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Contact</a>
+      </nav>
+
+      <a href="/contact.html" class="nav-btn cta-btn text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase px-5 sm:px-6 py-3 rounded-xl transition-all duration-300 shadow-md flex items-center gap-2 group">
+        <span>Book Consultation</span>
+        <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="flex-1">
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-12 pb-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+        
+        <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+          <span class="text-emerald-800 bg-emerald-100/60 font-bold text-xs uppercase tracking-widest px-3 py-1.5 rounded-md inline-block border border-emerald-200/50">
+            About HomeScape
+          </span>
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-slate-900 leading-[1.15]">
+            Building Trust in <br class="hidden sm:block" />
+            <span class="text-emerald-700">Kenyan Real Estate</span>
+          </h1>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
+            For over a decade, HomeScape Real Estate Group has been connecting discerning buyers with Kenya's most prestigious properties. We combine deep local expertise with global standards to deliver exceptional results.
+          </p>
+          <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <a href="/properties.html" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition text-center shadow-md">
+              Browse Properties
+            </a>
+            <a href="/contact.html" class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-xl transition text-center">
+              Talk to Us
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative rounded-3xl overflow-hidden shadow-xl border border-slate-200/80 bg-white">
+            <img 
+              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1000&q=80" 
+              alt="HomeScape Office" 
+              class="w-full h-[320px] sm:h-[460px] object-cover" 
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== STATS SECTION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12">
+      <div class="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 shadow-2xl">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          
+          <div class="stat-card text-center">
+            <div class="text-3xl sm:text-4xl font-serif font-bold text-emerald-400">500+</div>
+            <p class="text-xs text-slate-400 mt-2 uppercase tracking-wider font-semibold">Properties Sold</p>
+          </div>
+          
+          <div class="stat-card text-center">
+            <div class="text-3xl sm:text-4xl font-serif font-bold text-emerald-400">15+</div>
+            <p class="text-xs text-slate-400 mt-2 uppercase tracking-wider font-semibold">Years Experience</p>
+          </div>
+          
+          <div class="stat-card text-center">
+            <div class="text-3xl sm:text-4xl font-serif font-bold text-emerald-400">98%</div>
+            <p class="text-xs text-slate-400 mt-2 uppercase tracking-wider font-semibold">Client Satisfaction</p>
+          </div>
+          
+          <div class="stat-card text-center">
+            <div class="text-3xl sm:text-4xl font-serif font-bold text-emerald-400">12+</div>
+            <p class="text-xs text-slate-400 mt-2 uppercase tracking-wider font-semibold">Prime Locations</p>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== OUR STORY / MISSION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 sm:py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        
+        <div class="order-2 lg:order-1">
+          <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Our Story</span>
+          <h2 class="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">From Humble Beginnings to Industry Leaders</h2>
+          <div class="space-y-4 mt-6 text-sm text-slate-600 leading-relaxed">
+            <p>
+              HomeScape was founded in 2011 with a simple vision: to make premium real estate accessible to Kenyan families and investors through transparency, integrity, and exceptional service.
+            </p>
+            <p>
+              What started as a small office in Westlands has grown into one of Kenya's most trusted real estate groups. We've helped over 500 families find their dream homes, guided countless investors toward profitable opportunities, and built lasting relationships based on trust.
+            </p>
+            <p>
+              Today, we continue to lead the market by embracing technology, investing in our team, and always putting our clients first.
+            </p>
+          </div>
+        </div>
+        
+        <div class="order-1 lg:order-2">
+          <div class="grid grid-cols-2 gap-4">
+            <img 
+              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80" 
+              alt="Our Team" 
+              class="w-full h-48 sm:h-64 object-cover rounded-2xl shadow-lg"
+              loading="lazy"
+            />
+            <img 
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80" 
+              alt="Properties" 
+              class="w-full h-48 sm:h-64 object-cover rounded-2xl shadow-lg mt-6 sm:mt-8"
+              loading="lazy"
+            />
+            <img 
+              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" 
+              alt="Luxury Homes" 
+              class="w-full h-48 sm:h-64 object-cover rounded-2xl shadow-lg -mt-6 sm:-mt-8"
+              loading="lazy"
+            />
+            <img 
+              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80" 
+              alt="Office" 
+              class="w-full h-48 sm:h-64 object-cover rounded-2xl shadow-lg"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ===== OUR VALUES ===== -->
+    <section class="bg-white py-16 sm:py-20 border-y border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Our Core Values</span>
+          <h2 class="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">What Drives Us Forward</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-3">The principles that guide every decision we make</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          
+          <div class="value-card bg-warmBg p-6 sm:p-8 rounded-2xl border border-slate-200/80">
+            <div class="w-14 h-14 bg-emerald-50 text-emerald-800 rounded-2xl flex items-center justify-center mb-5 text-2xl border border-emerald-100">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="font-serif font-bold text-slate-900 text-lg mb-2">Integrity First</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">We operate with complete transparency. Every property undergoes thorough verification, and our clients receive honest advice—even when it's not what they want to hear.</p>
+          </div>
+
+          <div class="value-card bg-warmBg p-6 sm:p-8 rounded-2xl border border-slate-200/80">
+            <div class="w-14 h-14 bg-emerald-50 text-emerald-800 rounded-2xl flex items-center justify-center mb-5 text-2xl border border-emerald-100">
+              <i class="fa-solid fa-handshake"></i>
+            </div>
+            <h3 class="font-serif font-bold text-slate-900 text-lg mb-2">Client Commitment</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">Your goals are our goals. Whether you're buying your first home or expanding an investment portfolio, we're with you every step of the way.</p>
+          </div>
+
+          <div class="value-card bg-warmBg p-6 sm:p-8 rounded-2xl border border-slate-200/80">
+            <div class="w-14 h-14 bg-emerald-50 text-emerald-800 rounded-2xl flex items-center justify-center mb-5 text-2xl border border-emerald-100">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h3 class="font-serif font-bold text-slate-900 text-lg mb-2">Market Expertise</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">Over 15 years of experience gives us unmatched insight into Kenyan real estate trends, prime locations, and investment opportunities.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== OUR JOURNEY / TIMELINE ===== -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Our Journey</span>
+        <h2 class="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">Milestones That Shaped Us</h2>
+      </div>
+
+      <div class="space-y-8">
+        
+        <div class="timeline-item">
+          <span class="text-emerald-700 font-bold text-xs uppercase tracking-widest">2011</span>
+          <h3 class="text-lg font-serif font-bold text-slate-900 mt-1">Founded in Westlands</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">HomeScape opened its first office with a team of 3 dedicated professionals, focused on residential sales in Nairobi's prime neighborhoods.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="text-emerald-700 font-bold text-xs uppercase tracking-widest">2015</span>
+          <h3 class="text-lg font-serif font-bold text-slate-900 mt-1">Expanded to Commercial</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">We launched our commercial division, helping businesses find office spaces, retail locations, and industrial properties across Kenya.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="text-emerald-700 font-bold text-xs uppercase tracking-widest">2018</span>
+          <h3 class="text-lg font-serif font-bold text-slate-900 mt-1">Digital Transformation</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">Introduced virtual property tours and online listings, making it easier for buyers to explore properties from anywhere in the world.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="text-emerald-700 font-bold text-xs uppercase tracking-widest">2021</span>
+          <h3 class="text-lg font-serif font-bold text-slate-900 mt-1">500 Properties Sold</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">Reached a major milestone, having successfully sold over 500 properties and managed KSh 4.5B+ in transactions.</p>
+        </div>
+
+        <div class="timeline-item">
+          <span class="text-emerald-700 font-bold text-xs uppercase tracking-widest">2026</span>
+          <h3 class="text-lg font-serif font-bold text-slate-900 mt-1">4K Virtual Experience</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">Launched our 4K video tour platform, giving clients an immersive, cinematic preview of properties before site visits.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== MEET THE TEAM ===== -->
+    <section class="bg-white py-16 sm:py-20 border-y border-slate-200/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+        
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Meet The Team</span>
+          <h2 class="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">The People Behind HomeScape</h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-3">Experienced professionals dedicated to your real estate success</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
+          
+          <div class="team-card bg-warmBg p-6 rounded-2xl border border-slate-200/80 text-center">
+            <div class="w-24 h-24 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold shadow-lg">
+              JM
+            </div>
+            <h3 class="font-serif font-bold text-slate-900 text-lg">James Mwangi</h3>
+            <p class="text-xs text-emerald-700 font-semibold uppercase tracking-wider mt-1">Founder & CEO</p>
+            <p class="text-xs text-slate-500 mt-3 leading-relaxed">15+ years in real estate. Leads our strategic direction and client advisory services.</p>
+          </div>
+
+          <div class="team-card bg-warmBg p-6 rounded-2xl border border-slate-200/80 text-center">
+            <div class="w-24 h-24 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold shadow-lg">
+              SW
+            </div>
+            <h3 class="font-serif font-bold text-slate-900 text-lg">Sarah Wanjiru</h3>
+            <p class="text-xs text-emerald-700 font-semibold uppercase tracking-wider mt-1">Head of Residential</p>
+            <p class="text-xs text-slate-500 mt-3 leading-relaxed">Specializes in luxury residential properties and first-time homebuyer guidance.</p>
+          </div>
+
+          <div class="team-card bg-warmBg p-6 rounded-2xl border border-slate-200/80 text-center">
+            <div class="w-24 h-24 bg-emerald-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-3xl font-bold shadow-lg">
+              DO
+            </div>
+            <h3 class="font-serif font-bold text-slate-900 text-lg">David Ochieng</h3>
+            <p class="text-xs text-emerald-700 font-semibold uppercase tracking-wider mt-1">Commercial Director</p>
+            <p class="text-xs text-slate-500 mt-3 leading-relaxed">Expert in commercial leasing, investment properties, and business advisory.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHY CHOOSE US ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-20">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Why Choose HomeScape</span>
+        <h2 class="text-2xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">Your Trusted Real Estate Partner</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        
+        <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-200/80">
+          <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            <i class="fa-solid fa-check-double"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">100% Verified Properties</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">Every listing undergoes rigorous title verification, physical inspection, and legal due diligence.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-200/80">
+          <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">24/7 Client Support</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">Our team responds to all inquiries within 2 hours and offers flexible viewing schedules.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-200/80">
+          <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            <i class="fa-solid fa-video"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">4K Virtual Tours</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">Preview properties from anywhere with our high-quality 4K video walkthroughs.</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-200/80">
+          <div class="w-12 h-12 bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-1">Transparent Pricing</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">No hidden fees, no surprises. Clear pricing and honest advice from start to finish.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-16">
+      <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800 shadow-xl">
+        <div class="space-y-2 max-w-2xl text-center md:text-left">
+          <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Ready to Work With Us?</span>
+          <h3 class="text-2xl sm:text-3xl font-serif font-bold">Let's Find Your Perfect Property</h3>
+          <p class="text-slate-300 text-xs sm:text-sm">Whether buying, selling, or investing, our team is here to help you succeed.</p>
+        </div>
+        <a href="/contact.html" class="whitespace-nowrap bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition shadow-lg">
+          Get In Touch
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-slate-950 text-slate-400 py-12 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <img 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=100&q=80" 
+          alt="HomeScape Logo" 
+          class="w-8 h-8 object-cover rounded-lg border border-slate-800" 
+        />
+        <span class="text-white font-serif font-bold text-base">HomeScape</span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-6 font-semibold">
+        <a href="/properties.html" class="hover:text-white transition">Properties</a>
+        <a href="/video-tours.html" class="hover:text-white transition">Video Tours</a>
+        <a href="/about.html" class="hover:text-white transition">About</a>
+        <a href="/contact.html" class="hover:text-white transition">Contact Us</a>
+        <a href="/privacy.html" class="hover:text-white transition">Privacy Policy</a>
+        <a href="/terms.html" class="hover:text-white transition">Terms of Service</a>
+      </div>
+      <p>&copy; 2026 HomeScape Group. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== BACK TO TOP ==================== -->
+  <button 
+    id="backToTopBtn" 
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" 
+    class="fixed bottom-6 right-6 z-40 bg-slate-900 hover:bg-emerald-800 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-xl opacity-0 pointer-events-none transition-all duration-300 border border-slate-700"
+    aria-label="Back to top"
+  >
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // Back to top button visibility
+    (function() {
+      const backToTopBtn = document.getElementById('backToTopBtn');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+          backToTopBtn.classList.add('opacity-100');
+        } else {
+          backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+          backToTopBtn.classList.remove('opacity-100');
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Short Video Tours | Cinematic Real Estate | HomeScape</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Experience Kenya's finest real estate through cinematic 4K short video tours. Property walkthroughs, neighborhood guides, and market insights in under 2 minutes." />
+  <meta name="keywords" content="short video tours Kenya, property videos, luxury real estate videos, cinematic tours Nairobi" />
+  <link rel="canonical" href="https://homescape.co.ke/video-tours.html" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Short Video Tours | HomeScape Real Estate" />
+  <meta property="og:description" content="Experience Kenya's finest real estate through cinematic videos." />
+  <meta property="og:type" content="video.other" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#047857',
+              800: '#065f46',
+              900: '#052e16',
+              950: '#022c22'
+            },
+            accent: { 600: '#b45309', 700: '#854d0e' },
+            darkbg: '#050811',
+            cardbg: '#111827',
+            warmBg: '#fbfbf9'
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;700;800&family=Playfair+Display:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #050811;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    .font-display { font-family: 'Syne', sans-serif; }
+    .font-serif { font-family: 'Playfair Display', serif; }
+
+    /* Glass Effects */
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+    }
+
+    .glass-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .glass-pill.active {
+      background: #22c55e;
+      color: #000;
+      border-color: #22c55e;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+      font-weight: 700;
+    }
+
+    /* Glow Blobs */
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.25;
+    }
+
+    /* Cinema Card */
+    .cinema-card {
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cinema-card:hover {
+      transform: translateY(-10px) scale(1.01);
+      border-color: rgba(34, 197, 94, 0.4);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(34, 197, 94, 0.15);
+    }
+    .cinema-card:hover .video-cover { transform: scale(1.08); }
+    .cinema-card:hover .play-trigger {
+      transform: scale(1.15) rotate(5deg);
+      background-color: #22c55e;
+      color: #000;
+    }
+
+    .video-cover { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .play-trigger { transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+    /* Navigation Styles — HomeScape style for dark mode */
+    .nav-link {
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      padding: 0.6rem 1rem;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active {
+      color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Header backdrop */
+    .header-glass {
+      background: rgba(5, 8, 17, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Mobile menu */
+    #mobileMenu {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #mobileMenu.hidden {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #050811; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+
+  <!-- Ambient Background Lights -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40 animate-pulse-slow"></div>
+  <div class="glow-blob w-[600px] h-[600px] bg-blue-600 top-1/2 -right-60"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-brand-400 bottom-0 left-1/4"></div>
+
+  <!-- ============================================================ -->
+  <!-- HOMESCAPE HEADER — Dark Mode Version -->
+  <!-- ============================================================ -->
+  <header class="sticky top-0 z-50 header-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- LOGO -->
+        <a href="/index.html" class="flex items-center gap-2 text-xl sm:text-2xl font-serif font-bold text-white hover:text-brand-400 transition-colors">
+          Home<span class="text-brand-500">Scape</span>
+        </a>
+
+        <!-- DESKTOP NAVIGATION -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <a href="/index.html" class="nav-link">Home</a>
+          <a href="/properties.html" class="nav-link">Properties</a>
+          <a href="/experience.html" class="nav-link">Experience</a>
+          <a href="/video-tours.html" class="nav-link active">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-brand-500 mr-1 animate-pulse"></span>
+            Videos
+          </a>
+          <a href="/about.html" class="nav-link">About</a>
+          <a href="/contact.html" class="nav-link">Contact</a>
+        </nav>
+
+        <!-- CTA BUTTON -->
+        <div class="flex items-center gap-3">
+          <a href="/contact.html" class="hidden sm:inline-flex bg-brand-500 hover:bg-brand-400 text-black font-bold text-[11px] uppercase tracking-wider px-5 py-2.5 rounded-full transition shadow-lg shadow-brand-500/20">
+            <i class="fa-regular fa-calendar-check mr-2"></i>
+            Book Consultation
+          </a>
+
+          <!-- Mobile Menu Button -->
+          <button id="mobileMenuBtn" class="lg:hidden text-white p-2 hover:bg-white/5 rounded-lg transition" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <div id="mobileMenu" class="lg:hidden hidden header-glass border-t border-white/5">
+      <div class="px-4 py-4 space-y-1">
+        <a href="/index.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition">Home</a>
+        <a href="/properties.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition">Properties</a>
+        <a href="/experience.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition">Experience</a>
+        <a href="/video-tours.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-brand-400 bg-brand-500/10 rounded-xl transition">Videos</a>
+        <a href="/about.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition">About</a>
+        <a href="/contact.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition">Contact</a>
+        <div class="pt-2">
+          <a href="/contact.html" class="block w-full bg-brand-500 hover:bg-brand-400 text-black font-bold text-xs uppercase tracking-wider text-center py-3 rounded-xl transition">
+            Book Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- MAIN CONTENT -->
+  <!-- ============================================================ -->
+  <main class="flex-1 pt-12 pb-24 relative z-10">
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 mb-12">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-mono mb-6">
+            <i class="fa-solid fa-bolt text-[10px]"></i> CINEMATIC SHORT VIDEOS
+          </div>
+          <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
+            Watch Kenya's <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-emerald-200 to-white">
+              Finest Properties
+            </span>
+          </h1>
+        </div>
+
+        <p class="text-slate-400 text-sm sm:text-base max-w-md leading-relaxed">
+          Quick, cinematic glimpses of luxury properties, neighborhoods, and market insights. Each video under 2 minutes.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 mb-10">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="glass-panel rounded-2xl p-4 text-center">
+          <p class="font-display text-2xl font-bold text-white" id="statTotal">0</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider mt-1 font-mono">Videos</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4 text-center">
+          <p class="font-display text-2xl font-bold text-white" id="statDuration">0:00</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider mt-1 font-mono">Avg Length</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4 text-center">
+          <p class="font-display text-2xl font-bold text-white">4</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider mt-1 font-mono">Categories</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4 text-center">
+          <p class="font-display text-2xl font-bold text-white">4K</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider mt-1 font-mono">Quality</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FILTERS & SEARCH ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 mb-10">
+      <div class="glass-panel rounded-2xl p-4 sm:p-6">
+        
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          
+          <!-- Filter Pills -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <button class="category-btn glass-pill active text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full whitespace-nowrap transition" data-category="all">
+              All Feeds
+            </button>
+            <button class="category-btn glass-pill text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full whitespace-nowrap transition" data-category="property-tour">
+              Walkthroughs
+            </button>
+            <button class="category-btn glass-pill text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full whitespace-nowrap transition" data-category="location">
+              Neighborhoods
+            </button>
+            <button class="category-btn glass-pill text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full whitespace-nowrap transition" data-category="insights">
+              Insights
+            </button>
+            <button class="category-btn glass-pill text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-full whitespace-nowrap transition" data-category="behind-scenes">
+              Behind Scenes
+            </button>
+          </div>
+
+          <!-- Search -->
+          <div class="relative w-full sm:w-64 flex-shrink-0">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="Search videos..." 
+              class="w-full bg-white/5 border border-white/10 rounded-full pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-400 focus:bg-white/10 transition"
+            />
+          </div>
+
+        </div>
+
+        <!-- Results count -->
+        <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+          <span class="text-xs text-slate-500 font-mono">
+            Showing <span id="visibleCount">0</span> videos
+          </span>
+          <button id="clearFilters" class="text-[10px] text-slate-500 hover:text-brand-400 transition font-mono uppercase tracking-wider hidden">
+            <i class="fa-solid fa-xmark"></i> Clear
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== VIDEO GRID ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      
+      <!-- Loading -->
+      <div id="loader" class="flex flex-col items-center justify-center py-20 gap-4">
+        <div class="w-12 h-12 border-2 border-brand-500/20 border-t-brand-400 rounded-full animate-spin"></div>
+        <span class="text-xs font-mono uppercase tracking-widest text-slate-500">Loading Feeds...</span>
+      </div>
+
+      <!-- Grid -->
+      <div id="videoContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 hidden">
+        <!-- JS Injected -->
+      </div>
+
+      <!-- Load More -->
+      <div id="loadMoreContainer" class="text-center mt-12 hidden">
+        <button id="loadMoreBtn" class="bg-white/5 hover:bg-brand-500 border border-white/10 hover:border-brand-500 text-white hover:text-black text-xs font-bold uppercase tracking-wider px-8 py-4 rounded-full transition inline-flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle"></i>
+          Load More Videos
+        </button>
+      </div>
+
+      <!-- Empty State -->
+      <div id="noData" class="hidden text-center py-20 glass-panel rounded-3xl">
+        <i class="fa-solid fa-ghost text-4xl text-slate-600 mb-4"></i>
+        <h3 class="font-display text-xl font-bold text-white">No videos found</h3>
+        <p class="text-xs text-slate-400 mt-2">Try adjusting your filters or search terms.</p>
+        <button onclick="clearAllFilters()" class="mt-6 bg-brand-500 hover:bg-brand-400 text-black font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-full transition">
+          Clear Filters
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 mt-20">
+      <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="space-y-2 max-w-2xl text-center md:text-left">
+          <span class="text-brand-400 text-xs font-bold uppercase tracking-widest font-mono">Want More?</span>
+          <h3 class="font-display text-2xl sm:text-3xl font-bold text-white">Watch Our Full Experience</h3>
+          <p class="text-slate-400 text-xs sm:text-sm">See the complete cinematic showcase with immersive property tours.</p>
+        </div>
+        <a href="/experience.html" class="whitespace-nowrap bg-brand-500 hover:bg-brand-400 text-black text-xs font-bold uppercase tracking-wider px-8 py-4 rounded-2xl transition shadow-lg shadow-brand-500/20">
+          Watch Experience
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- FULLSCREEN VIDEO MODAL -->
+  <!-- ============================================================ -->
+  <div id="mediaModal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-50 flex items-center justify-center p-0 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full h-full max-w-5xl md:h-[85vh] md:rounded-3xl bg-cardbg overflow-hidden flex flex-col md:flex-row border border-white/10 shadow-2xl">
+      
+      <button onclick="closeModal()" class="absolute top-4 right-4 z-30 w-11 h-11 rounded-full bg-black/50 border border-white/20 text-white hover:bg-brand-500 hover:text-black hover:border-brand-500 flex items-center justify-center transition" aria-label="Close video">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <!-- Video -->
+      <div class="relative flex-1 bg-black flex items-center justify-center min-h-[250px]">
+        <video id="activeVideo" class="w-full h-full object-contain" controls playsinline preload="metadata">
+          <source src="" type="video/mp4" id="activeSource">
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+
+      <!-- Info -->
+      <div class="w-full md:w-96 p-6 sm:p-8 bg-slate-900/90 flex flex-col justify-between border-t md:border-t-0 md:border-l border-white/10">
+        <div>
+          <span id="modalTag" class="inline-block text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 mb-4">
+            Property Tour
+          </span>
+          <h2 id="modalTitle" class="font-display text-2xl font-bold text-white leading-tight">Title</h2>
+          <p id="modalDesc" class="text-xs text-slate-400 mt-4 leading-relaxed">Description goes here...</p>
+        </div>
+
+        <div class="pt-6 border-t border-white/10 flex flex-col gap-3">
+          <a id="modalCta" href="#" class="w-full bg-brand-500 hover:bg-brand-400 text-black font-bold text-xs uppercase tracking-wider py-4 rounded-2xl transition flex items-center justify-center gap-2">
+            <span>Inquire About Property</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-2xl transition flex items-center justify-center gap-2">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>Chat on WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER — HomeScape Style (Dark) -->
+  <!-- ============================================================ -->
+  <footer class="relative z-10 border-t border-white/5 bg-slate-950/50 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <a href="/index.html" class="flex items-center gap-2 text-2xl font-serif font-bold text-white mb-3">
+            Home<span class="text-brand-500">Scape</span>
+          </a>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+            Kenya's trusted partner for luxury properties, commercial spaces, and investment advisory. Cinematic tours, verified listings, and expert guidance.
+          </p>
+          <div class="flex gap-3 mt-4">
+            <a href="https://facebook.com/homescape" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/5 hover:bg-brand-500 text-slate-400 hover:text-black flex items-center justify-center transition">
+              <i class="fa-brands fa-facebook-f text-xs"></i>
+            </a>
+            <a href="https://instagram.com/homescape" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/5 hover:bg-brand-500 text-slate-400 hover:text-black flex items-center justify-center transition">
+              <i class="fa-brands fa-instagram text-xs"></i>
+            </a>
+            <a href="https://twitter.com/homescape" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-9 h-9 rounded-full bg-white/5 hover:bg-brand-500 text-slate-400 hover:text-black flex items-center justify-center transition">
+              <i class="fa-brands fa-twitter text-xs"></i>
+            </a>
+            <a href="https://youtube.com/@homescape" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/5 hover:bg-brand-500 text-slate-400 hover:text-black flex items-center justify-center transition">
+              <i class="fa-brands fa-youtube text-xs"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4 font-mono">Explore</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="/properties.html" class="text-slate-400 hover:text-brand-400 transition">Properties</a></li>
+            <li><a href="/experience.html" class="text-slate-400 hover:text-brand-400 transition">Experience</a></li>
+            <li><a href="/video-tours.html" class="text-slate-400 hover:text-brand-400 transition">Videos</a></li>
+            <li><a href="/about.html" class="text-slate-400 hover:text-brand-400 transition">About</a></li>
+            <li><a href="/contact.html" class="text-slate-400 hover:text-brand-400 transition">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-4 font-mono">Legal</h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="/privacy.html" class="text-slate-400 hover:text-brand-400 transition">Privacy Policy</a></li>
+            <li><a href="/terms.html" class="text-slate-400 hover:text-brand-400 transition">Terms of Service</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-[10px] text-slate-500 font-mono">&copy; <span id="footerYear"></span> HomeScape Group. All rights reserved.</p>
+        <p class="text-[10px] text-slate-500 font-mono">Made in Kenya 🇰🇪</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- BACK TO TOP -->
+  <!-- ============================================================ -->
+  <button 
+    id="backToTop" 
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" 
+    class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-brand-500 hover:bg-brand-400 text-black flex items-center justify-center shadow-xl shadow-brand-500/30 opacity-0 pointer-events-none transition-all duration-300"
+    aria-label="Back to top"
+  >
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      var videoData = [];
+      var activeCategory = 'all';
+      var searchQuery = '';
+      var displayedCount = 0;
+      var INITIAL_ITEMS = 6;
+      var LOAD_INCREMENT = 3;
+
+      // ============================================================
+      // DOM REFS
+      // ============================================================
+      var container = document.getElementById('videoContainer');
+      var loader = document.getElementById('loader');
+      var noData = document.getElementById('noData');
+      var loadMoreContainer = document.getElementById('loadMoreContainer');
+      var loadMoreBtn = document.getElementById('loadMoreBtn');
+      var searchInput = document.getElementById('searchInput');
+      var visibleCount = document.getElementById('visibleCount');
+      var clearFilters = document.getElementById('clearFilters');
+
+      // ============================================================
+      // SECURITY
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function sanitizeURL(url) {
+        if (!url) return '';
+        var s = String(url).trim();
+        if (s.startsWith('javascript:') || s.startsWith('data:')) return '';
+        return s;
+      }
+
+      function formatDuration(seconds) {
+        if (!seconds) return '0:00';
+        var mins = Math.floor(seconds / 60);
+        var secs = seconds % 60;
+        return mins + ':' + (secs < 10 ? '0' : '') + secs;
+      }
+
+      // ============================================================
+      // FALLBACK DATA
+      // ============================================================
+      var fallbackData = [
+        { id: 'video-1', title: 'Video 1 - Property Advertisement', category: 'property-tour', duration: '0:45', durationSeconds: 45, thumbnail: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80', description: 'Luxury estate walkthrough featuring agent showcase.', videoSrc: '/assets/videos/short/01-property-advertisement.mp4', propertyLink: '/properties.html' },
+        { id: 'video-2', title: 'Video 2 - Modern Interior Showcase', category: 'property-tour', duration: '1:20', durationSeconds: 80, thumbnail: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80', description: 'Contemporary apartment interior walkthrough.', videoSrc: '/assets/videos/short/02-interior-showcase.mp4', propertyLink: '/properties.html' },
+        { id: 'video-3', title: 'Video 3 - 360° Estate Tour', category: 'property-tour', duration: '2:15', durationSeconds: 135, thumbnail: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80', description: 'Complete walkthrough of a luxury mansion.', videoSrc: '/assets/videos/short/03-estate-360-tour.mp4', propertyLink: '/properties.html' },
+        { id: 'video-4', title: 'Video 4 - Location Guide', category: 'location', duration: '1:30', durationSeconds: 90, thumbnail: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80', description: "Explore Nairobi's prime neighborhoods.", videoSrc: '/assets/videos/short/04-location-guide.mp4', propertyLink: null },
+        { id: 'video-5', title: 'Video 5 - Neighborhood Tour', category: 'location', duration: '1:05', durationSeconds: 65, thumbnail: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80', description: "Walk through Kenya's most sought-after areas.", videoSrc: '/assets/videos/short/05-neighborhood-tour.mp4', propertyLink: null },
+        { id: 'video-6', title: 'Video 6 - Market Insights', category: 'insights', duration: '0:55', durationSeconds: 55, thumbnail: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80', description: 'Understanding property pricing in Kenya.', videoSrc: '/assets/videos/short/06-market-insights.mp4', propertyLink: null },
+        { id: 'video-7', title: 'Video 7 - Behind the Scenes', category: 'behind-scenes', duration: '1:10', durationSeconds: 70, thumbnail: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80', description: 'How we produce our cinematic tours.', videoSrc: '/assets/videos/short/07-behind-scenes.mp4', propertyLink: null },
+        { id: 'video-8', title: 'Video 8 - Advertisement Showcase', category: 'behind-scenes', duration: '1:25', durationSeconds: 85, thumbnail: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', description: 'Exclusive preview of our advertising campaign.', videoSrc: '/assets/videos/short/08-advertisement-showcase.mp4', propertyLink: null }
+      ];
+
+      // ============================================================
+      // BUILD CARD
+      // ============================================================
+      function buildCard(item) {
+        var safeThumb = sanitizeURL(item.thumbnail);
+        var safeTitle = escapeHTML(item.title);
+        var safeDesc = escapeHTML(item.description);
+        var safeDuration = escapeHTML(item.duration || '0:00');
+        var safeId = escapeHTML(item.id);
+        var categoryLabel = (item.category || '').replace(/-/g, ' ');
+
+        var categoryColors = {
+          'property-tour': 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
+          'location': 'text-blue-400 border-blue-400/30 bg-blue-400/10',
+          'insights': 'text-amber-400 border-amber-400/30 bg-amber-400/10',
+          'behind-scenes': 'text-purple-400 border-purple-400/30 bg-purple-400/10'
+        };
+        var colorClass = categoryColors[item.category] || 'text-slate-400 border-slate-400/30 bg-slate-400/10';
+
+        return '<div class="cinema-card glass-panel rounded-3xl overflow-hidden cursor-pointer flex flex-col group" onclick="openModal(\'' + safeId + '\')">' +
+          '<div class="relative aspect-[4/5] overflow-hidden bg-slate-950">' +
+            '<img src="' + safeThumb + '" alt="' + safeTitle + '" class="video-cover w-full h-full object-cover opacity-80" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80\'" />' +
+            '<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>' +
+            
+            '<span class="absolute top-4 left-4 backdrop-blur-md text-[10px] font-mono font-bold uppercase tracking-widest px-3 py-1.5 rounded-full border ' + colorClass + '">' +
+              escapeHTML(categoryLabel) +
+            '</span>' +
+
+            '<span class="absolute top-4 right-4 bg-black/60 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-full border border-white/10">' +
+              '<i class="fa-regular fa-clock text-[8px] mr-1"></i>' + safeDuration +
+            '</span>' +
+
+            '<div class="absolute inset-0 flex items-center justify-center">' +
+              '<div class="play-trigger w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center text-xl shadow-2xl">' +
+                '<i class="fa-solid fa-play ml-1"></i>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="absolute bottom-0 left-0 right-0 p-5 sm:p-6">' +
+              '<h3 class="font-display text-lg sm:text-xl font-bold text-white leading-snug group-hover:text-brand-400 transition line-clamp-2">' + safeTitle + '</h3>' +
+              '<p class="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">' + safeDesc + '</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }
+
+      // ============================================================
+      // FILTER & RENDER
+      // ============================================================
+      function getFilteredVideos() {
+        return videoData.filter(function(v) {
+          var matchCat = activeCategory === 'all' || v.category === activeCategory;
+          var matchSearch = !searchQuery || 
+            v.title.toLowerCase().indexOf(searchQuery) !== -1 || 
+            v.description.toLowerCase().indexOf(searchQuery) !== -1;
+          return matchCat && matchSearch;
+        });
+      }
+
+      function render() {
+        var filtered = getFilteredVideos();
+        var displayCount = Math.min(displayedCount, filtered.length);
+
+        loader.classList.add('hidden');
+
+        if (filtered.length === 0) {
+          container.classList.add('hidden');
+          noData.classList.remove('hidden');
+          loadMoreContainer.classList.add('hidden');
+          visibleCount.textContent = '0';
+          return;
+        }
+
+        noData.classList.add('hidden');
+        container.classList.remove('hidden');
+
+        var html = '';
+        for (var i = 0; i < displayCount; i++) {
+          html += buildCard(filtered[i]);
+        }
+        container.innerHTML = html;
+        visibleCount.textContent = displayCount;
+
+        if (displayCount >= filtered.length) {
+          loadMoreContainer.classList.add('hidden');
+        } else {
+          loadMoreContainer.classList.remove('hidden');
+        }
+      }
+
+      function applyFilters() {
+        var filtered = getFilteredVideos();
+        displayedCount = Math.min(INITIAL_ITEMS, filtered.length);
+        
+        // Show/hide clear button
+        if (activeCategory !== 'all' || searchQuery) {
+          clearFilters.classList.remove('hidden');
+        } else {
+          clearFilters.classList.add('hidden');
+        }
+        
+        render();
+      }
+
+      window.clearAllFilters = function() {
+        activeCategory = 'all';
+        searchQuery = '';
+        if (searchInput) searchInput.value = '';
+        
+        document.querySelectorAll('.category-btn').forEach(function(b) {
+          b.classList.remove('active');
+          if (b.dataset.category === 'all') b.classList.add('active');
+        });
+        
+        applyFilters();
+      };
+
+      // ============================================================
+      // MODAL
+      // ============================================================
+      window.openModal = function(id) {
+        var item = null;
+        for (var i = 0; i < videoData.length; i++) {
+          if (videoData[i].id === id) { item = videoData[i]; break; }
+        }
+        if (!item) return;
+
+        var modal = document.getElementById('mediaModal');
+        var video = document.getElementById('activeVideo');
+        var source = document.getElementById('activeSource');
+
+        document.getElementById('modalTitle').textContent = item.title;
+        document.getElementById('modalDesc').textContent = item.description;
+        document.getElementById('modalTag').textContent = (item.category || '').replace(/-/g, ' ');
+        
+        var cta = document.getElementById('modalCta');
+        if (item.propertyLink) {
+          cta.href = item.propertyLink;
+          cta.style.display = 'flex';
+        } else {
+          cta.style.display = 'none';
+        }
+
+        // WhatsApp link with property name
+        var whatsapp = document.getElementById('modalWhatsapp');
+        var waMessage = encodeURIComponent('Hi HomeScape, I saw the video "' + item.title + '" and I am interested. Please share more details.');
+        whatsapp.href = 'https://wa.me/254700000000?text=' + waMessage;
+
+        source.src = sanitizeURL(item.videoSrc);
+        video.load();
+
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(function() {
+          video.play().catch(function(e) { console.log('Autoplay blocked:', e); });
+        }, 300);
+      };
+
+      window.closeModal = function() {
+        var modal = document.getElementById('mediaModal');
+        var video = document.getElementById('activeVideo');
+        video.pause();
+        video.currentTime = 0;
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        modal.classList.remove('opacity-100', 'pointer-events-auto');
+        document.body.style.overflow = '';
+      };
+
+      // ============================================================
+      // STATS
+      // ============================================================
+      function updateStats() {
+        document.getElementById('statTotal').textContent = videoData.length;
+        var totalSeconds = 0;
+        for (var i = 0; i < videoData.length; i++) {
+          totalSeconds += videoData[i].durationSeconds || 0;
+        }
+        var avgSeconds = Math.round(totalSeconds / videoData.length) || 0;
+        document.getElementById('statDuration').textContent = formatDuration(avgSeconds);
+      }
+
+      // ============================================================
+      // MOBILE MENU
+      // ============================================================
+      function initMobileMenu() {
+        var btn = document.getElementById('mobileMenuBtn');
+        var menu = document.getElementById('mobileMenu');
+        if (!btn || !menu) return;
+
+        btn.addEventListener('click', function() {
+          menu.classList.toggle('hidden');
+          var icon = btn.querySelector('i');
+          if (icon) {
+            icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+          }
+        });
+
+        menu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            menu.classList.add('hidden');
+            var icon = btn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars text-lg';
+          });
+        });
+      }
+
+      // ============================================================
+      // BACK TO TOP
+      // ============================================================
+      function initBackToTop() {
+        var btn = document.getElementById('backToTop');
+        if (!btn) return;
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 400) {
+            btn.classList.remove('opacity-0', 'pointer-events-none');
+            btn.classList.add('opacity-100');
+          } else {
+            btn.classList.add('opacity-0', 'pointer-events-none');
+            btn.classList.remove('opacity-100');
+          }
+        });
+      }
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      async function init() {
+        // Footer year
+        var yearEl = document.getElementById('footerYear');
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        // Load videos
+        try {
+          var res = await fetch('/data/videos.json');
+          if (!res.ok) throw new Error('Failed');
+          var json = await res.json();
+          videoData = json.videos || json;
+          console.log('✅ Loaded ' + videoData.length + ' videos');
+        } catch (e) {
+          console.warn('⚠️ Using fallback data');
+          videoData = fallbackData;
+        }
+
+        updateStats();
+        displayedCount = Math.min(INITIAL_ITEMS, videoData.length);
+        render();
+
+        // Events
+        document.querySelectorAll('.category-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.category-btn').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            activeCategory = this.dataset.category;
+            applyFilters();
+          });
+        });
+
+        if (searchInput) {
+          searchInput.addEventListener('input', function(e) {
+            searchQuery = e.target.value.toLowerCase().trim();
+            applyFilters();
+          });
+        }
+
+        if (loadMoreBtn) {
+          loadMoreBtn.addEventListener('click', function() {
+            var filtered = getFilteredVideos();
+            var remaining = filtered.length - displayedCount;
+            displayedCount += Math.min(LOAD_INCREMENT, remaining);
+            render();
+          });
+        }
+
+        if (clearFilters) {
+          clearFilters.addEventListener('click', clearAllFilters);
+        }
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeModal();
+        });
+
+        var modal = document.getElementById('mediaModal');
+        if (modal) {
+          modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+          });
+        }
+
+        initMobileMenu();
+        initBackToTop();
+
+        console.log('✅ Video Tours (Option B) initialized');
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+</body>
+</html>

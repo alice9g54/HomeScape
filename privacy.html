@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | HomeScape Real Estate Kenya</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="HomeScape Real Estate Privacy Policy. Learn how we collect, protect, and handle your personal data in compliance with Kenya Data Protection Act and GDPR." />
+  <meta name="keywords" content="homescape privacy policy, data protection Kenya, real estate privacy, GDPR compliance" />
+  <link rel="canonical" href="https://homescape.co.ke/privacy.html" />
+  <meta name="theme-color" content="#047857" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 700: '#065f46', 800: '#047857', 900: '#022c22' },
+            accent: { 600: '#b45309', 700: '#854d0e' },
+            warmBg: '#fbfbf9',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    .nav-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:active {
+      transform: scale(0.95);
+      background-color: #e2e8f0;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #065f46; }
+
+    .legal-section {
+      transition: all 0.3s ease;
+    }
+    .legal-section:hover {
+      box-shadow: 0 10px 30px -10px rgba(4, 120, 87, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-warmBg text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <a href="/index.html" class="flex items-center gap-3">
+        <img 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&q=80" 
+          alt="HomeScape Logo" 
+          class="w-10 h-10 sm:w-11 sm:h-11 object-cover rounded-xl shadow-sm border border-slate-200"
+        />
+        <div class="flex flex-col">
+          <span class="text-lg sm:text-xl font-serif font-bold text-slate-900 leading-none">Home<span class="text-brand-800">Scape</span></span>
+          <span class="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase text-slate-400 mt-1">Real Estate Group</span>
+        </div>
+      </a>
+
+      <!-- DESKTOP NAVIGATION -->
+      <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-widest text-slate-600">
+        <a href="/index.html" class="nav-btn hover:text-accent-600 transition pb-1">Home</a>
+        <a href="/properties.html" class="nav-btn hover:text-accent-600 transition pb-1">Properties</a>
+        <a href="/experience.html" class="nav-btn hover:text-accent-600 transition pb-1">Experience</a>
+        <a href="/video-tours.html" class="nav-btn hover:text-accent-600 transition pb-1 flex items-center gap-1.5">
+          <span>Videos</span>
+          <span class="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.5 rounded-full font-bold">NEW</span>
+        </a>
+        <a href="/about.html" class="nav-btn hover:text-accent-600 transition pb-1">About</a>
+        <a href="/contact.html" class="nav-btn hover:text-accent-600 transition pb-1">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button type="button" id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-lg"></i>
+      </button>
+
+      <!-- TOP ACTION BUTTON -->
+      <a href="/contact.html" class="hidden sm:inline-flex nav-btn bg-slate-900 hover:bg-brand-800 text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase px-5 sm:px-6 py-3 rounded-xl transition duration-300 shadow-sm">
+        Book Consultation
+      </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-white border-t border-slate-200 px-4 py-4 space-y-1">
+      <a href="/index.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Home</a>
+      <a href="/properties.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Properties</a>
+      <a href="/experience.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Experience</a>
+      <a href="/video-tours.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Videos</a>
+      <a href="/about.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">About</a>
+      <a href="/contact.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Contact</a>
+      <div class="pt-2">
+        <a href="/contact.html" class="block w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-wider text-center py-3 rounded-xl transition">
+          <i class="fa-regular fa-calendar-check mr-2"></i>
+          Book Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="bg-slate-900 text-white py-12 sm:py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <img 
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" 
+        alt="Background" 
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10 text-center">
+      <span class="text-amber-400 font-bold text-xs uppercase tracking-widest bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 inline-block">
+        <i class="fa-solid fa-shield-halved mr-1.5"></i> Legal
+      </span>
+      <h1 class="text-3xl sm:text-5xl font-serif font-bold mt-4 mb-3">Privacy Policy</h1>
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+        Your privacy matters. Learn how we protect, handle, and respect your personal information.
+      </p>
+      <p class="text-[10px] text-slate-400 mt-3 uppercase tracking-wider font-mono">
+        Last Updated: September 2026
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10 py-12 mb-auto w-full space-y-6">
+
+    <!-- Section 1: Introduction -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <div>
+          <h2 class="text-lg font-serif font-bold text-slate-900">1. Introduction</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            HomeScape Real Estate Group ("we," "us," or "our") respects your personal privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.
+          </p>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            By using our website, you consent to the practices described in this Privacy Policy. If you do not agree, please discontinue use of our services.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Information We Collect -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-folder-open"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">2. Information We Collect</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            We collect information you voluntarily provide to us when you:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li><strong>Submit an inquiry:</strong> Name, email address, phone number, and message content.</li>
+            <li><strong>Schedule a visit:</strong> Contact details and preferred visit date.</li>
+            <li><strong>Contact us:</strong> Any information included in your message.</li>
+          </ul>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            We may also automatically collect certain technical information such as your IP address, browser type, and device information for analytical and security purposes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: How We Use Your Information -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-database"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">3. How We Use Your Information</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            We use the information we collect to:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li>Respond to your inquiries and provide requested services.</li>
+            <li>Schedule property viewings and site visits.</li>
+            <li>Send updates about properties matching your interests.</li>
+            <li>Improve our website and service quality.</li>
+            <li>Comply with legal obligations.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Data Protection -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">4. Data Protection & Security</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            We implement industry-standard security measures to protect your personal information:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li><strong>Strict Confidentiality:</strong> Your inquiry information is shared strictly with authorized property agents handling your specific requested listing.</li>
+            <li><strong>No Selling of Data:</strong> We do not sell, lease, or rent client contact information to third-party advertisers.</li>
+            <li><strong>Secure Storage:</strong> All data is stored on encrypted servers with restricted access.</li>
+            <li><strong>Regular Audits:</strong> We conduct regular security audits to ensure your data remains protected.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Your Rights -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-scale-balanced"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">5. Your Data Rights</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            Under the Kenya Data Protection Act (2019) and GDPR where applicable, you have the right to:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
+            <li><strong>Correction:</strong> Request correction of inaccurate or incomplete data.</li>
+            <li><strong>Deletion:</strong> Request deletion of your personal data (subject to legal requirements).</li>
+            <li><strong>Objection:</strong> Object to processing of your data for marketing purposes.</li>
+            <li><strong>Portability:</strong> Request transfer of your data in a machine-readable format.</li>
+          </ul>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            To exercise any of these rights, please contact us at <a href="mailto:privacy@homescape.co.ke" class="text-emerald-700 font-bold hover:underline">privacy@homescape.co.ke</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Cookies -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-cookie-bite"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">6. Cookies & Tracking</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            Our website uses cookies to enhance your browsing experience:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li><strong>Essential Cookies:</strong> Required for basic site functionality (navigation, form submission).</li>
+            <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our site to improve experience.</li>
+            <li><strong>Preference Cookies:</strong> Remember your settings and preferences for future visits.</li>
+          </ul>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            You can control or disable cookies through your browser settings. Note that disabling cookies may affect certain site features.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Third-Party Services -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-share-nodes"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">7. Third-Party Services</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            We may use trusted third-party services to operate our website:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li><strong>Google Maps:</strong> For property location display.</li>
+            <li><strong>WhatsApp:</strong> For direct messaging with our agents.</li>
+            <li><strong>Google Analytics:</strong> For website traffic analysis (if enabled).</li>
+          </ul>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            These services have their own privacy policies. We recommend reviewing them before use.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 8: Changes to Policy -->
+    <section class="legal-section bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold text-slate-900">8. Changes to This Policy</h2>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            We may update this Privacy Policy from time to time. Material changes will be notified via:
+          </p>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-5 leading-relaxed mt-2">
+            <li>Email notification to registered users.</li>
+            <li>Prominent notice on our website homepage.</li>
+            <li>Updated "Last Modified" date at the top of this page.</li>
+          </ul>
+          <p class="text-xs text-slate-600 leading-relaxed mt-2">
+            Your continued use of our website after changes constitutes acceptance of the updated policy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 9: Contact -->
+    <section class="legal-section bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
+      <div class="flex items-start gap-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 text-xl">
+          <i class="fa-regular fa-envelope"></i>
+        </div>
+        <div class="flex-1">
+          <h2 class="text-lg font-serif font-bold">9. Contact Us</h2>
+          <p class="text-xs text-slate-300 leading-relaxed mt-2">
+            For questions about this Privacy Policy or to exercise your data rights:
+          </p>
+          <div class="text-xs text-slate-300 space-y-1 mt-3">
+            <p><strong class="text-white">Email:</strong> <a href="mailto:privacy@homescape.co.ke" class="text-emerald-400 hover:underline">privacy@homescape.co.ke</a></p>
+            <p><strong class="text-white">Phone:</strong> <a href="tel:+254700000000" class="text-emerald-400 hover:underline">+254 700 000 000</a></p>
+            <p><strong class="text-white">Address:</strong> HomeScape Plaza, 4th Floor, Westlands Road, Nairobi, Kenya</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Links -->
+    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-slate-600">
+        Looking for our Terms of Service?
+      </p>
+      <a href="/terms.html" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-800 text-white text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-xl transition">
+        <span>Read Terms</span>
+        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div id="footer">
+    <!-- Fallback -->
+    <footer class="bg-slate-950 text-slate-400 py-8 text-xs text-center">
+      <p>&copy; <span id="footerYear">2026</span> HomeScape Group. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- ==================== BACK TO TOP ==================== -->
+  <button 
+    type="button"
+    id="backToTopBtn" 
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" 
+    class="fixed bottom-6 right-6 z-40 bg-slate-900 hover:bg-brand-800 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-xl opacity-0 pointer-events-none transition-all duration-300 border border-slate-700"
+    aria-label="Back to top"
+  >
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // MOBILE MENU
+      // ============================================================
+      var menuBtn = document.getElementById('mobileMenuBtn');
+      var mobileMenu = document.getElementById('mobileMenu');
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+          var icon = menuBtn.querySelector('i');
+          if (icon) {
+            icon.className = mobileMenu.classList.contains('hidden')
+              ? 'fa-solid fa-bars text-lg'
+              : 'fa-solid fa-xmark text-lg';
+          }
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            var icon = menuBtn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars text-lg';
+          });
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!mobileMenu.classList.contains('hidden')) {
+            var isClickInside = mobileMenu.contains(e.target) || menuBtn.contains(e.target);
+            if (!isClickInside) {
+              mobileMenu.classList.add('hidden');
+              var icon = menuBtn.querySelector('i');
+              if (icon) icon.className = 'fa-solid fa-bars text-lg';
+            }
+          }
+        });
+      }
+
+      // ============================================================
+      // BACK TO TOP
+      // ============================================================
+      var backToTopBtn = document.getElementById('backToTopBtn');
+      if (backToTopBtn) {
+        window.addEventListener('scroll', function() {
+          if (window.scrollY > 400) {
+            backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            backToTopBtn.classList.add('opacity-100');
+          } else {
+            backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            backToTopBtn.classList.remove('opacity-100');
+          }
+        });
+      }
+
+      console.log('✅ Privacy page loaded');
+    })();
+  </script>
+
+  <!-- Load Footer Component -->
+  <script>
+    (function() {
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      var container = document.getElementById('footer');
+      if (container) {
+        fetch('/components/footer.html')
+          .then(function(response) {
+            if (!response.ok) throw new Error('Footer not found');
+            return response.text();
+          })
+          .then(function(data) {
+            container.innerHTML = data;
+          })
+          .catch(function(error) {
+            console.error('Error loading footer:', error);
+          });
+      }
+    })();
+  </script>
+
+</body>
+</html>

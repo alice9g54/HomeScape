@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#047857" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Properties for Sale in Kenya | HomeScape Real Estate</title>
+  <meta name="description" content="Browse our curated collection of luxury properties, commercial spaces, and investment opportunities across Kenya's finest locations." />
+  <meta name="keywords" content="properties for sale Kenya, luxury homes Nairobi, commercial property Kenya, real estate listings" />
+  <link rel="canonical" href="https://homescape.co.ke/properties.html" />
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 700: '#065f46', 800: '#047857', 900: '#022c22' },
+            accent: { 600: '#b45309', 700: '#854d0e' },
+            warmBg: '#fbfbf9',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ============================================================
+       SMOOTH SCROLLING - Global
+       ============================================================ */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* ============================================================
+       PROPERTY CARDS
+       ============================================================ */
+    .property-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s ease forwards;
+      will-change: transform, opacity;
+    }
+    .property-card:nth-child(1) { animation-delay: 0.05s; }
+    .property-card:nth-child(2) { animation-delay: 0.10s; }
+    .property-card:nth-child(3) { animation-delay: 0.15s; }
+    .property-card:nth-child(4) { animation-delay: 0.20s; }
+    .property-card:nth-child(5) { animation-delay: 0.25s; }
+    .property-card:nth-child(6) { animation-delay: 0.30s; }
+    .property-card:nth-child(7) { animation-delay: 0.35s; }
+    .property-card:nth-child(8) { animation-delay: 0.40s; }
+    .property-card:nth-child(9) { animation-delay: 0.45s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .property-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    .nav-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ============================================================
+       FILTERS
+       ============================================================ */
+    .filter-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .filter-label i {
+      color: #047857;
+      font-size: 0.7rem;
+    }
+
+    .filter-select, .filter-input {
+      width: 100%;
+      background-color: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.75rem;
+      color: #1e293b;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+    .filter-select:focus, .filter-input:focus {
+      border-color: #047857;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.12);
+      background-color: #ffffff;
+    }
+    .filter-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364758b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2rem;
+      cursor: pointer;
+    }
+
+    .filter-select:hover, .filter-input:hover {
+      background-color: #ffffff;
+      border-color: #cbd5e1;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .filter-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.85rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .filter-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    .filter-tag {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .filter-tag:hover {
+      background-color: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .filter-tag i:hover {
+      color: #ef4444;
+    }
+
+    /* ============================================================
+       SCROLLBAR
+       ============================================================ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #065f46; }
+
+    /* ============================================================
+       LOADING & NO RESULTS
+       ============================================================ */
+    .no-results-icon { font-size: 4rem; color: #94a3b8; }
+
+    .load-more-btn {
+      transition: all 0.3s ease;
+    }
+    .load-more-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(4, 120, 87, 0.3);
+    }
+    .load-more-btn:active {
+      transform: scale(0.97);
+    }
+
+    .loading-spinner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 0;
+      min-height: 300px;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid #e2e8f0;
+      border-top: 4px solid #047857;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ============================================================
+       HERO SECTION
+       ============================================================ */
+    .hero-section {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(4, 120, 87, 0.08);
+      color: #047857;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(4, 120, 87, 0.12);
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+      line-height: 1.2;
+    }
+    @media (min-width: 640px) {
+      .hero-title {
+        font-size: 2.75rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 3.5rem;
+      }
+    }
+
+    .hero-title span {
+      color: #047857;
+    }
+
+    .hero-desc {
+      color: #64748b;
+      font-size: 0.875rem;
+      max-width: 36rem;
+      line-height: 1.6;
+      margin-top: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .hero-desc {
+        font-size: 1rem;
+      }
+    }
+
+    /* ============================================================
+       CTA BUTTON
+       ============================================================ */
+    .cta-btn {
+      background: #d97706;
+      color: white;
+    }
+    .cta-btn:hover {
+      background: #b45309;
+    }
+
+    /* ============================================================
+       STATUS FILTER - HIDDEN (All properties are For Sale)
+       ============================================================ */
+    #filter-status {
+      display: none;
+    }
+
+    /* ============================================================
+       VIRTUAL TOUR BADGE
+       ============================================================ */
+    .virtual-tour-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      z-index: 5;
+    }
+    .virtual-tour-badge i {
+      font-size: 0.6rem;
+      color: #34d399;
+    }
+
+    /* ============================================================
+       RELATED PROPERTIES - HORIZONTAL SCROLL
+       ============================================================ */
+    .related-scroll {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    .related-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .related-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .related-scroll::-webkit-scrollbar-thumb {
+      background: #047857;
+      border-radius: 10px;
+    }
+    .related-item {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
+    }
+    @media (min-width: 640px) {
+      .related-item {
+        flex: 0 0 220px;
+      }
+    }
+
+    /* ============================================================
+       MODAL - MOBILE FULL SCREEN
+       ============================================================ */
+    @media (max-width: 640px) {
+      #quickViewModal .modal-container {
+        max-width: 100% !important;
+        max-height: 100vh !important;
+        border-radius: 0 !important;
+        height: 100vh !important;
+        width: 100% !important;
+      }
+      #quickViewModal .modal-body {
+        padding: 1rem !important;
+      }
+    }
+
+    /* ============================================================
+       AGENT CARD
+       ============================================================ */
+    .agent-card {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .agent-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #047857;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .agent-avatar i {
+      font-size: 1.2rem;
+    }
+
+    /* ============================================================
+       MAP BUTTON
+       ============================================================ */
+    .map-btn {
+      background: #2563eb;
+      color: white;
+      transition: all 0.2s ease;
+    }
+    .map-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    /* ============================================================
+       MODAL - ONLY CLOSE VIA BUTTON
+       ============================================================ */
+    .modal-backdrop {
+      pointer-events: none;
+    }
+    .modal-container {
+      pointer-events: auto;
+    }
+
+    /* ============================================================
+       SMOOTH SCROLL FOR ANCHOR LINKS
+       ============================================================ */
+    a[href^="#"] {
+      scroll-behavior: smooth;
+    }
+
+    /* ============================================================
+       LOAD MORE - SMOOTH TRANSITION
+       ============================================================ */
+    #catalog-properties-grid {
+      transition: opacity 0.3s ease;
+    }
+    #catalog-properties-grid.loading {
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body class="bg-warmBg text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full">
+    <div class="bg-white/90 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-lg px-5 sm:px-7 h-20 flex items-center justify-between">
+      
+      <a href="/index.html" class="flex items-center gap-3.5 group">
+        <div class="relative overflow-hidden rounded-xl">
+          <img 
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&q=80" 
+            alt="HomeScape Logo" 
+            class="w-10 h-10 sm:w-11 sm:h-11 object-cover rounded-xl shadow-inner border border-slate-200 group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg sm:text-xl font-serif font-bold text-slate-900 leading-none tracking-tight">Home<span class="text-brand-800">Scape</span></span>
+          <span class="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase text-slate-400 mt-1">Real Estate Group</span>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 bg-slate-100/70 p-1.5 rounded-2xl border border-slate-200/50">
+        <a href="/index.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Home</a>
+        <a href="/properties.html" class="nav-btn px-4 py-2 rounded-xl text-brand-900 bg-white shadow-sm font-extrabold border border-slate-200/60">Properties</a>
+        <a href="/experience.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Experience</a>
+        <a href="/video-tours.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all flex items-center gap-1.5">
+          <span>Videos</span>
+          <span class="bg-amber-500 text-white text-[8px] px-1.5 py-0.5 rounded-md font-bold tracking-normal shadow-xs">NEW</span>
+        </a>
+        <a href="/about.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">About</a>
+        <a href="/contact.html" class="nav-btn px-4 py-2 rounded-xl hover:text-slate-900 hover:bg-white transition-all">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button type="button" id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-lg"></i>
+      </button>
+
+      <a href="/contact.html" class="hidden sm:flex nav-btn cta-btn text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase px-5 sm:px-6 py-3 rounded-xl transition-all duration-300 shadow-md items-center gap-2 group">
+        <span>Book Consultation</span>
+        <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+      </a>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="lg:hidden hidden bg-white border-t border-slate-200 px-4 py-4 space-y-1 mt-3 rounded-2xl shadow-lg">
+      <a href="/index.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Home</a>
+      <a href="/properties.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 rounded-xl">Properties</a>
+      <a href="/experience.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Experience</a>
+      <a href="/video-tours.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Videos</a>
+      <a href="/about.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">About</a>
+      <a href="/contact.html" class="block px-4 py-3 text-sm font-semibold uppercase tracking-wider text-slate-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-xl transition">Contact</a>
+      <div class="pt-2">
+        <a href="/contact.html" class="block w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-wider text-center py-3 rounded-xl transition">
+          <i class="fa-regular fa-calendar-check mr-2"></i>
+          Book Consultation
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="flex-1">
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 hero-section">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="hero-badge">
+            <i class="fa-regular fa-star text-[10px]"></i>
+            Premium Properties in Kenya
+          </span>
+          <h1 class="hero-title font-serif font-bold text-slate-900 mt-2">
+            Find Your <span>Dream Property</span>
+          </h1>
+          <p class="hero-desc">
+            Explore verified residential, commercial, and townhouse listings across Kenya's most sought-after neighborhoods.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <div class="hidden sm:block text-right">
+            <span class="block text-[10px] text-slate-400 font-medium uppercase tracking-wider">Featured</span>
+            <span class="text-sm font-semibold text-slate-800">Premium Properties</span>
+          </div>
+          <div class="w-12 h-12 rounded-full bg-emerald-800/10 flex items-center justify-center border border-emerald-200/50">
+            <i class="fa-regular fa-building text-emerald-800 text-lg"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FILTER CONTROLS ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-4">
+      <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+        
+        <div class="filter-grid">
+          
+          <div class="col-span-2 sm:col-span-1">
+            <label class="filter-label">
+              <i class="fa-solid fa-search"></i> Search
+            </label>
+            <input 
+              type="text" 
+              id="filter-search" 
+              name="search"
+              placeholder="Search properties by title or area..." 
+              aria-label="Search properties"
+              class="filter-input pl-8"
+            />
+          </div>
+
+          <div>
+            <label class="filter-label">
+              <i class="fa-solid fa-building"></i> Type
+            </label>
+            <select id="filter-type" name="type" aria-label="Filter by property type" class="filter-select">
+              <option value="All">All Types</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Townhouse">Townhouse</option>
+              <option value="Land">Land / Plots</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="filter-label">
+              <i class="fa-solid fa-location-dot"></i> Location
+            </label>
+            <select id="filter-location" name="location" aria-label="Filter by location" class="filter-select">
+              <option value="All">All Locations</option>
+              <option value="Kilimani">Kilimani</option>
+              <option value="Westlands">Westlands</option>
+              <option value="Karen">Karen</option>
+              <option value="Lavington">Lavington</option>
+              <option value="Runda">Runda</option>
+              <option value="Kileleshwa">Kileleshwa</option>
+              <option value="Parklands">Parklands</option>
+              <option value="Nairobi CBD">Nairobi CBD</option>
+              <option value="Mombasa">Mombasa</option>
+              <option value="Kisumu">Kisumu</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="filter-label">
+              <i class="fa-solid fa-bed"></i> Bedrooms
+            </label>
+            <select id="filter-beds" name="beds" aria-label="Filter by bedrooms" class="filter-select">
+              <option value="Any">Any</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="filter-label">
+              <i class="fa-solid fa-bath"></i> Bathrooms
+            </label>
+            <select id="filter-baths" name="baths" aria-label="Filter by bathrooms" class="filter-select">
+              <option value="Any">Any</option>
+              <option value="1">1+</option>
+              <option value="2">2+</option>
+              <option value="3">3+</option>
+              <option value="4">4+</option>
+              <option value="5">5+</option>
+            </select>
+          </div>
+
+          <div class="col-span-2 sm:col-span-1">
+            <label class="filter-label">
+              <i class="fa-solid fa-arrow-up-wide-short"></i> Sort By
+            </label>
+            <select id="filter-sort" name="sort" aria-label="Sort properties" class="filter-select">
+              <option value="default">Featured First</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="beds-desc">Most Bedrooms</option>
+              <option value="baths-desc">Most Bathrooms</option>
+              <option value="newest">Newest Listings</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div id="active-filters" class="flex flex-wrap gap-2 mt-4 min-h-[28px]"></div>
+
+        <div class="flex justify-end mt-3">
+          <button type="button" id="clear-filters-btn" class="text-xs text-slate-500 hover:text-emerald-700 transition flex items-center gap-1.5 font-medium">
+            <i class="fa-solid fa-undo-alt text-[10px]"></i>
+            Reset Filters
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== CATALOG GRID ===== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-20">
+
+      <div id="loading-state" class="hidden loading-spinner">
+        <div class="spinner"></div>
+        <p class="text-sm text-slate-500 font-medium mt-3">Loading properties...</p>
+      </div>
+
+      <div id="catalog-properties-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      </div>
+
+      <div id="load-more-container" class="text-center mt-10">
+        <button type="button" id="load-more-btn" class="load-more-btn bg-brand-800 hover:bg-brand-700 text-white text-xs font-bold uppercase tracking-wider px-8 py-3.5 rounded-xl transition shadow-md inline-flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle"></i>
+          View More Properties
+        </button>
+        <p id="all-loaded-msg" class="hidden text-sm text-slate-400 mt-3 font-medium">
+          <i class="fa-regular fa-circle-check text-brand-800 mr-2"></i>
+          You've seen all available properties
+        </p>
+      </div>
+
+      <div id="no-results-msg" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 my-8">
+        <div class="no-results-icon mb-4">
+          <i class="fa-regular fa-face-frown"></i>
+        </div>
+        <h3 class="text-xl font-serif font-bold text-slate-800">No Properties Found</h3>
+        <p class="text-sm text-slate-500 mt-2 max-w-sm mx-auto">
+          We couldn't find properties matching your current criteria.
+          <br />Try adjusting your filters or search terms.
+        </p>
+        <button type="button" id="clear-filters-btn-2" class="mt-4 bg-brand-800 hover:bg-brand-700 text-white text-xs font-bold uppercase tracking-wider px-6 py-2.5 rounded-xl transition">
+          Reset All Filters
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ==================== QUICK VIEW MODAL ==================== -->
+  <div id="quickViewModal" role="dialog" aria-modal="true" aria-labelledby="modal-title" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300 modal-backdrop">
+    <div class="modal-container bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-slate-200 transform scale-95 transition-all duration-300 relative flex flex-col max-h-[90vh]">
+      
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 flex-shrink-0">
+        <div>
+          <span id="modal-type-loc" class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">Category • Location</span>
+          <h3 id="modal-title" class="text-lg font-serif font-bold text-slate-900 line-clamp-1">Property Title</h3>
+        </div>
+        <button type="button" id="closeModalBtn" aria-label="Close modal" class="w-9 h-9 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition flex-shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 modal-body">
+        
+        <!-- Images -->
+        <div class="space-y-3">
+          <div class="relative h-64 sm:h-72 bg-slate-100 rounded-2xl overflow-hidden border border-slate-200">
+            <img id="modal-active-img" src="" alt="Property View" class="w-full h-full object-cover transition duration-300" />
+            <div class="absolute top-3 right-3 bg-slate-900/90 text-white text-xs font-bold px-3 py-1.5 rounded-lg backdrop-blur-md">
+              <span id="modal-price">KSh 0</span>
+            </div>
+            <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 border border-white/10">
+              <i class="fa-solid fa-rotate text-emerald-400"></i>
+              <span>360° Virtual Tour</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button type="button" id="tab-ext-btn" class="flex-1 py-2 px-3 text-xs font-bold rounded-xl border border-emerald-800 bg-emerald-800 text-white transition text-center">Exterior</button>
+            <button type="button" id="tab-int-btn" class="flex-1 py-2 px-3 text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition text-center">Interior</button>
+            <button type="button" id="tab-plan-btn" class="flex-1 py-2 px-3 text-xs font-bold rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition text-center">Floor Plan</button>
+          </div>
+        </div>
+
+        <!-- Specs -->
+        <div class="grid grid-cols-3 gap-3 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs text-center">
+          <div>
+            <span class="block text-slate-400 text-[10px] uppercase font-bold">Bedrooms</span>
+            <span id="modal-beds" class="font-bold text-slate-800 mt-0.5 block">4 Beds</span>
+          </div>
+          <div>
+            <span class="block text-slate-400 text-[10px] uppercase font-bold">Bathrooms</span>
+            <span id="modal-baths" class="font-bold text-slate-800 mt-0.5 block">5 Baths</span>
+          </div>
+          <div>
+            <span class="block text-slate-400 text-[10px] uppercase font-bold">Total Area</span>
+            <span id="modal-sqm" class="font-bold text-slate-800 mt-0.5 block">420 sqm</span>
+          </div>
+        </div>
+
+        <!-- Highlights -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-brand-800"></i>
+            Property Highlights & Features
+          </h4>
+          <div id="modal-features" class="grid grid-cols-2 gap-2 text-xs text-slate-700"></div>
+        </div>
+
+        <!-- Agent Profile -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+            <i class="fa-regular fa-user text-brand-800"></i>
+            Agent / Agency
+          </h4>
+          <div id="modal-agent" class="agent-card">
+            <div class="agent-avatar">
+              <i class="fa-regular fa-user"></i>
+            </div>
+            <div>
+              <p id="modal-agent-name" class="text-sm font-bold text-slate-900">Agent Name</p>
+              <p id="modal-agent-email" class="text-xs text-slate-500">agent@homescape.co.ke</p>
+              <p id="modal-agent-agency" class="text-[10px] text-emerald-700 font-semibold">HomeScape Real Estate</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+            <i class="fa-regular fa-file-lines text-brand-800"></i>
+            Property Overview
+          </h4>
+          <p id="modal-description" class="text-xs text-slate-600 leading-relaxed">
+            This stunning property offers modern living with premium finishes.
+          </p>
+        </div>
+
+        <!-- Related Properties -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
+            <i class="fa-regular fa-copy text-brand-800"></i>
+            Similar Properties
+          </h4>
+          <div id="modal-related" class="related-scroll">
+            <!-- Rendered by JavaScript -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="p-4 border-t border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-2 flex-shrink-0">
+        <a id="modal-details-link" href="#" class="flex-1 text-center bg-slate-900 hover:bg-emerald-800 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition shadow-sm hover:shadow-md">
+          View Full Details
+        </a>
+        <a id="modal-map-link" href="#" target="_blank" class="flex-1 text-center map-btn font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-location-dot text-xs"></i>
+          View on Map
+        </a>
+        <a id="modal-whatsapp-link" href="#" target="_blank" class="flex-1 text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div id="footer">
+    <!-- Fallback -->
+    <footer class="bg-slate-950 text-slate-400 py-8 text-xs text-center">
+      <p>&copy; <span id="footerYear">2026</span> HomeScape Group. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- ==================== BACK TO TOP ==================== -->
+  <button 
+    type="button"
+    id="backToTopBtn" 
+    class="fixed bottom-6 right-6 z-40 bg-slate-900 hover:bg-brand-800 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-xl opacity-0 pointer-events-none transition-all duration-300 border border-slate-700"
+    aria-label="Back to top"
+  >
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // 1. DATA
+      // ============================================================
+      var locations = ['Kilimani', 'Westlands', 'Karen', 'Lavington', 'Runda', 'Kileleshwa', 'Parklands'];
+      var types = ['Residential', 'Commercial', 'Townhouse'];
+
+      var locationCoords = {
+        'Kilimani': { lat: -1.2921, lng: 36.7895 },
+        'Westlands': { lat: -1.2673, lng: 36.8045 },
+        'Karen': { lat: -1.3285, lng: 36.7060 },
+        'Lavington': { lat: -1.2818, lng: 36.7771 },
+        'Runda': { lat: -1.2420, lng: 36.8060 },
+        'Kileleshwa': { lat: -1.2880, lng: 36.7720 },
+        'Parklands': { lat: -1.2580, lng: 36.8220 }
+      };
+
+      var agentNames = [
+        'John Mwangi', 'Sarah Wanjiru', 'David Ochieng', 
+        'Grace Akinyi', 'Michael Kiprop', 'Faith Auma',
+        'Peter Njoroge', 'Mary Wambui', 'James Otieno',
+        'Ann Njeri', 'Robert Kiplagat', 'Catherine Muthoni',
+        'Stephen Omondi', 'Jane Wairimu', 'Philip Kariuki',
+        'Esther Nyokabi', 'Samuel Kipkorir', 'Margaret Atieno',
+        'Daniel Kariuki', 'Susan Wanjiru'
+      ];
+
+      var agentAssignments = {};
+
+      function getAgentForProperty(propertyIndex) {
+        var agentKey = Math.floor(propertyIndex / 3);
+        if (!agentAssignments[agentKey]) {
+          var nameIndex = agentKey % agentNames.length;
+          var firstName = agentNames[nameIndex].split(' ')[0].toLowerCase();
+          var lastName = agentNames[nameIndex].split(' ')[1].toLowerCase();
+          agentAssignments[agentKey] = {
+            name: agentNames[nameIndex],
+            email: firstName + '.' + lastName + '@homescape.co.ke',
+            agency: 'HomeScape Real Estate'
+          };
+        }
+        return agentAssignments[agentKey];
+      }
+
+      var templates = {
+        Residential: [
+          { title: 'Luxury Villa', beds: [3,4,5,6], baths: [3,4,5,6], sqm: [250, 350, 450, 600],
+            highlights: ['Private Pool', 'Landscaped Garden', '24/7 Security', 'Parking for 4 Cars', 'Smart Home'] },
+          { title: 'Modern Apartment', beds: [2,3,4], baths: [2,3,4], sqm: [120, 180, 220],
+            highlights: ['Gym Access', 'Swimming Pool', '24/7 Security', 'Elevator', 'Concierge'] },
+          { title: 'Penthouse Suite', beds: [3,4,5], baths: [3,4,5], sqm: [280, 400, 550],
+            highlights: ['Rooftop Terrace', 'Panoramic Views', 'Smart Home System', 'Private Lift', 'Jacuzzi'] },
+          { title: 'Executive Home', beds: [4,5,6], baths: [4,5,6], sqm: [350, 500, 700],
+            highlights: ['Home Office', 'Double Garage', 'Large Garden', 'Solar Panels', 'Staff Quarters'] },
+          { title: 'Contemporary Mansion', beds: [5,6,7], baths: [5,6,7], sqm: [600, 800, 1000],
+            highlights: ['Home Cinema', 'Wine Cellar', 'Gym', 'Tennis Court', 'Helipad'] },
+          { title: 'Garden Estate', beds: [4,5], baths: [4,5], sqm: [400, 550, 750],
+            highlights: ['Mature Gardens', 'Orchard', 'Swimming Pool', 'Guest House', 'Solar'] },
+        ],
+        Commercial: [
+          { title: 'Office Tower', beds: [0], baths: [4,6,8], sqm: [500, 800, 1200],
+            highlights: ['High-speed Elevators', 'CCTV Monitoring', 'Basement Parking', 'Fiber Optic', 'Generator'] },
+          { title: 'Retail Space', beds: [0], baths: [2,3,4], sqm: [200, 350, 500],
+            highlights: ['High Footfall Area', 'Glass Shopfront', 'Storage Room', 'Customer Parking', 'Signage'] },
+          { title: 'Business Hub', beds: [0], baths: [6,8,10], sqm: [800, 1200, 2000],
+            highlights: ['Conference Rooms', 'Cafeteria', '24/7 Access', 'Generator Backup', 'Data Center'] },
+          { title: 'Corporate Plaza', beds: [0], baths: [5,7,9], sqm: [600, 900, 1500],
+            highlights: ['Reception Area', 'Boardrooms', 'Kitchenette', 'Secure Parking', 'Backup Power'] },
+        ],
+        Townhouse: [
+          { title: 'Family Townhouse', beds: [3,4,5], baths: [3,4,5], sqm: [200, 280, 350],
+            highlights: ['Gated Community', 'Children Playground', 'Clubhouse', 'Swimming Pool', '24/7 Security'] },
+          { title: 'Luxury Row House', beds: [4,5,6], baths: [4,5,6], sqm: [300, 400, 500],
+            highlights: ['Rooftop Terrace', 'Private Garden', 'Double Garage', 'Smart Intercom', 'Solar'] },
+          { title: 'Premium Townhouse', beds: [3,4], baths: [3,4], sqm: [220, 300, 380],
+            highlights: ['Balcony', 'Parking', 'Gym Access', 'Swimming Pool', 'Landscaped Gardens'] },
+        ]
+      };
+
+      var imagePool = [
+        'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1568605117036-5f5e40b6f3d9?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80',
+      ];
+
+      function generateProperties() {
+        var props = [];
+        var id = 1;
+        var basePrices = {
+          Residential: { min: 2000000, max: 15000000 },
+          Commercial: { min: 3000000, max: 15000000 },
+          Townhouse: { min: 2500000, max: 14000000 }
+        };
+
+        var usedImages = [];
+        
+        function getUniqueImage() {
+          var available = [];
+          for (var i = 0; i < imagePool.length; i++) {
+            if (usedImages.indexOf(i) === -1) {
+              available.push(i);
+            }
+          }
+          if (available.length === 0) {
+            usedImages = [];
+            return getUniqueImage();
+          }
+          var randomIndex = available[Math.floor(Math.random() * available.length)];
+          usedImages.push(randomIndex);
+          return randomIndex;
+        }
+
+        types.forEach(function(type) {
+          var tpls = templates[type] || templates.Residential;
+          var countPerType = 50;
+          
+          for (var i = 0; i < countPerType; i++) {
+            var tpl = tpls[i % tpls.length];
+            var loc = locations[i % locations.length];
+            var beds = tpl.beds[i % tpl.beds.length];
+            var baths = tpl.baths[i % tpl.baths.length];
+            var sqm = tpl.sqm[i % tpl.sqm.length];
+            var min = basePrices[type].min;
+            var max = basePrices[type].max;
+            var price = Math.floor(Math.random() * (max - min + 1)) + min;
+            var priceFormatted = 'KSh ' + price.toLocaleString();
+            var title = tpl.title + ' ' + (i + 1);
+            
+            var extIdx = getUniqueImage();
+            var intIdx = getUniqueImage();
+            var planIdx = getUniqueImage();
+            
+            var descriptions = [
+              'This stunning property offers modern living with premium finishes. Located in a prime neighborhood with easy access to schools, shopping, and transport.',
+              'A masterpiece of contemporary design, this property features spacious interiors, high-end appliances, and breathtaking views.',
+              'Perfect for families or investors, this property combines comfort, security, and convenience in one of the most sought-after locations.',
+              'Experience luxury living at its finest with this meticulously designed property featuring top-of-the-line amenities and finishes.',
+              'An exceptional opportunity to own this beautiful property in a prestigious neighborhood. Features include modern finishes and spacious living areas.'
+            ];
+            var desc = descriptions[i % descriptions.length];
+
+            var agent = getAgentForProperty(id - 1);
+
+            var priceCategory = 'medium';
+            if (price >= 10000000) priceCategory = 'high-end';
+            else if (price >= 5000000) priceCategory = 'medium';
+            else priceCategory = 'low';
+
+            props.push({
+              id: 'prop-' + id++,
+              title: title,
+              type: type,
+              location: loc,
+              coords: locationCoords[loc] || { lat: -1.2921, lng: 36.7895 },
+              price: price,
+              priceFormatted: priceFormatted,
+              beds: beds,
+              baths: baths,
+              sqm: sqm + ' sqm',
+              status: 'For Sale',
+              description: desc,
+              priceCategory: priceCategory,
+              images: { 
+                exterior: imagePool[extIdx], 
+                interior: imagePool[intIdx], 
+                floorPlan: imagePool[planIdx] 
+              },
+              highlights: tpl.highlights.slice(0, 4),
+              agent: agent,
+              hasVirtualTour: true,
+              isNew: (id % 7 === 0) // Mark every 7th property as new for demo
+            });
+          }
+        });
+
+        return props;
+      }
+
+      var allProperties = generateProperties();
+
+      // ============================================================
+      // 2. STATE
+      // ============================================================
+      var currentList = [];
+      var displayedCount = 0;
+      var INITIAL_ITEMS = 5;
+      var LOAD_INCREMENT = 4;
+      var MAX_ITEMS = 9;
+
+      // ============================================================
+      // 3. DOM REFERENCES
+      // ============================================================
+      var grid = document.getElementById('catalog-properties-grid');
+      var loadingState = document.getElementById('loading-state');
+      var loadMoreBtn = document.getElementById('load-more-btn');
+      var allLoadedMsg = document.getElementById('all-loaded-msg');
+      var noResultsMsg = document.getElementById('no-results-msg');
+      var activeFiltersContainer = document.getElementById('active-filters');
+      var modal = document.getElementById('quickViewModal');
+      
+      // ============================================================
+      // 4. CARD HTML
+      // ============================================================
+      function createPropertyCard(item) {
+        var bedsHtml = (item.beds > 0) 
+          ? '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bed text-emerald-800"></i><span>' + item.beds + ' Beds</span></div>'
+          : '<div class="flex items-center gap-1.5"><i class="fa-solid fa-briefcase text-emerald-800"></i><span>Office</span></div>';
+
+        var virtualTourBadge = item.hasVirtualTour ? 
+          '<div class="virtual-tour-badge"><i class="fa-solid fa-rotate"></i> 360° Tour</div>' : '';
+
+        var newBadge = item.isNew ? 
+          '<span class="absolute top-3 left-3 bg-emerald-600/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md z-5">New</span>' : '';
+
+        var priceClass = (item.status === 'Sold') ? 'text-rose-500 line-through' : 'text-slate-900';
+
+        return '<article class="property-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between group" data-id="' + item.id + '">' +
+          '<div>' +
+            '<div class="relative overflow-hidden h-52 sm:h-60 bg-slate-100">' +
+              '<img src="' + item.images.exterior + '" alt="' + item.title + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80\'" />' +
+              virtualTourBadge +
+              newBadge +
+              '<div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg shadow-sm border border-slate-200">' +
+                '<span class="text-xs font-bold ' + priceClass + '">' + item.priceFormatted + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="p-5">' +
+              '<span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">' + item.type + ' • ' + item.location + '</span>' +
+              '<h3 class="text-base font-serif font-bold text-slate-900 mt-1 line-clamp-1 group-hover:text-emerald-800 transition">' + item.title + '</h3>' +
+              '<div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-slate-100 text-slate-600 text-xs">' +
+                bedsHtml +
+                '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bath text-emerald-800"></i><span>' + item.baths + ' Baths</span></div>' +
+                '<div class="flex items-center gap-1.5"><i class="fa-solid fa-ruler-combined text-emerald-800"></i><span>' + item.sqm + '</span></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="px-5 pb-5 pt-1 grid grid-cols-2 gap-2">' +
+            '<button type="button" class="quick-view-btn bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold text-[11px] uppercase tracking-wider py-2.5 rounded-xl border border-emerald-200 transition text-center" data-id="' + item.id + '">Quick View</button>' +
+            '<a href="/property-details.html?id=' + item.id + '" class="bg-slate-900 hover:bg-emerald-800 text-white font-bold text-[11px] uppercase tracking-wider py-2.5 rounded-xl transition text-center flex items-center justify-center shadow-sm hover:shadow-md">View Details</a>' +
+          '</div>' +
+        '</article>';
+      }
+
+      // ============================================================
+      // 5. RELATED PROPERTIES
+      // ============================================================
+      function getRelatedProperties(item, count) {
+        count = count || 3;
+        var related = [];
+        
+        for (var i = 0; i < allProperties.length; i++) {
+          var p = allProperties[i];
+          if (p.id === item.id) continue;
+          if (p.location === item.location && related.length < count) {
+            related.push(p);
+          }
+        }
+        
+        if (related.length < count) {
+          for (var j = 0; j < allProperties.length; j++) {
+            var p2 = allProperties[j];
+            if (p2.id === item.id) continue;
+            if (related.indexOf(p2) !== -1) continue;
+            if (p2.type === item.type && related.length < count) {
+              related.push(p2);
+            }
+          }
+        }
+        
+        if (related.length < count) {
+          for (var k = 0; k < allProperties.length; k++) {
+            var p3 = allProperties[k];
+            if (p3.id === item.id) continue;
+            if (related.indexOf(p3) !== -1) continue;
+            if (p3.priceCategory === item.priceCategory && related.length < count) {
+              related.push(p3);
+            }
+          }
+        }
+        
+        while (related.length < count) {
+          var random = allProperties[Math.floor(Math.random() * allProperties.length)];
+          if (random.id === item.id) continue;
+          if (related.indexOf(random) !== -1) continue;
+          related.push(random);
+        }
+        
+        return related;
+      }
+
+      function createRelatedCard(item) {
+        return '<a href="/property-details.html?id=' + item.id + '" class="related-item bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition flex-shrink-0 group">' +
+          '<div class="relative h-32 bg-slate-100">' +
+            '<img src="' + item.images.exterior + '" alt="' + item.title + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80\'" />' +
+            '<div class="absolute bottom-2 right-2 bg-white/90 px-2 py-0.5 rounded text-[10px] font-bold text-slate-900">' + item.priceFormatted + '</div>' +
+          '</div>' +
+          '<div class="p-3">' +
+            '<p class="text-xs font-bold text-slate-800 line-clamp-1 group-hover:text-emerald-700 transition">' + item.title + '</p>' +
+            '<p class="text-[10px] text-slate-500">' + item.location + ' • ' + item.beds + ' beds</p>' +
+          '</div>' +
+        '</a>';
+      }
+
+      // ============================================================
+      // 6. QUICK VIEW MODAL
+      // ============================================================
+      var activeModalProperty = null;
+
+      window.openQuickView = function(id) {
+        var item = null;
+        for (var i = 0; i < allProperties.length; i++) {
+          if (allProperties[i].id === id) {
+            item = allProperties[i];
+            break;
+          }
+        }
+        if (!item) return;
+
+        activeModalProperty = item;
+
+        document.getElementById('modal-type-loc').textContent = item.type + ' • ' + item.location;
+        document.getElementById('modal-title').textContent = item.title;
+        document.getElementById('modal-price').textContent = item.priceFormatted;
+        document.getElementById('modal-beds').textContent = item.beds > 0 ? item.beds + ' Beds' : 'Commercial';
+        document.getElementById('modal-baths').textContent = item.baths + ' Baths';
+        document.getElementById('modal-sqm').textContent = item.sqm;
+        document.getElementById('modal-description').textContent = item.description;
+
+        document.getElementById('modal-active-img').src = item.images.exterior;
+
+        var featuresHtml = '';
+        for (var h = 0; h < item.highlights.length; h++) {
+          featuresHtml += '<div class="flex items-center gap-2 bg-white p-2 rounded-lg border border-slate-100"><i class="fa-solid fa-circle-check text-emerald-700 text-xs"></i><span>' + item.highlights[h] + '</span></div>';
+        }
+        document.getElementById('modal-features').innerHTML = featuresHtml;
+
+        document.getElementById('modal-agent-name').textContent = item.agent.name;
+        document.getElementById('modal-agent-email').textContent = item.agent.email;
+        document.getElementById('modal-agent-agency').textContent = item.agent.agency;
+
+        document.getElementById('modal-details-link').href = '/property-details.html?id=' + item.id;
+        
+        var mapUrl = 'https://www.google.com/maps?q=' + item.coords.lat + ',' + item.coords.lng;
+        document.getElementById('modal-map-link').href = mapUrl;
+        
+        var whatsappMsg = encodeURIComponent('Hi HomeScape Real Estate, I am inquiring about "' + item.title + '" listed for ' + item.priceFormatted + ' in ' + item.location + '.');
+        document.getElementById('modal-whatsapp-link').href = 'https://wa.me/254700000000?text=' + whatsappMsg;
+
+        var related = getRelatedProperties(item, 3);
+        var relatedHtml = '';
+        for (var r = 0; r < related.length; r++) {
+          relatedHtml += createRelatedCard(related[r]);
+        }
+        document.getElementById('modal-related').innerHTML = relatedHtml;
+
+        setActiveTab('exterior');
+
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.firstElementChild.classList.remove('scale-95');
+        modal.firstElementChild.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
+        
+        // Smooth scroll to top of modal
+        var modalBody = modal.querySelector('.modal-body');
+        if (modalBody) {
+          modalBody.scrollTop = 0;
+        }
+      };
+
+      function setActiveTab(tab) {
+        if (!activeModalProperty) return;
+
+        var activeImg = document.getElementById('modal-active-img');
+        var extBtn = document.getElementById('tab-ext-btn');
+        var intBtn = document.getElementById('tab-int-btn');
+        var planBtn = document.getElementById('tab-plan-btn');
+
+        var activeClasses = ['bg-emerald-800', 'text-white', 'border-emerald-800'];
+        var inactiveClasses = ['bg-slate-50', 'text-slate-700', 'border-slate-200'];
+
+        var btns = [extBtn, intBtn, planBtn];
+        for (var i = 0; i < btns.length; i++) {
+          var btn = btns[i];
+          for (var c = 0; c < activeClasses.length; c++) {
+            btn.classList.remove(activeClasses[c]);
+          }
+          for (var c2 = 0; c2 < inactiveClasses.length; c2++) {
+            btn.classList.add(inactiveClasses[c2]);
+          }
+        }
+
+        if (tab === 'exterior') {
+          activeImg.src = activeModalProperty.images.exterior;
+          for (var c3 = 0; c3 < inactiveClasses.length; c3++) {
+            extBtn.classList.remove(inactiveClasses[c3]);
+          }
+          for (var c4 = 0; c4 < activeClasses.length; c4++) {
+            extBtn.classList.add(activeClasses[c4]);
+          }
+        } else if (tab === 'interior') {
+          activeImg.src = activeModalProperty.images.interior;
+          for (var c5 = 0; c5 < inactiveClasses.length; c5++) {
+            intBtn.classList.remove(inactiveClasses[c5]);
+          }
+          for (var c6 = 0; c6 < activeClasses.length; c6++) {
+            intBtn.classList.add(activeClasses[c6]);
+          }
+        } else if (tab === 'floorPlan') {
+          activeImg.src = activeModalProperty.images.floorPlan;
+          for (var c7 = 0; c7 < inactiveClasses.length; c7++) {
+            planBtn.classList.remove(inactiveClasses[c7]);
+          }
+          for (var c8 = 0; c8 < activeClasses.length; c8++) {
+            planBtn.classList.add(activeClasses[c8]);
+          }
+        }
+      }
+
+      window.closeQuickView = function() {
+        modal.firstElementChild.classList.remove('scale-100');
+        modal.firstElementChild.classList.add('scale-95');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = '';
+      };
+
+      // ============================================================
+      // 7. FILTER ENGINE
+      // ============================================================
+      function getFilterValues() {
+        return {
+          search: document.getElementById('filter-search').value.toLowerCase().trim(),
+          type: document.getElementById('filter-type').value,
+          location: document.getElementById('filter-location').value,
+          beds: document.getElementById('filter-beds').value,
+          baths: document.getElementById('filter-baths').value,
+          sort: document.getElementById('filter-sort').value
+        };
+      }
+
+      function getFilteredList() {
+        var filters = getFilterValues();
+        var filtered = [];
+
+        for (var i = 0; i < allProperties.length; i++) {
+          var item = allProperties[i];
+          
+          if (filters.search) {
+            var searchMatch = item.title.toLowerCase().indexOf(filters.search) !== -1 || 
+                              item.location.toLowerCase().indexOf(filters.search) !== -1 || 
+                              item.type.toLowerCase().indexOf(filters.search) !== -1;
+            if (!searchMatch) continue;
+          }
+          if (filters.type !== 'All' && item.type !== filters.type) continue;
+          if (filters.location !== 'All' && item.location !== filters.location) continue;
+          if (filters.beds !== 'Any' && item.beds < parseInt(filters.beds)) continue;
+          if (filters.baths !== 'Any' && item.baths < parseInt(filters.baths)) continue;
+          
+          filtered.push(item);
+        }
+
+        if (filters.sort === 'price-asc') {
+          filtered.sort(function(a, b) { return a.price - b.price; });
+        } else if (filters.sort === 'price-desc') {
+          filtered.sort(function(a, b) { return b.price - a.price; });
+        } else if (filters.sort === 'beds-desc') {
+          filtered.sort(function(a, b) { return b.beds - a.beds; });
+        } else if (filters.sort === 'baths-desc') {
+          filtered.sort(function(a, b) { return b.baths - a.baths; });
+        } else if (filters.sort === 'newest') {
+          filtered.sort(function(a, b) { return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0); });
+        }
+
+        return filtered;
+      }
+
+      function buildActiveFilters(filters) {
+        var tags = [];
+        if (filters.search) tags.push({ key: 'search', label: '"' + filters.search + '"' });
+        if (filters.type !== 'All') tags.push({ key: 'type', label: filters.type });
+        if (filters.location !== 'All') tags.push({ key: 'location', label: filters.location });
+        if (filters.beds !== 'Any') tags.push({ key: 'beds', label: filters.beds + '+ Beds' });
+        if (filters.baths !== 'Any') tags.push({ key: 'baths', label: filters.baths + '+ Baths' });
+        return tags;
+      }
+
+      function renderActiveFilters(tags) {
+        if (!activeFiltersContainer) return;
+        
+        if (tags.length === 0) {
+          activeFiltersContainer.innerHTML = '<span class="text-xs text-slate-400 italic">No active filters</span>';
+          return;
+        }
+        
+        var html = '';
+        for (var i = 0; i < tags.length; i++) {
+          html += '<span class="filter-tag inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full text-xs font-medium text-slate-700" data-key="' + tags[i].key + '">' + tags[i].label + '<i class="fa-solid fa-xmark text-[10px] text-slate-400 hover:text-rose-500 transition"></i></span>';
+        }
+        activeFiltersContainer.innerHTML = html;
+
+        var tags2 = activeFiltersContainer.querySelectorAll('.filter-tag');
+        for (var j = 0; j < tags2.length; j++) {
+          tags2[j].addEventListener('click', function() {
+            var key = this.dataset.key;
+            if (key === 'search') document.getElementById('filter-search').value = '';
+            if (key === 'type') document.getElementById('filter-type').value = 'All';
+            if (key === 'location') document.getElementById('filter-location').value = 'All';
+            if (key === 'beds') document.getElementById('filter-beds').value = 'Any';
+            if (key === 'baths') document.getElementById('filter-baths').value = 'Any';
+            applyFilters();
+          });
+        }
+      }
+
+      window.clearAllFilters = function() {
+        document.getElementById('filter-search').value = '';
+        document.getElementById('filter-type').value = 'All';
+        document.getElementById('filter-location').value = 'All';
+        document.getElementById('filter-beds').value = 'Any';
+        document.getElementById('filter-baths').value = 'Any';
+        document.getElementById('filter-sort').value = 'default';
+        applyFilters();
+      };
+
+      // ============================================================
+      // 8. RENDER FUNCTIONS
+      // ============================================================
+      function showLoading(show) {
+        if (show) {
+          grid.classList.add('hidden');
+          loadingState.classList.remove('hidden');
+        } else {
+          grid.classList.remove('hidden');
+          loadingState.classList.add('hidden');
+        }
+      }
+
+      window.applyFilters = function() {
+        var isFirstLoad = currentList.length === 0;
+        
+        if (isFirstLoad) {
+          showLoading(true);
+        }
+
+        setTimeout(function() {
+          var filtered = getFilteredList();
+          var tags = buildActiveFilters(getFilterValues());
+          renderActiveFilters(tags);
+
+          if (filtered.length === 0) {
+            grid.innerHTML = '';
+            grid.classList.add('hidden');
+            noResultsMsg.classList.remove('hidden');
+            loadMoreBtn.classList.add('hidden');
+            allLoadedMsg.classList.add('hidden');
+            showLoading(false);
+            return;
+          }
+
+          noResultsMsg.classList.add('hidden');
+          
+          currentList = filtered;
+          displayedCount = Math.min(INITIAL_ITEMS, currentList.length);
+          
+          renderGrid();
+          showLoading(false);
+        }, isFirstLoad ? 400 : 50);
+      };
+
+      function renderGrid() {
+        var totalAvailable = currentList.length;
+        var displayCount = Math.min(displayedCount, MAX_ITEMS, totalAvailable);
+
+        var html = '';
+        for (var i = 0; i < displayCount; i++) {
+          html += createPropertyCard(currentList[i]);
+        }
+        grid.innerHTML = html;
+        grid.classList.remove('hidden');
+
+        if (displayCount >= totalAvailable || displayCount >= MAX_ITEMS) {
+          loadMoreBtn.classList.add('hidden');
+          allLoadedMsg.classList.remove('hidden');
+        } else {
+          loadMoreBtn.classList.remove('hidden');
+          allLoadedMsg.classList.add('hidden');
+          loadMoreBtn.innerHTML = '<i class="fa-solid fa-plus-circle"></i> View More Properties';
+        }
+      }
+
+      window.loadMore = function() {
+        var totalAvailable = currentList.length;
+        var currentDisplay = Math.min(displayedCount, MAX_ITEMS, totalAvailable);
+        
+        if (currentDisplay >= totalAvailable || currentDisplay >= MAX_ITEMS) return;
+
+        var remaining = Math.min(totalAvailable - currentDisplay, MAX_ITEMS - currentDisplay);
+        var loadCount = Math.min(LOAD_INCREMENT, remaining);
+
+        displayedCount += loadCount;
+        renderGrid();
+        
+        // Smooth scroll to show new items
+        if (grid) {
+          grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
+      // ============================================================
+      // 9. BACK TO TOP
+      // ============================================================
+      var backToTopBtn = document.getElementById('backToTopBtn');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+          backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+          backToTopBtn.classList.add('opacity-100');
+        } else {
+          backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+          backToTopBtn.classList.remove('opacity-100');
+        }
+      });
+
+      backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // ============================================================
+      // 10. EVENT DELEGATION FOR QUICK VIEW BUTTONS
+      // ============================================================
+      document.addEventListener('click', function(e) {
+        var target = e.target.closest('.quick-view-btn');
+        if (target) {
+          var id = target.getAttribute('data-id');
+          if (id) {
+            window.openQuickView(id);
+          }
+        }
+      });
+
+      // ============================================================
+      // 11. INITIALIZATION
+      // ============================================================
+      function init() {
+        applyFilters();
+
+        document.getElementById('filter-search').addEventListener('input', applyFilters);
+        document.getElementById('filter-type').addEventListener('change', applyFilters);
+        document.getElementById('filter-location').addEventListener('change', applyFilters);
+        document.getElementById('filter-beds').addEventListener('change', applyFilters);
+        document.getElementById('filter-baths').addEventListener('change', applyFilters);
+        document.getElementById('filter-sort').addEventListener('change', applyFilters);
+
+        document.getElementById('clear-filters-btn').addEventListener('click', clearAllFilters);
+        document.getElementById('clear-filters-btn-2').addEventListener('click', clearAllFilters);
+
+        loadMoreBtn.addEventListener('click', loadMore);
+
+        document.getElementById('closeModalBtn').addEventListener('click', closeQuickView);
+
+        document.getElementById('tab-ext-btn').addEventListener('click', function() { setActiveTab('exterior'); });
+        document.getElementById('tab-int-btn').addEventListener('click', function() { setActiveTab('interior'); });
+        document.getElementById('tab-plan-btn').addEventListener('click', function() { setActiveTab('floorPlan'); });
+
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') closeQuickView();
+        });
+
+        console.log('✅ HomeScape Properties - Fully loaded with smooth scrolling');
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+
+    })();
+  </script>
+
+  <!-- Mobile Menu Toggle -->
+  <script>
+    (function() {
+      var btn = document.getElementById('mobileMenuBtn');
+      var menu = document.getElementById('mobileMenu');
+      
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', function() {
+        menu.classList.toggle('hidden');
+        var icon = btn.querySelector('i');
+        if (icon) {
+          icon.className = menu.classList.contains('hidden') 
+            ? 'fa-solid fa-bars text-lg' 
+            : 'fa-solid fa-xmark text-lg';
+        }
+      });
+
+      // Close on link click
+      menu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          menu.classList.add('hidden');
+          var icon = btn.querySelector('i');
+          if (icon) icon.className = 'fa-solid fa-bars text-lg';
+        });
+      });
+
+      // Close on outside click
+      document.addEventListener('click', function(e) {
+        if (!menu.classList.contains('hidden')) {
+          var isClickInside = menu.contains(e.target) || btn.contains(e.target);
+          if (!isClickInside) {
+            menu.classList.add('hidden');
+            var icon = btn.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-bars text-lg';
+          }
+        }
+      });
+    })();
+  </script>
+
+  <!-- Load Footer Component -->
+  <script>
+    (function() {
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      var container = document.getElementById('footer');
+      if (container) {
+        fetch('/components/footer.html')
+          .then(function(response) {
+            if (!response.ok) throw new Error('Footer not found');
+            return response.text();
+          })
+          .then(function(data) {
+            container.innerHTML = data;
+          })
+          .catch(function(error) {
+            console.error('Error loading footer:', error);
+          });
+      }
+    })();
+  </script>
+
+</body>
+</html>

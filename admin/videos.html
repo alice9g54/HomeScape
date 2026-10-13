@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Videos | HomeScape Admin</title>
+  
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0f1c" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#0d9488', 800: '#065f46', 900: '#022c22' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link:hover { background: rgba(255, 255, 255, 0.04); color: white; }
+    .sidebar-link.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      color: #f3f4f6;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input::placeholder { color: #4b5563; }
+    .form-input:focus {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    }
+    .form-input.error {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+
+    .btn-danger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      font-weight: 600;
+      font-size: 0.7rem;
+      padding: 0.6rem 1rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-danger:hover { background: rgba(239, 68, 68, 0.2); color: white; }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .btn-icon:hover { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3); color: #4ade80; }
+    .btn-icon.danger:hover { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #fca5a5; }
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Video Card */
+    .video-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 197, 94, 0.3);
+      box-shadow: 0 20px 40px -15px rgba(34, 197, 94, 0.2);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-content {
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+
+    #sidebar { transition: transform 0.3s ease; }
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+    }
+
+    .fade-in { animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-blue-500 bottom-0 right-0"></div>
+
+  <!-- Overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-lg border-r border-white/5 z-40 flex flex-col justify-between">
+    
+    <div>
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white font-serif font-bold text-sm leading-none">Home<span class="text-brand-400">Scape</span></span>
+            <span class="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Admin</span>
+          </div>
+        </a>
+        <button id="closeSidebar" class="lg:hidden text-slate-500 hover:text-white transition p-1" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="p-3 space-y-1">
+        <a href="/admin/dashboard.html" class="sidebar-link">
+          <i class="fa-solid fa-chart-line w-4 text-center"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/properties.html" class="sidebar-link">
+          <i class="fa-solid fa-city w-4 text-center"></i>
+          <span>Properties</span>
+        </a>
+        <a href="/admin/videos.html" class="sidebar-link active">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Videos</span>
+        </a>
+        <a href="/admin/inquiries.html" class="sidebar-link">
+          <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+          <span>Inquiries</span>
+        </a>
+        <div class="border-t border-white/5 my-2"></div>
+        <a href="/admin/backups.html" class="sidebar-link">
+          <i class="fa-solid fa-database w-4 text-center"></i>
+          <span>Backups</span>
+        </a>
+        <a href="/admin/activity.html" class="sidebar-link">
+          <i class="fa-solid fa-clock-rotate-left w-4 text-center"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="/admin/settings.html" class="sidebar-link">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-3 space-y-1 border-t border-white/5">
+      <div class="px-3 py-2 rounded-xl bg-white/5 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xs font-bold" id="adminInitials">A1</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-white truncate" id="adminName">Admin</p>
+            <p class="text-[10px] text-slate-500 truncate" id="adminRole">admin</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/index.html" class="sidebar-link">
+        <i class="fa-solid fa-globe w-4 text-center"></i>
+        <span>View Website</span>
+      </a>
+      
+      <button id="logoutBtn" type="button" class="sidebar-link w-full text-red-400 hover:bg-red-500/10 hover:text-red-300">
+        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="lg:ml-64 min-h-screen relative z-10">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-lg border-b border-white/5">
+      <div class="px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-3">
+          <button id="openSidebar" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="text-lg sm:text-xl font-serif font-bold text-white">Manage Videos</h1>
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              <span id="videoCount">0</span> total videos
+            </p>
+          </div>
+        </div>
+
+        <button id="addVideoBtn" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
+          <i class="fa-solid fa-plus text-[10px]"></i>
+          <span class="hidden sm:inline">Add Video</span>
+          <span class="sm:hidden">Add</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4 sm:p-6 space-y-6 fade-in">
+
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-video text-brand-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Total</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statTotal">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-building text-emerald-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Tours</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statTours">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-location-dot text-blue-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Locations</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statLocations">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Featured</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statFeatured">0</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="glass-panel rounded-2xl p-4 sm:p-5">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          
+          <div class="sm:col-span-2">
+            <label for="searchInput" class="form-label">Search</label>
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search videos..." 
+                class="form-input pl-10"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="categoryFilter" class="form-label">Category</label>
+            <select id="categoryFilter" class="form-input">
+              <option value="all">All Categories</option>
+              <option value="property-tour">Property Tours</option>
+              <option value="location">Locations</option>
+              <option value="insights">Insights</option>
+              <option value="behind-scenes">Behind Scenes</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="sortFilter" class="form-label">Sort</label>
+            <select id="sortFilter" class="form-input">
+              <option value="newest">Newest First</option>
+              <option value="title">Title A-Z</option>
+              <option value="duration">Longest First</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
+          <span class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+            Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span>
+          </span>
+          <button id="clearFilters" type="button" class="text-[10px] text-slate-500 hover:text-brand-400 transition font-mono uppercase tracking-widest">
+            <i class="fa-solid fa-xmark mr-1"></i> Clear Filters
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Grid -->
+      <div id="videosGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <!-- Loaded dynamically -->
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="text-center py-12">
+        <div class="inline-block w-6 h-6 border-2 border-brand-500/30 border-t-brand-500 rounded-full animate-spin mb-2"></div>
+        <p class="text-xs text-slate-500">Loading videos...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden glass-panel rounded-2xl p-12 text-center">
+        <i class="fa-solid fa-folder-open text-4xl text-slate-600 mb-3"></i>
+        <p class="text-sm font-semibold text-white">No videos found</p>
+        <p class="text-xs text-slate-500 mt-1">Try adjusting filters or add a new video.</p>
+        <button onclick="document.getElementById('addVideoBtn').click()" class="mt-4 bg-brand-500 hover:bg-brand-400 text-black text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition">
+          <i class="fa-solid fa-plus mr-1"></i> Add First Video
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-6 py-6 text-center text-[10px] text-slate-600 font-mono border-t border-white/5">
+      &copy; <span id="footerYear">2026</span> HomeScape Admin Panel. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ==================== VIDEO MODAL (Add/Edit) ==================== -->
+  <div id="videoModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="sticky top-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-b border-white/5 flex items-center justify-between z-10">
+        <div>
+          <h2 id="modalTitle" class="text-base font-serif font-bold text-white">Add New Video</h2>
+          <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">
+            <i class="fa-solid fa-video mr-1"></i> Video Details
+          </p>
+        </div>
+        <button type="button" onclick="closeVideoModal()" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <form id="videoForm" class="p-5 space-y-5" novalidate>
+
+        <input type="hidden" id="videoId" />
+
+        <!-- Title -->
+        <div>
+          <label for="vidTitle" class="form-label">Video Title *</label>
+          <input type="text" id="vidTitle" placeholder="e.g. The Grand Horizon Estate" required maxlength="200" class="form-input" />
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+        </div>
+
+        <!-- Category + Duration -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="vidCategory" class="form-label">Category *</label>
+            <select id="vidCategory" required class="form-input">
+              <option value="">Select category</option>
+              <option value="property-tour">Property Tour</option>
+              <option value="location">Location</option>
+              <option value="insights">Insights</option>
+              <option value="behind-scenes">Behind Scenes</option>
+            </select>
+            <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+          </div>
+          <div>
+            <label for="vidDuration" class="form-label">Duration (MM:SS) *</label>
+            <input type="text" id="vidDuration" placeholder="0:45" required pattern="^[0-9]+:[0-5][0-9]$" class="form-input" />
+            <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+          </div>
+        </div>
+
+        <!-- Video Source -->
+        <div>
+          <label for="vidSrc" class="form-label">Video File Path *</label>
+          <input type="text" id="vidSrc" placeholder="/assets/videos/short/01-property.mp4" required class="form-input" />
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+          <p class="text-[10px] text-slate-500 mt-1">Full path from project root, e.g. <code class="text-brand-400">/assets/videos/short/01-tour.mp4</code></p>
+        </div>
+
+        <!-- Thumbnail -->
+        <div>
+          <label for="vidThumbnail" class="form-label">Thumbnail URL</label>
+          <input type="url" id="vidThumbnail" placeholder="https://images.unsplash.com/..." class="form-input" />
+          <p class="text-[10px] text-slate-500 mt-1">If empty, first frame of video will be used</p>
+        </div>
+
+        <!-- Property Link -->
+        <div>
+          <label for="vidPropertyLink" class="form-label">Property Link (Optional)</label>
+          <input type="text" id="vidPropertyLink" placeholder="/property-details.html?id=prop-1" class="form-input" />
+          <p class="text-[10px] text-slate-500 mt-1">Link to the property details page (if applicable)</p>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="vidDescription" class="form-label">Description *</label>
+          <textarea id="vidDescription" rows="3" placeholder="Describe the video content..." required maxlength="500" class="form-input resize-none"></textarea>
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+        </div>
+
+        <!-- Featured -->
+        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+          <input type="checkbox" id="vidFeatured" class="w-4 h-4 rounded border-slate-700 bg-white/5 text-brand-500 focus:ring-brand-500/30" />
+          <label for="vidFeatured" class="text-xs text-slate-300 cursor-pointer select-none">
+            <span class="font-semibold text-white">Featured Video</span>
+            <span class="block text-[10px] text-slate-500 mt-0.5">Highlight on video tours page</span>
+          </label>
+        </div>
+
+      </form>
+
+      <!-- Modal Footer -->
+      <div class="sticky bottom-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closeVideoModal()" class="btn-secondary">
+          <i class="fa-solid fa-xmark"></i> Cancel
+        </button>
+        <button type="button" id="saveVideoBtn" class="btn-primary">
+          <i class="fa-solid fa-check"></i> Save Video
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== DELETE CONFIRM MODAL ==================== -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 420px;">
+      
+      <div class="p-6 text-center">
+        <div class="w-14 h-14 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mx-auto mb-4">
+          <i class="fa-solid fa-trash text-xl"></i>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-white">Delete Video?</h3>
+        <p class="text-xs text-slate-400 mt-2">
+          You are about to delete <strong id="deleteVideoName" class="text-white"></strong>. This action cannot be undone.
+        </p>
+      </div>
+
+      <div class="px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closeDeleteModal()" class="btn-secondary">
+          Cancel
+        </button>
+        <button type="button" id="confirmDeleteBtn" class="btn-danger">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== VIDEO PREVIEW MODAL ==================== -->
+  <div id="previewModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 900px;">
+      
+      <div class="sticky top-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-b border-white/5 flex items-center justify-between z-10">
+        <div class="min-w-0 flex-1">
+          <h2 id="previewTitle" class="text-base font-serif font-bold text-white truncate">Video Preview</h2>
+          <p id="previewCategory" class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5"></p>
+        </div>
+        <button type="button" onclick="closePreviewModal()" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="bg-black">
+        <video id="previewVideo" class="w-full aspect-video" controls playsinline preload="metadata">
+          <source src="" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+
+      <div class="p-5">
+        <p id="previewDescription" class="text-xs text-slate-400 leading-relaxed"></p>
+        <div class="flex items-center gap-4 mt-4 text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+          <span><i class="fa-regular fa-clock mr-1"></i><span id="previewDuration">0:00</span></span>
+          <a id="previewLink" href="#" class="text-brand-400 hover:text-brand-300 transition hidden">
+            <i class="fa-solid fa-arrow-right mr-1"></i> View Property
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass-panel rounded-xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-check text-sm"></i>
+      </div>
+      <p id="toastMessage" class="text-xs font-semibold text-white">Success!</p>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        sessionKey: 'homescape_admin_session',
+        loginUrl: '/admin/index.html',
+        dataUrl: '/data/',
+        videosFile: 'videos.json'
+      };
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      var allVideos = [];
+      var filteredVideos = [];
+      var pendingDeleteId = null;
+
+      // ============================================================
+      // DOM REFS
+      // ============================================================
+      var grid = document.getElementById('videosGrid');
+      var loadingState = document.getElementById('loadingState');
+      var emptyState = document.getElementById('emptyState');
+      var searchInput = document.getElementById('searchInput');
+      var categoryFilter = document.getElementById('categoryFilter');
+      var sortFilter = document.getElementById('sortFilter');
+      var clearFilters = document.getElementById('clearFilters');
+      var videoModal = document.getElementById('videoModal');
+      var deleteModal = document.getElementById('deleteModal');
+      var previewModal = document.getElementById('previewModal');
+
+      // ============================================================
+      // SECURITY
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function sanitizeURL(url) {
+        if (!url) return '';
+        var s = String(url).trim();
+        if (s.startsWith('javascript:') || s.startsWith('data:')) return '';
+        return s;
+      }
+
+      function getInitials(name) {
+        if (!name) return 'A';
+        return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      }
+
+      function getCategoryLabel(cat) {
+        var labels = {
+          'property-tour': 'Property Tour',
+          'location': 'Location',
+          'insights': 'Insights',
+          'behind-scenes': 'Behind Scenes'
+        };
+        return labels[cat] || cat;
+      }
+
+      function getCategoryColor(cat) {
+        var colors = {
+          'property-tour': 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+          'location': 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
+          'insights': 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
+          'behind-scenes': 'bg-purple-500/10 text-purple-400 border border-purple-500/20'
+        };
+        return colors[cat] || 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+      }
+
+      // ============================================================
+      // SESSION CHECK
+      // ============================================================
+      function getSession() {
+        var data = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!data) return null;
+        try {
+          var session = JSON.parse(data);
+          var expiresAt = new Date(session.expiresAt);
+          if (expiresAt < new Date()) {
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            return null;
+          }
+          return session;
+        } catch (e) { return null; }
+      }
+
+      var session = getSession();
+      if (!session) {
+        window.location.href = CONFIG.loginUrl;
+        return;
+      }
+
+      // Populate sidebar
+      var adminNameEl = document.getElementById('adminName');
+      if (adminNameEl) adminNameEl.textContent = escapeHTML(session.fullName || 'Admin');
+      var adminRoleEl = document.getElementById('adminRole');
+      if (adminRoleEl) adminRoleEl.textContent = escapeHTML(session.role || 'admin');
+      var adminInitialsEl = document.getElementById('adminInitials');
+      if (adminInitialsEl) adminInitialsEl.textContent = getInitials(session.fullName);
+
+      // Footer year
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // SIDEBAR
+      // ============================================================
+      var sidebar = document.getElementById('sidebar');
+      var sidebarOverlay = document.getElementById('sidebarOverlay');
+      var openBtn = document.getElementById('openSidebar');
+      var closeBtn = document.getElementById('closeSidebar');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to logout?')) return;
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(message, type) {
+        type = type || 'success';
+        var toast = document.getElementById('toast');
+        var toastIcon = document.getElementById('toastIcon');
+        var toastMessage = document.getElementById('toastMessage');
+
+        var colors = {
+          success: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/30', text: 'text-emerald-400', icon: 'fa-check' },
+          error: { bg: 'bg-rose-500/20', border: 'border-rose-500/30', text: 'text-rose-400', icon: 'fa-circle-exclamation' },
+          warning: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-400', icon: 'fa-triangle-exclamation' }
+        };
+
+        var c = colors[type] || colors.success;
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center ' + c.bg + ' border ' + c.border + ' ' + c.text;
+        toastIcon.innerHTML = '<i class="fa-solid ' + c.icon + ' text-sm"></i>';
+        toastMessage.textContent = message;
+
+        toast.classList.remove('translate-y-4', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(function() {
+          toast.classList.add('translate-y-4', 'opacity-0', 'pointer-events-none');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      // ============================================================
+      // LOAD VIDEOS
+      // ============================================================
+      function loadVideos() {
+        fetch(CONFIG.dataUrl + CONFIG.videosFile)
+          .then(function(res) {
+            if (!res.ok) throw new Error('Failed to load');
+            return res.json();
+          })
+          .then(function(data) {
+            allVideos = data.videos || data;
+            loadingState.classList.add('hidden');
+            updateStats();
+            applyFilters();
+          })
+          .catch(function(e) {
+            console.error('Load error:', e);
+            loadingState.classList.add('hidden');
+            grid.innerHTML = '<div class="col-span-full text-center py-12 text-rose-400 text-xs">Failed to load videos. Please refresh.</div>';
+          });
+      }
+
+      // ============================================================
+      // UPDATE STATS
+      // ============================================================
+      function updateStats() {
+        var total = allVideos.length;
+        var tours = 0, locations = 0, featured = 0;
+
+        allVideos.forEach(function(v) {
+          if (v.category === 'property-tour') tours++;
+          else if (v.category === 'location') locations++;
+          if (v.featured) featured++;
+        });
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statTours').textContent = tours;
+        document.getElementById('statLocations').textContent = locations;
+        document.getElementById('statFeatured').textContent = featured;
+        document.getElementById('videoCount').textContent = total;
+      }
+
+      // ============================================================
+      // FILTERS
+      // ============================================================
+      function applyFilters() {
+        var search = (searchInput.value || '').toLowerCase().trim();
+        var category = categoryFilter.value;
+        var sort = sortFilter.value;
+
+        filteredVideos = allVideos.filter(function(v) {
+          var matchSearch = !search ||
+            (v.title || '').toLowerCase().indexOf(search) !== -1 ||
+            (v.description || '').toLowerCase().indexOf(search) !== -1;
+          var matchCategory = category === 'all' || v.category === category;
+          return matchSearch && matchCategory;
+        });
+
+        // Sort
+        if (sort === 'title') {
+          filteredVideos.sort(function(a, b) { return (a.title || '').localeCompare(b.title || ''); });
+        } else if (sort === 'duration') {
+          filteredVideos.sort(function(a, b) { return (b.durationSeconds || 0) - (a.durationSeconds || 0); });
+        } else {
+          // Newest — reverse
+          filteredVideos.sort(function(a, b) { return (b.id || '').localeCompare(a.id || ''); });
+        }
+
+        renderGrid();
+      }
+
+      // ============================================================
+      // RENDER GRID
+      // ============================================================
+      function renderGrid() {
+        var total = filteredVideos.length;
+
+        document.getElementById('visibleCount').textContent = total;
+        document.getElementById('totalCount').textContent = allVideos.length;
+
+        if (total === 0) {
+          grid.innerHTML = '';
+          grid.classList.add('hidden');
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+        grid.classList.remove('hidden');
+
+        var html = '';
+        filteredVideos.forEach(function(v) {
+          var safeTitle = escapeHTML(v.title);
+          var safeDesc = escapeHTML(v.description);
+          var safeDuration = escapeHTML(v.duration || '0:00');
+          var safeThumb = sanitizeURL(v.thumbnail) || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80';
+          var safeId = escapeHTML(v.id);
+          var catClass = getCategoryColor(v.category);
+          var catLabel = getCategoryLabel(v.category);
+
+          var featuredBadge = v.featured 
+            ? '<span class="category-badge bg-amber-500/10 text-amber-400 border border-amber-500/20"><i class="fa-solid fa-star text-[8px]"></i> Featured</span>' 
+            : '';
+
+          html += '<article class="video-card glass-panel rounded-2xl overflow-hidden group" data-id="' + safeId + '">' +
+            '<div class="relative aspect-video bg-slate-900 overflow-hidden">' +
+              '<img src="' + safeThumb + '" alt="' + safeTitle + '" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80\'" />' +
+              '<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>' +
+              
+              // Play button (opens preview)
+              '<button type="button" class="preview-btn absolute inset-0 flex items-center justify-center" data-id="' + safeId + '" title="Preview video">' +
+                '<div class="w-14 h-14 rounded-full bg-brand-500/90 hover:bg-brand-500 flex items-center justify-center text-black shadow-2xl transition transform group-hover:scale-110">' +
+                  '<i class="fa-solid fa-play text-lg ml-0.5"></i>' +
+                '</div>' +
+              '</button>' +
+              
+              // Category badge
+              '<span class="absolute top-3 left-3 category-badge ' + catClass + '">' + escapeHTML(catLabel) + '</span>' +
+              
+              // Featured badge
+              (v.featured ? '<span class="absolute top-3 right-3 category-badge bg-amber-500/90 text-black"><i class="fa-solid fa-star text-[8px]"></i> Featured</span>' : '') +
+              
+              // Duration
+              '<span class="absolute bottom-3 right-3 bg-black/80 backdrop-blur-sm text-white text-[10px] font-mono px-2 py-1 rounded-full border border-white/10">' +
+                '<i class="fa-regular fa-clock text-[8px] mr-1"></i>' + safeDuration +
+              '</span>' +
+            '</div>' +
+            
+            '<div class="p-4">' +
+              '<h3 class="text-sm font-serif font-bold text-white line-clamp-1 group-hover:text-brand-400 transition">' + safeTitle + '</h3>' +
+              '<p class="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">' + safeDesc + '</p>' +
+              
+              '<div class="flex items-center justify-between mt-4 pt-3 border-t border-white/5">' +
+                '<span class="text-[10px] text-slate-600 font-mono uppercase tracking-widest">' + escapeHTML(v.id) + '</span>' +
+                '<div class="flex items-center gap-1.5">' +
+                  '<button type="button" class="btn-icon edit-btn" data-id="' + safeId + '" title="Edit">' +
+                    '<i class="fa-solid fa-pen"></i>' +
+                  '</button>' +
+                  '<button type="button" class="btn-icon danger delete-btn" data-id="' + safeId + '" title="Delete">' +
+                    '<i class="fa-solid fa-trash"></i>' +
+                  '</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</article>';
+        });
+
+        grid.innerHTML = html;
+
+        // Attach listeners
+        grid.querySelectorAll('.edit-btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openEditModal(this.dataset.id);
+          });
+        });
+        grid.querySelectorAll('.delete-btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openDeleteModal(this.dataset.id);
+          });
+        });
+        grid.querySelectorAll('.preview-btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openPreviewModal(this.dataset.id);
+          });
+        });
+      }
+
+      // ============================================================
+      // MODAL — ADD/EDIT
+      // ============================================================
+      function openAddModal() {
+        document.getElementById('modalTitle').textContent = 'Add New Video';
+        document.getElementById('videoForm').reset();
+        document.getElementById('videoId').value = '';
+        document.getElementById('vidFeatured').checked = false;
+        
+        clearFormErrors();
+
+        videoModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function openEditModal(id) {
+        var v = allVideos.find(function(x) { return x.id === id; });
+        if (!v) return;
+
+        document.getElementById('modalTitle').textContent = 'Edit Video';
+        document.getElementById('videoId').value = v.id;
+        document.getElementById('vidTitle').value = v.title || '';
+        document.getElementById('vidCategory').value = v.category || '';
+        document.getElementById('vidDuration').value = v.duration || '';
+        document.getElementById('vidSrc').value = v.videoSrc || '';
+        document.getElementById('vidThumbnail').value = v.thumbnail || '';
+        document.getElementById('vidPropertyLink').value = v.propertyLink || '';
+        document.getElementById('vidDescription').value = v.description || '';
+        document.getElementById('vidFeatured').checked = !!v.featured;
+
+        clearFormErrors();
+
+        videoModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeVideoModal = function() {
+        videoModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      // ============================================================
+      // CLEAR FORM ERRORS
+      // ============================================================
+      function clearFormErrors() {
+        var form = document.getElementById('videoForm');
+        form.querySelectorAll('.field-error').forEach(function(el) {
+          el.textContent = '';
+          el.classList.add('hidden');
+        });
+        form.querySelectorAll('.form-input').forEach(function(el) {
+          el.classList.remove('error');
+        });
+      }
+
+      // ============================================================
+      // VALIDATE FORM
+      // ============================================================
+      function validateForm() {
+        var isValid = true;
+
+        function check(fieldId, condition, message) {
+          var field = document.getElementById(fieldId);
+          var error = field.parentElement.querySelector('.field-error');
+          if (!condition) {
+            field.classList.add('error');
+            if (error) {
+              error.textContent = message;
+              error.classList.remove('hidden');
+            }
+            isValid = false;
+          } else {
+            field.classList.remove('error');
+            if (error) {
+              error.textContent = '';
+              error.classList.add('hidden');
+            }
+          }
+        }
+
+        var title = document.getElementById('vidTitle').value.trim();
+        var category = document.getElementById('vidCategory').value;
+        var duration = document.getElementById('vidDuration').value.trim();
+        var src = document.getElementById('vidSrc').value.trim();
+        var description = document.getElementById('vidDescription').value.trim();
+
+        check('vidTitle', title.length >= 3, 'Title must be at least 3 characters');
+        check('vidCategory', category !== '', 'Please select a category');
+        check('vidDuration', /^[0-9]+:[0-5][0-9]$/.test(duration), 'Use format M:SS or MM:SS');
+        check('vidSrc', src.length >= 3, 'Video file path is required');
+        check('vidDescription', description.length >= 10, 'Description must be at least 10 characters');
+
+        return isValid;
+      }
+
+      // ============================================================
+      // PARSE DURATION TO SECONDS
+      // ============================================================
+      function parseDuration(str) {
+        var parts = str.split(':');
+        if (parts.length !== 2) return 0;
+        return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+      }
+
+      // ============================================================
+      // SAVE VIDEO
+      // ============================================================
+      document.getElementById('saveVideoBtn').addEventListener('click', function() {
+        if (!validateForm()) {
+          showToast('Please fix errors before saving', 'error');
+          return;
+        }
+
+        var id = document.getElementById('videoId').value;
+        var isEdit = !!id;
+        var duration = document.getElementById('vidDuration').value.trim();
+
+        var videoData = {
+          id: id || 'video-' + Date.now(),
+          title: document.getElementById('vidTitle').value.trim(),
+          category: document.getElementById('vidCategory').value,
+          duration: duration,
+          durationSeconds: parseDuration(duration),
+          videoSrc: document.getElementById('vidSrc').value.trim(),
+          thumbnail: sanitizeURL(document.getElementById('vidThumbnail').value.trim()) || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+          propertyLink: document.getElementById('vidPropertyLink').value.trim() || null,
+          description: document.getElementById('vidDescription').value.trim(),
+          featured: document.getElementById('vidFeatured').checked
+        };
+
+        if (isEdit) {
+          var idx = allVideos.findIndex(function(v) { return v.id === id; });
+          if (idx !== -1) {
+            allVideos[idx] = Object.assign({}, allVideos[idx], videoData);
+          }
+          showToast('Video updated successfully!', 'success');
+        } else {
+          allVideos.unshift(videoData);
+          showToast('Video added successfully!', 'success');
+        }
+
+        updateStats();
+        applyFilters();
+        closeVideoModal();
+      });
+
+      // ============================================================
+      // PREVIEW
+      // ============================================================
+      function openPreviewModal(id) {
+        var v = allVideos.find(function(x) { return x.id === id; });
+        if (!v) return;
+
+        document.getElementById('previewTitle').textContent = v.title || 'Video';
+        document.getElementById('previewCategory').textContent = getCategoryLabel(v.category);
+        document.getElementById('previewDescription').textContent = v.description || '';
+        document.getElementById('previewDuration').textContent = v.duration || '0:00';
+
+        var video = document.getElementById('previewVideo');
+        var source = video.querySelector('source');
+        source.src = sanitizeURL(v.videoSrc);
+        video.load();
+
+        var linkEl = document.getElementById('previewLink');
+        if (v.propertyLink) {
+          linkEl.href = v.propertyLink;
+          linkEl.classList.remove('hidden');
+        } else {
+          linkEl.classList.add('hidden');
+        }
+
+        previewModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(function() {
+          video.play().catch(function(e) { console.log('Autoplay blocked:', e); });
+        }, 300);
+      }
+
+      window.closePreviewModal = function() {
+        var video = document.getElementById('previewVideo');
+        video.pause();
+        video.currentTime = 0;
+        previewModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      // ============================================================
+      // DELETE
+      // ============================================================
+      function openDeleteModal(id) {
+        var v = allVideos.find(function(x) { return x.id === id; });
+        if (!v) return;
+
+        pendingDeleteId = id;
+        document.getElementById('deleteVideoName').textContent = v.title || 'this video';
+        deleteModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeDeleteModal = function() {
+        pendingDeleteId = null;
+        deleteModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        if (!pendingDeleteId) return;
+
+        allVideos = allVideos.filter(function(v) { return v.id !== pendingDeleteId; });
+        updateStats();
+        applyFilters();
+        closeDeleteModal();
+        showToast('Video deleted successfully!', 'success');
+      });
+
+      // ============================================================
+      // ADD BUTTON
+      // ============================================================
+      document.getElementById('addVideoBtn').addEventListener('click', openAddModal);
+
+      // ============================================================
+      // FILTER EVENTS
+      // ============================================================
+      searchInput.addEventListener('input', applyFilters);
+      categoryFilter.addEventListener('change', applyFilters);
+      sortFilter.addEventListener('change', applyFilters);
+
+      clearFilters.addEventListener('click', function() {
+        searchInput.value = '';
+        categoryFilter.value = 'all';
+        sortFilter.value = 'newest';
+        applyFilters();
+      });
+
+      // ============================================================
+      // ESC / OUTSIDE CLICK
+      // ============================================================
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (videoModal.classList.contains('active')) closeVideoModal();
+          if (deleteModal.classList.contains('active')) closeDeleteModal();
+          if (previewModal.classList.contains('active')) closePreviewModal();
+        }
+      });
+
+      videoModal.addEventListener('click', function(e) {
+        if (e.target === videoModal) closeVideoModal();
+      });
+      deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) closeDeleteModal();
+      });
+      previewModal.addEventListener('click', function(e) {
+        if (e.target === previewModal) closePreviewModal();
+      });
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      loadVideos();
+
+      console.log('✅ Videos page loaded');
+
+    })();
+  </script>
+
+</body>
+</html>

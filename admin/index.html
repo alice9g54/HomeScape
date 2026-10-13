@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | HomeScape Real Estate</title>
+  
+  <!-- Prevent Search Engines -->
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0f172a" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#0d9488', 600: '#0d9488', 700: '#0f766e' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+    
+    .font-serif { font-family: 'Playfair Display', serif; }
+
+    /* Ambient Glow Blobs */
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.15;
+    }
+
+    /* Glass Panel */
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Input Styles */
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      font-size: 0.875rem;
+      color: #f3f4f6;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: #4b5563;
+    }
+
+    .form-input:focus {
+      border-color: #0d9488;
+      background: rgba(13, 148, 136, 0.05);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+    .form-input.error {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .form-input.error:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+
+    /* Input Icon */
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      pointer-events: none;
+      font-size: 0.875rem;
+    }
+
+    /* Button */
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #0d9488, #065f46);
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(13, 148, 136, 0.3);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(13, 148, 136, 0.4);
+      background: linear-gradient(135deg, #0f766e, #065f46);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Error Message */
+    .error-message {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .success-message {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    /* Warning Message */
+    .warning-message {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fcd34d;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Fade In Animation */
+    .fade-in {
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Password Toggle */
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .password-toggle:hover {
+      color: #0d9488;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-8 relative overflow-hidden">
+
+  <!-- Ambient Glow Blobs -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[600px] h-[600px] bg-emerald-500 -bottom-40 -right-40"></div>
+
+  <!-- ==================== LOGIN CONTAINER ==================== -->
+  <div class="w-full max-w-md relative z-10 fade-in">
+
+    <!-- Brand Logo -->
+    <div class="text-center mb-8">
+      <a href="/index.html" class="inline-flex items-center gap-3 group">
+        <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400 group-hover:scale-105 transition">
+          <i class="fa-solid fa-shield-halved text-xl"></i>
+        </div>
+      </a>
+      <h1 class="text-3xl sm:text-4xl font-serif font-bold text-white mt-4 tracking-tight">
+        Home<span class="text-brand-400">Scape</span>
+      </h1>
+      <p class="text-xs text-slate-500 mt-2 uppercase tracking-widest font-mono">
+        Admin Portal
+      </p>
+    </div>
+
+    <!-- Glass Card -->
+    <div class="glass-panel rounded-3xl p-8 shadow-2xl">
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h2 class="text-xl font-serif font-bold text-white">Secure Sign In</h2>
+        <p class="text-xs text-slate-400 mt-1">Enter your credentials to access the dashboard</p>
+      </div>
+
+      <!-- Alert Container -->
+      <div id="alertBox" class="hidden mb-5"></div>
+
+      <!-- Warning for Expired Password (shown dynamically) -->
+      <div id="passwordExpiryWarning" class="hidden warning-message mb-5">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="passwordExpiryText">Your password will expire soon.</span>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" class="space-y-5" novalidate>
+
+        <!-- Username -->
+        <div>
+          <label for="username" class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
+            Username or Email
+          </label>
+          <div class="relative">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input 
+              type="text" 
+              id="username" 
+              name="username"
+              placeholder="admin1" 
+              required 
+              autocomplete="username"
+              class="form-input"
+            />
+          </div>
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
+            Password
+          </label>
+          <div class="relative">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input 
+              type="password" 
+              id="password" 
+              name="password"
+              placeholder="Enter your password" 
+              required 
+              autocomplete="current-password"
+              class="form-input pr-10"
+            />
+            <button type="button" id="togglePassword" class="password-toggle" aria-label="Toggle password visibility">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+        </div>
+
+        <!-- Remember Me + Forgot -->
+        <div class="flex items-center justify-between text-xs">
+          <label class="flex items-center gap-2 text-slate-400 cursor-pointer hover:text-white transition">
+            <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded border-slate-700 bg-white/5 text-brand-500 focus:ring-brand-500/30">
+            <span>Remember me</span>
+          </label>
+          <a href="/contact.html" class="text-slate-400 hover:text-brand-400 transition">
+            Need help?
+          </a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="submitBtn" class="submit-btn">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Sign In Securely</span>
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="flex items-center gap-3 my-6">
+        <div class="flex-1 h-px bg-white/10"></div>
+        <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Security</span>
+        <div class="flex-1 h-px bg-white/10"></div>
+      </div>
+
+      <!-- Security Info -->
+      <div class="space-y-3 text-[10px] text-slate-500">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-brand-500 text-xs w-4"></i>
+          <span>Passwords expire every <strong class="text-slate-400">15 days</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-lock text-brand-500 text-xs w-4"></i>
+          <span>Accounts lock after <strong class="text-slate-400">5 failed attempts</strong></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-envelope text-brand-500 text-xs w-4"></i>
+          <span>Alerts sent to your <strong class="text-slate-400">registered email</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Back to Website -->
+    <div class="text-center mt-6">
+      <a href="/index.html" class="inline-flex items-center gap-2 text-xs text-slate-500 hover:text-brand-400 transition">
+        <i class="fa-solid fa-arrow-left text-[10px]"></i>
+        <span>Back to HomeScape</span>
+      </a>
+    </div>
+
+    <!-- Footer Info -->
+    <p class="text-center text-[10px] text-slate-600 mt-6 font-mono">
+      &copy; <span id="footerYear">2026</span> HomeScape Group. All rights reserved.
+    </p>
+
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        passwordMinLength: 12,
+        passwordExpiryDays: 15,
+        gracePeriodDays: 2,
+        maxLoginAttempts: 5,
+        lockoutDurationMinutes: 30,
+        sessionKey: 'homescape_admin_session',
+        loginAttemptsKey: 'homescape_login_attempts',
+        lockoutKey: 'homescape_lockout_until'
+      };
+
+      // ============================================================
+      // DOM REFERENCES
+      // ============================================================
+      var form = document.getElementById('loginForm');
+      var usernameField = document.getElementById('username');
+      var passwordField = document.getElementById('password');
+      var submitBtn = document.getElementById('submitBtn');
+      var alertBox = document.getElementById('alertBox');
+      var expiryWarning = document.getElementById('passwordExpiryWarning');
+      var expiryText = document.getElementById('passwordExpiryText');
+      var togglePassword = document.getElementById('togglePassword');
+      var rememberMe = document.getElementById('rememberMe');
+      var yearEl = document.getElementById('footerYear');
+
+      // ============================================================
+      // FOOTER YEAR
+      // ============================================================
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // TOGGLE PASSWORD VISIBILITY
+      // ============================================================
+      if (togglePassword) {
+        togglePassword.addEventListener('click', function() {
+          var icon = this.querySelector('i');
+          if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.className = 'fa-solid fa-eye-slash';
+          } else {
+            passwordField.type = 'password';
+            icon.className = 'fa-solid fa-eye';
+          }
+        });
+      }
+
+      // ============================================================
+      // SHOW ALERT
+      // ============================================================
+      function showAlert(type, message) {
+        var className, icon;
+        if (type === 'error') {
+          className = 'error-message';
+          icon = 'fa-circle-exclamation';
+        } else if (type === 'success') {
+          className = 'success-message';
+          icon = 'fa-circle-check';
+        } else {
+          className = 'warning-message';
+          icon = 'fa-triangle-exclamation';
+        }
+
+        alertBox.className = 'mb-5 ' + className;
+        alertBox.innerHTML = '<i class="fa-solid ' + icon + '"></i><span>' + message + '</span>';
+        alertBox.classList.remove('hidden');
+      }
+
+      function hideAlert() {
+        alertBox.classList.add('hidden');
+      }
+
+      // ============================================================
+      // FIELD ERRORS
+      // ============================================================
+      function showFieldError(field, message) {
+        field.classList.add('error');
+        var errorEl = field.parentElement.parentElement.querySelector('.field-error');
+        if (errorEl) {
+          errorEl.textContent = message;
+          errorEl.classList.remove('hidden');
+        }
+      }
+
+      function clearFieldError(field) {
+        field.classList.remove('error');
+        var errorEl = field.parentElement.parentElement.querySelector('.field-error');
+        if (errorEl) {
+          errorEl.textContent = '';
+          errorEl.classList.add('hidden');
+        }
+      }
+
+      // Clear errors on input
+      [usernameField, passwordField].forEach(function(field) {
+        field.addEventListener('input', function() { clearFieldError(field); });
+      });
+
+      // ============================================================
+      // CHECK LOCKOUT
+      // ============================================================
+      function isLockedOut() {
+        var lockoutUntil = localStorage.getItem(CONFIG.lockoutKey);
+        if (!lockoutUntil) return false;
+        
+        var lockoutTime = parseInt(lockoutUntil, 10);
+        if (Date.now() < lockoutTime) {
+          var remainingMs = lockoutTime - Date.now();
+          var remainingMin = Math.ceil(remainingMs / 60000);
+          return { locked: true, minutes: remainingMin };
+        }
+        
+        localStorage.removeItem(CONFIG.lockoutKey);
+        localStorage.removeItem(CONFIG.loginAttemptsKey);
+        return false;
+      }
+
+      // ============================================================
+      // TRACK FAILED ATTEMPTS
+      // ============================================================
+      function recordFailedAttempt() {
+        var attempts = parseInt(localStorage.getItem(CONFIG.loginAttemptsKey) || '0', 10);
+        attempts++;
+        localStorage.setItem(CONFIG.loginAttemptsKey, String(attempts));
+
+        if (attempts >= CONFIG.maxLoginAttempts) {
+          var lockoutUntil = Date.now() + (CONFIG.lockoutDurationMinutes * 60 * 1000);
+          localStorage.setItem(CONFIG.lockoutKey, String(lockoutUntil));
+          localStorage.setItem(CONFIG.loginAttemptsKey, '0');
+          return true; // locked out
+        }
+        return false;
+      }
+
+      function clearFailedAttempts() {
+        localStorage.removeItem(CONFIG.loginAttemptsKey);
+        localStorage.removeItem(CONFIG.lockoutKey);
+      }
+
+      // ============================================================
+      // PASSWORD EXPIRY CHECK
+      // ============================================================
+      function checkPasswordExpiry(admin) {
+        if (!admin.passwordExpiresAt) {
+          return { status: 'ok', daysLeft: null };
+        }
+
+        var expiryDate = new Date(admin.passwordExpiresAt);
+        var now = new Date();
+        var diffMs = expiryDate - now;
+        var daysLeft = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+        if (daysLeft < 0) {
+          return { status: 'expired', daysLeft: 0 };
+        } else if (daysLeft <= 2) {
+          return { status: 'warning', daysLeft: daysLeft };
+        } else {
+          return { status: 'ok', daysLeft: daysLeft };
+        }
+      }
+
+      // ============================================================
+      // FIND ADMIN
+      // ============================================================
+      function findAdmin(admins, username, password) {
+        var lowerUsername = username.toLowerCase().trim();
+        
+        for (var i = 0; i < admins.length; i++) {
+          var admin = admins[i];
+          if (!admin.active) continue;
+
+          var matchesUsername = 
+            admin.username.toLowerCase() === lowerUsername ||
+            admin.email.toLowerCase() === lowerUsername;
+
+          if (matchesUsername && admin.password === password) {
+            return admin;
+          }
+        }
+        return null;
+      }
+
+      // ============================================================
+      // CREATE SESSION
+      // ============================================================
+      function createSession(admin, remember) {
+        var session = {
+          id: admin.id,
+          username: admin.username,
+          fullName: admin.fullName,
+          email: admin.email,
+          role: admin.role,
+          loginAt: new Date().toISOString(),
+          expiresAt: new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString() // 8 hours
+        };
+
+        if (remember) {
+          localStorage.setItem(CONFIG.sessionKey, JSON.stringify(session));
+        } else {
+          sessionStorage.setItem(CONFIG.sessionKey, JSON.stringify(session));
+        }
+
+        return session;
+      }
+
+      // ============================================================
+      // HANDLE LOGIN SUBMIT
+      // ============================================================
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideAlert();
+
+        // Clear previous errors
+        clearFieldError(usernameField);
+        clearFieldError(passwordField);
+
+        // Check lockout
+        var lockout = isLockedOut();
+        if (lockout && lockout.locked) {
+          showAlert('error', 'Account locked. Try again in ' + lockout.minutes + ' minutes.');
+          return;
+        }
+
+        // Get values
+        var username = usernameField.value.trim();
+        var password = passwordField.value;
+        var remember = rememberMe ? rememberMe.checked : false;
+
+        // Validate
+        var isValid = true;
+
+        if (!username) {
+          showFieldError(usernameField, 'Username is required');
+          isValid = false;
+        }
+
+        if (!password) {
+          showFieldError(passwordField, 'Password is required');
+          isValid = false;
+        } else if (password.length < 6) {
+          showFieldError(passwordField, 'Password is too short');
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        // Disable button
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span><span>Signing in...</span>';
+
+        // Simulate API delay
+        await new Promise(function(resolve) { setTimeout(resolve, 800); });
+
+        try {
+          // Fetch admins data
+          var response = await fetch('/data/admins.json');
+          if (!response.ok) throw new Error('Failed to load admin data');
+
+          var data = await response.json();
+          var admins = data.admins || [];
+
+          // Find matching admin
+          var admin = findAdmin(admins, username, password);
+
+          if (!admin) {
+            var locked = recordFailedAttempt();
+            if (locked) {
+              showAlert('error', 'Too many failed attempts. Account locked for 30 minutes.');
+            } else {
+              var attempts = parseInt(localStorage.getItem(CONFIG.loginAttemptsKey) || '0', 10);
+              var remaining = CONFIG.maxLoginAttempts - attempts;
+              showAlert('error', 'Invalid username or password. ' + remaining + ' attempts remaining.');
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i><span>Sign In Securely</span>';
+            return;
+          }
+
+          // Check password expiry
+          var expiry = checkPasswordExpiry(admin);
+
+          if (expiry.status === 'expired') {
+            showAlert('warning', 'Your password has expired. Please contact support to reset.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i><span>Sign In Securely</span>';
+            return;
+          }
+
+          // Success!
+          clearFailedAttempts();
+          var session = createSession(admin, remember);
+
+          showAlert('success', 'Login successful! Redirecting...');
+
+          // Redirect to dashboard
+          setTimeout(function() {
+            window.location.href = '/admin/dashboard.html';
+          }, 1200);
+
+        } catch (error) {
+          console.error('Login error:', error);
+          showAlert('error', 'Connection error. Please try again.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i><span>Sign In Securely</span>';
+        }
+      });
+
+      // ============================================================
+      // CHECK EXISTING SESSION
+      // ============================================================
+      function checkExistingSession() {
+        var sessionData = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!sessionData) return;
+
+        try {
+          var session = JSON.parse(sessionData);
+          var expiresAt = new Date(session.expiresAt);
+          
+          if (expiresAt > new Date()) {
+            // Valid session — redirect to dashboard
+            showAlert('success', 'Welcome back, ' + session.fullName + '! Redirecting...');
+            setTimeout(function() {
+              window.location.href = '/admin/dashboard.html';
+            }, 1000);
+          } else {
+            // Expired session — clean up
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+          }
+        } catch (error) {
+          console.error('Session check error:', error);
+        }
+      }
+
+      // Run session check
+      checkExistingSession();
+
+      // Focus username field
+      if (usernameField) usernameField.focus();
+
+      console.log('✅ Admin login page loaded');
+
+    })();
+  </script>
+
+</body>
+</html>

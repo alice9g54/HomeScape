@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Properties | HomeScape Admin</title>
+  
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0f1c" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#0d9488', 800: '#065f46', 900: '#022c22' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      color: #f3f4f6;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input::placeholder { color: #4b5563; }
+
+    .form-input:focus {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    }
+
+    .form-input.error {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-danger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      font-weight: 600;
+      font-size: 0.7rem;
+      padding: 0.6rem 1rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: white;
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+
+    .btn-icon:hover {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .btn-icon.danger:hover {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1);
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+
+    #sidebar { transition: transform 0.3s ease; }
+
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .data-table td {
+      padding: 1rem;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      vertical-align: middle;
+    }
+
+    .data-table tbody tr {
+      transition: background 0.2s ease;
+    }
+
+    .data-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Mobile cards for small screens */
+    @media (max-width: 767px) {
+      .data-table thead { display: none; }
+      .data-table, .data-table tbody, .data-table tr, .data-table td {
+        display: block;
+        width: 100%;
+      }
+      .data-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 0.75rem;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .data-table td {
+        padding: 0.4rem 0.5rem;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .data-table td::before {
+        content: attr(data-label);
+        font-size: 0.6rem;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-family: 'JetBrains Mono', monospace;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-emerald-500 bottom-0 right-0"></div>
+
+  <!-- Overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-lg border-r border-white/5 z-40 flex flex-col justify-between">
+    
+    <div>
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white font-serif font-bold text-sm leading-none">Home<span class="text-brand-400">Scape</span></span>
+            <span class="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Admin</span>
+          </div>
+        </a>
+        <button id="closeSidebar" class="lg:hidden text-slate-500 hover:text-white transition p-1" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="p-3 space-y-1">
+        <a href="/admin/dashboard.html" class="sidebar-link">
+          <i class="fa-solid fa-chart-line w-4 text-center"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/properties.html" class="sidebar-link active">
+          <i class="fa-solid fa-city w-4 text-center"></i>
+          <span>Properties</span>
+        </a>
+        <a href="/admin/videos.html" class="sidebar-link">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Videos</span>
+        </a>
+        <a href="/admin/inquiries.html" class="sidebar-link">
+          <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+          <span>Inquiries</span>
+        </a>
+        <div class="border-t border-white/5 my-2"></div>
+        <a href="/admin/backups.html" class="sidebar-link">
+          <i class="fa-solid fa-database w-4 text-center"></i>
+          <span>Backups</span>
+        </a>
+        <a href="/admin/activity.html" class="sidebar-link">
+          <i class="fa-solid fa-clock-rotate-left w-4 text-center"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="/admin/settings.html" class="sidebar-link">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-3 space-y-1 border-t border-white/5">
+      <div class="px-3 py-2 rounded-xl bg-white/5 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xs font-bold" id="adminInitials">A1</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-white truncate" id="adminName">Admin</p>
+            <p class="text-[10px] text-slate-500 truncate" id="adminRole">admin</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/index.html" class="sidebar-link">
+        <i class="fa-solid fa-globe w-4 text-center"></i>
+        <span>View Website</span>
+      </a>
+      
+      <button id="logoutBtn" type="button" class="sidebar-link w-full text-red-400 hover:bg-red-500/10 hover:text-red-300">
+        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="lg:ml-64 min-h-screen relative z-10">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-lg border-b border-white/5">
+      <div class="px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-3">
+          <button id="openSidebar" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="text-lg sm:text-xl font-serif font-bold text-white">Manage Properties</h1>
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              <span id="propertyCount">0</span> total properties
+            </p>
+          </div>
+        </div>
+
+        <button id="addPropertyBtn" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
+          <i class="fa-solid fa-plus text-[10px]"></i>
+          <span class="hidden sm:inline">Add Property</span>
+          <span class="sm:hidden">Add</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4 sm:p-6 space-y-6 fade-in">
+
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-building text-brand-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Available</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statAvailable">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-check-circle text-emerald-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Sold</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statSold">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-clock text-amber-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Under Offer</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statUnderOffer">0</p>
+        </div>
+        <div class="glass-panel rounded-2xl p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-key text-blue-400 text-xs"></i>
+            <span class="text-[10px] text-slate-500 uppercase tracking-widest font-mono">For Rent</span>
+          </div>
+          <p class="text-2xl font-serif font-bold text-white" id="statForRent">0</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="glass-panel rounded-2xl p-4 sm:p-5">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          
+          <div class="sm:col-span-2">
+            <label for="searchInput" class="form-label">Search</label>
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+              <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search by title or location..." 
+                class="form-input pl-10"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="statusFilter" class="form-label">Status</label>
+            <select id="statusFilter" class="form-input">
+              <option value="all">All Statuses</option>
+              <option value="Available">Available</option>
+              <option value="Sold">Sold</option>
+              <option value="Under Offer">Under Offer</option>
+              <option value="For Rent">For Rent</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="typeFilter" class="form-label">Type</label>
+            <select id="typeFilter" class="form-input">
+              <option value="all">All Types</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Townhouse">Townhouse</option>
+              <option value="Land">Land</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Sort + Reset -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-4 pt-4 border-t border-white/5">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Sort:</span>
+            <select id="sortFilter" class="form-input !w-auto text-xs">
+              <option value="newest">Newest First</option>
+              <option value="price-desc">Price: High → Low</option>
+              <option value="price-asc">Price: Low → High</option>
+              <option value="title">Title A-Z</option>
+            </select>
+          </div>
+          <button id="clearFilters" type="button" class="text-[10px] text-slate-500 hover:text-brand-400 transition font-mono uppercase tracking-widest">
+            <i class="fa-solid fa-xmark mr-1"></i> Clear Filters
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Table -->
+      <div class="glass-panel rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="propertiesTableBody">
+              <tr>
+                <td colspan="5" class="text-center py-12">
+                  <div class="inline-block w-6 h-6 border-2 border-brand-500/30 border-t-brand-500 rounded-full animate-spin mb-2"></div>
+                  <p class="text-xs text-slate-500">Loading properties...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden p-12 text-center">
+          <i class="fa-solid fa-folder-open text-4xl text-slate-600 mb-3"></i>
+          <p class="text-sm font-semibold text-white">No properties found</p>
+          <p class="text-xs text-slate-500 mt-1">Try adjusting your filters or add a new property.</p>
+          <button onclick="document.getElementById('addPropertyBtn').click()" class="mt-4 bg-brand-500 hover:bg-brand-400 text-black text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition">
+            <i class="fa-solid fa-plus mr-1"></i> Add First Property
+          </button>
+        </div>
+      </div>
+
+      <!-- Results count -->
+      <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+        <span>Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> properties</span>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-6 py-6 text-center text-[10px] text-slate-600 font-mono border-t border-white/5">
+      &copy; <span id="footerYear">2026</span> HomeScape Admin Panel. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ==================== PROPERTY MODAL (Add/Edit) ==================== -->
+  <div id="propertyModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="sticky top-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-b border-white/5 flex items-center justify-between z-10">
+        <div>
+          <h2 id="modalTitle" class="text-base font-serif font-bold text-white">Add New Property</h2>
+          <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest mt-0.5">
+            <i class="fa-solid fa-pen-to-square mr-1"></i> Property Details
+          </p>
+        </div>
+        <button type="button" onclick="closePropertyModal()" class="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition" aria-label="Close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <form id="propertyForm" class="p-5 space-y-5" novalidate>
+
+        <input type="hidden" id="propertyId" />
+
+        <!-- Title -->
+        <div>
+          <label for="propTitle" class="form-label">Property Title *</label>
+          <input type="text" id="propTitle" placeholder="e.g. The Grand Horizon Estate" required maxlength="200" class="form-input" />
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+        </div>
+
+        <!-- Type + Status -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="propType" class="form-label">Property Type *</label>
+            <select id="propType" required class="form-input">
+              <option value="">Select type</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Townhouse">Townhouse</option>
+              <option value="Land">Land</option>
+            </select>
+            <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+          </div>
+          <div>
+            <label for="propStatus" class="form-label">Status *</label>
+            <select id="propStatus" required class="form-input">
+              <option value="Available">Available</option>
+              <option value="Sold">Sold</option>
+              <option value="Under Offer">Under Offer</option>
+              <option value="For Rent">For Rent</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Location + Price -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="propLocation" class="form-label">Location *</label>
+            <input type="text" id="propLocation" placeholder="e.g. Kilimani, Nairobi" required maxlength="100" class="form-input" />
+            <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+          </div>
+          <div>
+            <label for="propPrice" class="form-label">Price (KSh) *</label>
+            <input type="number" id="propPrice" placeholder="38000000" required min="0" step="1000" class="form-input" />
+            <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+          </div>
+        </div>
+
+        <!-- Sold Price (only when Sold) -->
+        <div id="soldPriceWrapper" class="hidden">
+          <label for="propSoldPrice" class="form-label">Sold Price (KSh)</label>
+          <input type="number" id="propSoldPrice" placeholder="36500000" min="0" step="1000" class="form-input" />
+        </div>
+
+        <!-- Beds + Baths + Area -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label for="propBeds" class="form-label">Bedrooms</label>
+            <input type="number" id="propBeds" placeholder="4" min="0" max="20" value="0" class="form-input" />
+          </div>
+          <div>
+            <label for="propBaths" class="form-label">Bathrooms</label>
+            <input type="number" id="propBaths" placeholder="4" min="0" max="20" value="0" class="form-input" />
+          </div>
+          <div>
+            <label for="propArea" class="form-label">Area (sqm)</label>
+            <input type="number" id="propArea" placeholder="420" min="0" max="100000" value="0" class="form-input" />
+          </div>
+        </div>
+
+        <!-- Image URL -->
+        <div>
+          <label for="propImage" class="form-label">Image URL</label>
+          <input type="url" id="propImage" placeholder="https://images.unsplash.com/..." class="form-input" />
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="propDescription" class="form-label">Description *</label>
+          <textarea id="propDescription" rows="4" placeholder="Describe the property..." required maxlength="2000" class="form-input resize-none"></textarea>
+          <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+        </div>
+
+        <!-- Featured -->
+        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+          <input type="checkbox" id="propFeatured" class="w-4 h-4 rounded border-slate-700 bg-white/5 text-brand-500 focus:ring-brand-500/30" />
+          <label for="propFeatured" class="text-xs text-slate-300 cursor-pointer select-none">
+            <span class="font-semibold text-white">Featured Property</span>
+            <span class="block text-[10px] text-slate-500 mt-0.5">Show on homepage and featured sections</span>
+          </label>
+        </div>
+
+      </form>
+
+      <!-- Modal Footer -->
+      <div class="sticky bottom-0 bg-slate-950/90 backdrop-blur-lg px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closePropertyModal()" class="btn-secondary">
+          <i class="fa-solid fa-xmark"></i> Cancel
+        </button>
+        <button type="button" id="savePropertyBtn" class="btn-primary">
+          <i class="fa-solid fa-check"></i> Save Property
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== DELETE CONFIRM MODAL ==================== -->
+  <div id="deleteModal" class="modal-overlay">
+    <div class="modal-content glass-panel rounded-2xl overflow-hidden" style="max-width: 420px;">
+      
+      <div class="p-6 text-center">
+        <div class="w-14 h-14 rounded-full bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mx-auto mb-4">
+          <i class="fa-solid fa-trash text-xl"></i>
+        </div>
+        <h3 class="text-lg font-serif font-bold text-white">Delete Property?</h3>
+        <p class="text-xs text-slate-400 mt-2">
+          You are about to delete <strong id="deletePropertyName" class="text-white"></strong>. This action cannot be undone.
+        </p>
+      </div>
+
+      <div class="px-5 py-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <button type="button" onclick="closeDeleteModal()" class="btn-secondary">
+          Cancel
+        </button>
+        <button type="button" id="confirmDeleteBtn" class="btn-danger">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass-panel rounded-xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-check text-sm"></i>
+      </div>
+      <p id="toastMessage" class="text-xs font-semibold text-white">Success!</p>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        sessionKey: 'homescape_admin_session',
+        loginUrl: '/admin/index.html',
+        dataUrl: '/data/',
+        propertiesFile: 'properties.json'
+      };
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      var allProperties = [];
+      var filteredProperties = [];
+      var pendingDeleteId = null;
+
+      // ============================================================
+      // DOM REFS
+      // ============================================================
+      var tableBody = document.getElementById('propertiesTableBody');
+      var emptyState = document.getElementById('emptyState');
+      var searchInput = document.getElementById('searchInput');
+      var statusFilter = document.getElementById('statusFilter');
+      var typeFilter = document.getElementById('typeFilter');
+      var sortFilter = document.getElementById('sortFilter');
+      var clearFilters = document.getElementById('clearFilters');
+      var propertyModal = document.getElementById('propertyModal');
+      var deleteModal = document.getElementById('deleteModal');
+      var propertyForm = document.getElementById('propertyForm');
+
+      // ============================================================
+      // SECURITY
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function sanitizeURL(url) {
+        if (!url) return '';
+        var s = String(url).trim();
+        if (s.startsWith('javascript:') || s.startsWith('data:')) return '';
+        return s;
+      }
+
+      function getInitials(name) {
+        if (!name) return 'A';
+        return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      }
+
+      function formatPrice(num) {
+        if (!num && num !== 0) return 'KSh 0';
+        return 'KSh ' + Number(num).toLocaleString();
+      }
+
+      // ============================================================
+      // SESSION CHECK
+      // ============================================================
+      function getSession() {
+        var data = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!data) return null;
+        try {
+          var session = JSON.parse(data);
+          var expiresAt = new Date(session.expiresAt);
+          if (expiresAt < new Date()) {
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            return null;
+          }
+          return session;
+        } catch (e) { return null; }
+      }
+
+      var session = getSession();
+      if (!session) {
+        window.location.href = CONFIG.loginUrl;
+        return;
+      }
+
+      // ============================================================
+      // POPULATE SIDEBAR
+      // ============================================================
+      var adminNameEl = document.getElementById('adminName');
+      if (adminNameEl) adminNameEl.textContent = escapeHTML(session.fullName || 'Admin');
+
+      var adminRoleEl = document.getElementById('adminRole');
+      if (adminRoleEl) adminRoleEl.textContent = escapeHTML(session.role || 'admin');
+
+      var adminInitialsEl = document.getElementById('adminInitials');
+      if (adminInitialsEl) adminInitialsEl.textContent = getInitials(session.fullName);
+
+      // ============================================================
+      // FOOTER YEAR
+      // ============================================================
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // SIDEBAR MOBILE
+      // ============================================================
+      var sidebar = document.getElementById('sidebar');
+      var overlay = document.getElementById('sidebarOverlay');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      var openBtn = document.getElementById('openSidebar');
+      var closeBtn = document.getElementById('closeSidebar');
+      if (openBtn) openBtn.addEventListener('click', openSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to logout?')) return;
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(message, type) {
+        type = type || 'success';
+        var toast = document.getElementById('toast');
+        var toastIcon = document.getElementById('toastIcon');
+        var toastMessage = document.getElementById('toastMessage');
+
+        var colors = {
+          success: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/30', text: 'text-emerald-400', icon: 'fa-check' },
+          error: { bg: 'bg-rose-500/20', border: 'border-rose-500/30', text: 'text-rose-400', icon: 'fa-circle-exclamation' },
+          warning: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-400', icon: 'fa-triangle-exclamation' }
+        };
+
+        var c = colors[type] || colors.success;
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center ' + c.bg + ' border ' + c.border + ' ' + c.text;
+        toastIcon.innerHTML = '<i class="fa-solid ' + c.icon + ' text-sm"></i>';
+        toastMessage.textContent = message;
+
+        toast.classList.remove('translate-y-4', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(function() {
+          toast.classList.add('translate-y-4', 'opacity-0', 'pointer-events-none');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      // ============================================================
+      // LOAD PROPERTIES
+      // ============================================================
+      function loadProperties() {
+        fetch(CONFIG.dataUrl + CONFIG.propertiesFile)
+          .then(function(res) {
+            if (!res.ok) throw new Error('Failed to load');
+            return res.json();
+          })
+          .then(function(data) {
+            allProperties = data.properties || data;
+            updateStats();
+            applyFilters();
+          })
+          .catch(function(e) {
+            console.error('Load error:', e);
+            tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-rose-400 text-xs">Failed to load properties. Please refresh.</td></tr>';
+          });
+      }
+
+      // ============================================================
+      // UPDATE STATS
+      // ============================================================
+      function updateStats() {
+        var available = 0, sold = 0, underOffer = 0, forRent = 0;
+        allProperties.forEach(function(p) {
+          if (p.status === 'Sold') sold++;
+          else if (p.status === 'Under Offer') underOffer++;
+          else if (p.status === 'For Rent') forRent++;
+          else available++;
+        });
+
+        document.getElementById('statAvailable').textContent = available;
+        document.getElementById('statSold').textContent = sold;
+        document.getElementById('statUnderOffer').textContent = underOffer;
+        document.getElementById('statForRent').textContent = forRent;
+      }
+
+      // ============================================================
+      // FILTERS
+      // ============================================================
+      function applyFilters() {
+        var search = (searchInput.value || '').toLowerCase().trim();
+        var status = statusFilter.value;
+        var type = typeFilter.value;
+        var sort = sortFilter.value;
+
+        filteredProperties = allProperties.filter(function(p) {
+          var matchSearch = !search || 
+            (p.title || '').toLowerCase().indexOf(search) !== -1 ||
+            (p.location || '').toLowerCase().indexOf(search) !== -1;
+          var matchStatus = status === 'all' || p.status === status;
+          var matchType = type === 'all' || p.type === type;
+          return matchSearch && matchStatus && matchType;
+        });
+
+        // Sort
+        if (sort === 'price-desc') {
+          filteredProperties.sort(function(a, b) { return (b.price || 0) - (a.price || 0); });
+        } else if (sort === 'price-asc') {
+          filteredProperties.sort(function(a, b) { return (a.price || 0) - (b.price || 0); });
+        } else if (sort === 'title') {
+          filteredProperties.sort(function(a, b) { return (a.title || '').localeCompare(b.title || ''); });
+        } else {
+          // Newest — reverse order (last added first)
+          filteredProperties.sort(function(a, b) { return (b.id || '').localeCompare(a.id || ''); });
+        }
+
+        renderTable();
+      }
+
+      // ============================================================
+      // RENDER TABLE
+      // ============================================================
+      function renderTable() {
+        var total = filteredProperties.length;
+
+        document.getElementById('visibleCount').textContent = total;
+        document.getElementById('totalCount').textContent = allProperties.length;
+        document.getElementById('propertyCount').textContent = allProperties.length;
+
+        if (total === 0) {
+          tableBody.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+
+        var html = '';
+        filteredProperties.forEach(function(p) {
+          var safeTitle = escapeHTML(p.title);
+          var safeType = escapeHTML(p.type);
+          var safeLocation = escapeHTML(p.location);
+          var safePrice = escapeHTML(p.priceFormatted || formatPrice(p.price));
+          var safeStatus = escapeHTML(p.status || 'Available');
+          var safeId = escapeHTML(p.id);
+
+          var statusClass = p.status === 'Sold'
+            ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+            : p.status === 'Under Offer'
+              ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+              : p.status === 'For Rent'
+                ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+
+          var featuredBadge = p.featured 
+            ? '<i class="fa-solid fa-star text-amber-400 text-[9px] ml-1.5" title="Featured"></i>' 
+            : '';
+
+          html += '<tr data-id="' + safeId + '">' +
+            '<td data-label="Property">' +
+              '<div class="flex items-center gap-3">' +
+                '<div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">' +
+                  '<i class="fa-solid fa-building text-slate-400 text-sm"></i>' +
+                '</div>' +
+                '<div class="min-w-0">' +
+                  '<p class="text-xs font-semibold text-white truncate flex items-center">' + safeTitle + featuredBadge + '</p>' +
+                  '<p class="text-[10px] text-slate-500 truncate">' + safeLocation + '</p>' +
+                '</div>' +
+              '</div>' +
+            '</td>' +
+            '<td data-label="Type">' +
+              '<span class="text-xs text-slate-300">' + safeType + '</span>' +
+            '</td>' +
+            '<td data-label="Price">' +
+              '<span class="text-xs font-semibold text-white">' + safePrice + '</span>' +
+            '</td>' +
+            '<td data-label="Status">' +
+              '<span class="status-badge ' + statusClass + '">' + safeStatus + '</span>' +
+            '</td>' +
+            '<td data-label="Actions">' +
+              '<div class="flex items-center justify-end gap-1.5">' +
+                '<button type="button" class="btn-icon edit-btn" data-id="' + safeId + '" title="Edit">' +
+                  '<i class="fa-solid fa-pen"></i>' +
+                '</button>' +
+                '<button type="button" class="btn-icon danger delete-btn" data-id="' + safeId + '" title="Delete">' +
+                  '<i class="fa-solid fa-trash"></i>' +
+                '</button>' +
+              '</div>' +
+            '</td>' +
+          '</tr>';
+        });
+
+        tableBody.innerHTML = html;
+
+        // Attach listeners
+        tableBody.querySelectorAll('.edit-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() { openEditModal(this.dataset.id); });
+        });
+        tableBody.querySelectorAll('.delete-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() { openDeleteModal(this.dataset.id); });
+        });
+      }
+
+      // ============================================================
+      // MODAL — ADD/EDIT
+      // ============================================================
+      function openAddModal() {
+        document.getElementById('modalTitle').textContent = 'Add New Property';
+        propertyForm.reset();
+        document.getElementById('propertyId').value = '';
+        document.getElementById('propStatus').value = 'Available';
+        document.getElementById('propBeds').value = 0;
+        document.getElementById('propBaths').value = 0;
+        document.getElementById('propArea').value = 0;
+        document.getElementById('propFeatured').checked = false;
+        document.getElementById('soldPriceWrapper').classList.add('hidden');
+        
+        // Clear errors
+        propertyForm.querySelectorAll('.field-error').forEach(function(el) {
+          el.textContent = '';
+          el.classList.add('hidden');
+        });
+        propertyForm.querySelectorAll('.form-input').forEach(function(el) {
+          el.classList.remove('error');
+        });
+
+        propertyModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function openEditModal(id) {
+        var p = allProperties.find(function(x) { return x.id === id; });
+        if (!p) return;
+
+        document.getElementById('modalTitle').textContent = 'Edit Property';
+        document.getElementById('propertyId').value = p.id;
+        document.getElementById('propTitle').value = p.title || '';
+        document.getElementById('propType').value = p.type || '';
+        document.getElementById('propStatus').value = p.status || 'Available';
+        document.getElementById('propLocation').value = p.location || '';
+        document.getElementById('propPrice').value = p.price || '';
+        document.getElementById('propSoldPrice').value = p.soldPrice || '';
+        document.getElementById('propBeds').value = p.beds || 0;
+        document.getElementById('propBaths').value = p.baths || 0;
+        document.getElementById('propArea').value = (p.sqm || '').toString().replace(/[^0-9]/g, '') || 0;
+        document.getElementById('propImage').value = p.image || '';
+        document.getElementById('propDescription').value = p.description || '';
+        document.getElementById('propFeatured').checked = !!p.featured;
+
+        // Show sold price field if status is Sold
+        if (p.status === 'Sold') {
+          document.getElementById('soldPriceWrapper').classList.remove('hidden');
+        } else {
+          document.getElementById('soldPriceWrapper').classList.add('hidden');
+        }
+
+        // Clear errors
+        propertyForm.querySelectorAll('.field-error').forEach(function(el) {
+          el.textContent = '';
+          el.classList.add('hidden');
+        });
+        propertyForm.querySelectorAll('.form-input').forEach(function(el) {
+          el.classList.remove('error');
+        });
+
+        propertyModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closePropertyModal = function() {
+        propertyModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      // ============================================================
+      // SHOW SOLD PRICE FIELD
+      // ============================================================
+      document.getElementById('propStatus').addEventListener('change', function() {
+        if (this.value === 'Sold') {
+          document.getElementById('soldPriceWrapper').classList.remove('hidden');
+        } else {
+          document.getElementById('soldPriceWrapper').classList.add('hidden');
+        }
+      });
+
+      // ============================================================
+      // VALIDATE FORM
+      // ============================================================
+      function validateForm() {
+        var isValid = true;
+
+        function check(fieldId, condition, message) {
+          var field = document.getElementById(fieldId);
+          var error = field.parentElement.querySelector('.field-error');
+          if (!condition) {
+            field.classList.add('error');
+            if (error) {
+              error.textContent = message;
+              error.classList.remove('hidden');
+            }
+            isValid = false;
+          } else {
+            field.classList.remove('error');
+            if (error) {
+              error.textContent = '';
+              error.classList.add('hidden');
+            }
+          }
+        }
+
+        var title = document.getElementById('propTitle').value.trim();
+        var type = document.getElementById('propType').value;
+        var location = document.getElementById('propLocation').value.trim();
+        var price = document.getElementById('propPrice').value;
+        var description = document.getElementById('propDescription').value.trim();
+
+        check('propTitle', title.length >= 3, 'Title must be at least 3 characters');
+        check('propType', type !== '', 'Please select a property type');
+        check('propLocation', location.length >= 2, 'Location is required');
+        check('propPrice', price !== '' && Number(price) > 0, 'Please enter a valid price');
+        check('propDescription', description.length >= 10, 'Description must be at least 10 characters');
+
+        return isValid;
+      }
+
+      // ============================================================
+      // SAVE PROPERTY
+      // ============================================================
+      document.getElementById('savePropertyBtn').addEventListener('click', function() {
+        if (!validateForm()) {
+          showToast('Please fix errors before saving', 'error');
+          return;
+        }
+
+        var id = document.getElementById('propertyId').value;
+        var isEdit = !!id;
+
+        var propertyData = {
+          id: id || 'prop-' + Date.now(),
+          title: document.getElementById('propTitle').value.trim(),
+          type: document.getElementById('propType').value,
+          status: document.getElementById('propStatus').value,
+          location: document.getElementById('propLocation').value.trim(),
+          price: Number(document.getElementById('propPrice').value),
+          soldPrice: document.getElementById('propSoldPrice').value 
+            ? Number(document.getElementById('propSoldPrice').value) 
+            : null,
+          beds: Number(document.getElementById('propBeds').value) || 0,
+          baths: Number(document.getElementById('propBaths').value) || 0,
+          sqm: (Number(document.getElementById('propArea').value) || 0) + ' sqm',
+          image: sanitizeURL(document.getElementById('propImage').value.trim()) || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+          description: document.getElementById('propDescription').value.trim(),
+          featured: document.getElementById('propFeatured').checked
+        };
+
+        propertyData.priceFormatted = 'KSh ' + propertyData.price.toLocaleString();
+
+        // Simulate save (in production, this would POST to a server)
+        if (isEdit) {
+          var idx = allProperties.findIndex(function(p) { return p.id === id; });
+          if (idx !== -1) {
+            allProperties[idx] = Object.assign({}, allProperties[idx], propertyData);
+          }
+          showToast('Property updated successfully!', 'success');
+        } else {
+          allProperties.unshift(propertyData);
+          showToast('Property added successfully!', 'success');
+        }
+
+        updateStats();
+        applyFilters();
+        closePropertyModal();
+      });
+
+      // ============================================================
+      // DELETE
+      // ============================================================
+      function openDeleteModal(id) {
+        var p = allProperties.find(function(x) { return x.id === id; });
+        if (!p) return;
+
+        pendingDeleteId = id;
+        document.getElementById('deletePropertyName').textContent = p.title || 'this property';
+        deleteModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.closeDeleteModal = function() {
+        pendingDeleteId = null;
+        deleteModal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+        if (!pendingDeleteId) return;
+
+        allProperties = allProperties.filter(function(p) { return p.id !== pendingDeleteId; });
+        updateStats();
+        applyFilters();
+        closeDeleteModal();
+        showToast('Property deleted successfully!', 'success');
+      });
+
+      // ============================================================
+      // ADD BUTTON
+      // ============================================================
+      document.getElementById('addPropertyBtn').addEventListener('click', openAddModal);
+
+      // ============================================================
+      // FILTER EVENTS
+      // ============================================================
+      searchInput.addEventListener('input', applyFilters);
+      statusFilter.addEventListener('change', applyFilters);
+      typeFilter.addEventListener('change', applyFilters);
+      sortFilter.addEventListener('change', applyFilters);
+
+      clearFilters.addEventListener('click', function() {
+        searchInput.value = '';
+        statusFilter.value = 'all';
+        typeFilter.value = 'all';
+        sortFilter.value = 'newest';
+        applyFilters();
+      });
+
+      // ============================================================
+      // ESC TO CLOSE MODALS
+      // ============================================================
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (propertyModal.classList.contains('active')) closePropertyModal();
+          if (deleteModal.classList.contains('active')) closeDeleteModal();
+        }
+      });
+
+      // Click outside modal to close
+      propertyModal.addEventListener('click', function(e) {
+        if (e.target === propertyModal) closePropertyModal();
+      });
+      deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) closeDeleteModal();
+      });
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      loadProperties();
+
+      console.log('✅ Properties page loaded');
+
+    })();
+  </script>
+
+</body>
+</html>

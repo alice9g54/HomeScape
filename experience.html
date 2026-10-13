@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience HomeScape | Luxury Real Estate Kenya</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Experience luxury living through our cinematic showcase. Discover recently sold properties and see why HomeScape is Kenya's trusted real estate partner." />
+  <meta name="keywords" content="luxury real estate Kenya, homescape experience, recently sold properties Nairobi, premium real estate" />
+  <link rel="canonical" href="https://homescape.co.ke/experience.html" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Experience HomeScape | Luxury Real Estate Kenya" />
+  <meta property="og:description" content="Experience luxury living through our cinematic showcase." />
+  <meta property="og:type" content="website" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 700: '#065f46', 800: '#047857', 900: '#022c22' },
+            accent: { 600: '#b45309', 700: '#854d0e' },
+            warmBg: '#fbfbf9',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    .nav-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-btn:active {
+      transform: scale(0.95);
+      background-color: #e2e8f0;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(2, 44, 34, 0.7);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .property-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .property-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .sold-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #dc2626;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+
+    .sold-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.35);
+      pointer-events: none;
+    }
+
+    .stat-card {
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px -10px rgba(4, 120, 87, 0.15);
+    }
+
+    .testimonial-card {
+      transition: all 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 3px solid #e2e8f0;
+      border-top-color: #047857;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #047857; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #065f46; }
+  </style>
+</head>
+<body class="bg-warmBg text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between relative">
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <a href="/index.html" class="flex items-center gap-3">
+        <img 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&q=80" 
+          alt="HomeScape Logo" 
+          class="w-10 h-10 sm:w-11 sm:h-11 object-cover rounded-xl shadow-sm border border-slate-200"
+        />
+        <div class="flex flex-col">
+          <span class="text-lg sm:text-xl font-serif font-bold text-slate-900 leading-none">Home<span class="text-brand-800">Scape</span></span>
+          <span class="text-[8px] sm:text-[9px] font-bold tracking-widest uppercase text-slate-400 mt-1">Real Estate Group</span>
+        </div>
+      </a>
+
+      <!-- NAVIGATION LINKS -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest text-slate-600">
+        <a href="/index.html" class="nav-btn hover:text-accent-600 transition pb-1">Home</a>
+        <a href="/properties.html" class="nav-btn hover:text-accent-600 transition pb-1">Properties</a>
+        <a href="/experience.html" class="nav-btn text-slate-900 border-b-2 border-brand-800 pb-1 flex items-center gap-1.5">
+          <span>Experience</span>
+          <span class="bg-amber-100 text-amber-800 text-[9px] px-1.5 py-0.5 rounded-full font-bold">4K</span>
+        </a>
+        <a href="/about.html" class="nav-btn hover:text-accent-600 transition pb-1">About</a>
+        <a href="/contact.html" class="nav-btn hover:text-accent-600 transition pb-1">Contact</a>
+      </nav>
+
+      <!-- TOP ACTION BUTTON -->
+      <a href="/contact.html" class="nav-btn bg-slate-900 hover:bg-brand-800 text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase px-4 sm:px-6 py-3 rounded-xl transition duration-300 shadow-sm">
+        Book Consultation
+      </a>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION WITH VIDEO BACKGROUND ==================== -->
+  <section class="relative min-h-[70vh] sm:min-h-[80vh] flex items-center overflow-hidden">
+    <!-- Video Background -->
+    <video 
+      class="hero-video"
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
+    >
+      <source src="/assets/videos/hero-showcase.mp4" type="video/mp4" />
+      <img 
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80" 
+        alt="HomeScape Showcase" 
+        class="w-full h-full object-cover"
+      />
+    </video>
+    
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+    
+    <!-- Content -->
+    <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full py-20">
+      <div class="max-w-3xl">
+        <span class="inline-block text-amber-400 font-bold text-xs uppercase tracking-widest bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 mb-4">
+          <i class="fa-solid fa-play mr-1.5"></i> Virtual Experience
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white leading-[1.1]">
+          Welcome to <br class="hidden sm:block" />
+          <span class="text-amber-400">HomeScape</span>
+        </h1>
+        <p class="text-sm sm:text-base text-slate-200/90 max-w-xl mt-4 leading-relaxed">
+          Experience luxury living across Kenya's finest locations. Our showcase film captures the essence of premium real estate.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-6">
+          <a href="/properties.html" class="bg-brand-800 hover:bg-brand-700 text-white text-xs font-bold uppercase tracking-wider px-8 py-3.5 rounded-xl transition shadow-lg text-center">
+            Browse Properties
+          </a>
+          <a href="/contact.html" class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white text-xs font-bold uppercase tracking-wider px-8 py-3.5 rounded-xl transition border border-white/20 text-center">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce hidden sm:block">
+      <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1">
+        <div class="w-1 h-3 bg-white/50 rounded-full mt-1"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="mb-auto">
+
+    <!-- STATS / QUICK HIGHLIGHTS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 -mt-8 relative z-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div class="stat-card bg-white rounded-2xl p-5 sm:p-6 text-center border border-slate-200/80 shadow-sm">
+          <div class="w-10 h-10 bg-emerald-50 text-brand-800 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <i class="fa-solid fa-building text-lg"></i>
+          </div>
+          <p class="text-xl sm:text-2xl font-serif font-bold text-slate-900">150+</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Properties</p>
+        </div>
+        
+        <div class="stat-card bg-white rounded-2xl p-5 sm:p-6 text-center border border-slate-200/80 shadow-sm">
+          <div class="w-10 h-10 bg-emerald-50 text-brand-800 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <i class="fa-solid fa-users text-lg"></i>
+          </div>
+          <p class="text-xl sm:text-2xl font-serif font-bold text-slate-900">500+</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Happy Clients</p>
+        </div>
+        
+        <div class="stat-card bg-white rounded-2xl p-5 sm:p-6 text-center border border-slate-200/80 shadow-sm">
+          <div class="w-10 h-10 bg-emerald-50 text-brand-800 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <i class="fa-solid fa-location-dot text-lg"></i>
+          </div>
+          <p class="text-xl sm:text-2xl font-serif font-bold text-slate-900">12+</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Locations</p>
+        </div>
+        
+        <div class="stat-card bg-white rounded-2xl p-5 sm:p-6 text-center border border-slate-200/80 shadow-sm">
+          <div class="w-10 h-10 bg-emerald-50 text-brand-800 rounded-xl flex items-center justify-center mx-auto mb-3">
+            <i class="fa-solid fa-star text-lg"></i>
+          </div>
+          <p class="text-xl sm:text-2xl font-serif font-bold text-slate-900">4.9</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Client Rating</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Why HomeScape</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">Your Trusted Real Estate Partner</h2>
+        <p class="text-xs text-slate-500 mt-2">We combine local expertise with global standards to deliver exceptional service</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm text-center">
+          <div class="w-14 h-14 bg-emerald-50 text-brand-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="fa-regular fa-circle-check"></i>
+          </div>
+          <h3 class="font-serif font-bold text-slate-900 text-lg">Verified Properties</h3>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">Every listing undergoes thorough due diligence, title verification, and physical inspection.</p>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm text-center">
+          <div class="w-14 h-14 bg-emerald-50 text-brand-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="fa-regular fa-handshake"></i>
+          </div>
+          <h3 class="font-serif font-bold text-slate-900 text-lg">Expert Guidance</h3>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">Our experienced advisors provide end-to-end support from viewing to closing.</p>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/80 shadow-sm text-center">
+          <div class="w-14 h-14 bg-emerald-50 text-brand-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="fa-regular fa-clock"></i>
+          </div>
+          <h3 class="font-serif font-bold text-slate-900 text-lg">Fast Response</h3>
+          <p class="text-xs text-slate-500 mt-2 leading-relaxed">We respond to all inquiries within 2 hours and offer flexible viewing schedules.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECENTLY SOLD PROPERTIES -->
+    <section class="bg-white py-16 border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+          <div>
+            <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">Recently Sold</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">See What Our Clients Bought</h2>
+            <p class="text-xs text-slate-500 mt-2">Real properties sold to real clients</p>
+          </div>
+          <a href="/properties.html" class="text-xs font-bold uppercase tracking-wider text-brand-800 hover:text-accent-600 transition inline-flex items-center gap-1">
+            View Available <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div id="recently-sold-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <!-- Loading state -->
+          <div class="col-span-full text-center py-12">
+            <div class="spinner"></div>
+            <p class="text-sm text-slate-500 mt-4">Loading recently sold properties...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLIENT TESTIMONIALS -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-accent-600 font-bold text-xs uppercase tracking-widest">What Our Clients Say</span>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-2">Trusted by Homeowners &amp; Investors</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="testimonial-card bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center gap-1 text-amber-400 mb-3">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed italic">
+            "HomeScape made buying our dream home seamless. Their team guided us through every step with professionalism and care."
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-sm">
+              JM
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-900">Jane Mwangi</p>
+              <p class="text-[10px] text-slate-400">Homeowner, Kilimani</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center gap-1 text-amber-400 mb-3">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed italic">
+            "Their commercial property expertise helped us secure the perfect office space in Westlands. Highly recommended!"
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-sm">
+              PK
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-900">Peter Kariuki</p>
+              <p class="text-[10px] text-slate-400">Business Owner, Westlands</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center gap-1 text-amber-400 mb-3">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed italic">
+            "From valuation to closing, HomeScape exceeded our expectations. They truly understand the Kenyan real estate market."
+          </p>
+          <div class="mt-4 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-sm">
+              SO
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-900">Sarah Ochieng</p>
+              <p class="text-[10px] text-slate-400">Investor, Karen</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pb-16">
+      <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800 shadow-xl">
+        <div class="space-y-2 max-w-2xl text-center md:text-left">
+          <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Ready to Find Your Dream Home?</span>
+          <h3 class="text-2xl sm:text-3xl font-serif font-bold">Let's Start Your Property Journey</h3>
+          <p class="text-slate-300 text-xs sm:text-sm">Book a consultation with our advisors today and discover the perfect property for you.</p>
+        </div>
+        <a href="/contact.html" class="whitespace-nowrap bg-brand-800 hover:bg-brand-700 text-white text-xs font-bold uppercase tracking-wider px-8 py-4 rounded-xl transition shadow-lg">
+          Book a Consultation
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-slate-950 text-slate-400 py-12 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <img 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=100&q=80" 
+          alt="HomeScape Logo" 
+          class="w-8 h-8 object-cover rounded-lg border border-slate-800" 
+        />
+        <span class="text-white font-serif font-bold text-base">HomeScape</span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-6 font-semibold">
+        <a href="/properties.html" class="hover:text-white transition">Properties</a>
+        <a href="/experience.html" class="hover:text-white transition">Experience</a>
+        <a href="/about.html" class="hover:text-white transition">About</a>
+        <a href="/contact.html" class="hover:text-white transition">Contact Us</a>
+        <a href="/privacy.html" class="hover:text-white transition">Privacy Policy</a>
+        <a href="/terms.html" class="hover:text-white transition">Terms of Service</a>
+      </div>
+      <p>&copy; 2026 HomeScape Group. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== BACK TO TOP ==================== -->
+  <button 
+    id="backToTopBtn" 
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" 
+    class="fixed bottom-6 right-6 z-40 bg-slate-900 hover:bg-brand-800 text-white w-11 h-11 rounded-full flex items-center justify-center shadow-xl opacity-0 pointer-events-none transition-all duration-300 border border-slate-700"
+    aria-label="Back to top"
+  >
+    <i class="fa-solid fa-arrow-up text-sm"></i>
+  </button>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // SECURITY UTILITIES
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function sanitizeURL(url) {
+        if (!url) return '';
+        var sanitized = String(url).trim();
+        if (sanitized.startsWith('javascript:') || sanitized.startsWith('data:')) {
+          return '';
+        }
+        return sanitized;
+      }
+
+      // ============================================================
+      // 1. LOAD RECENTLY SOLD PROPERTIES
+      // ============================================================
+      async function loadRecentlySold() {
+        var grid = document.getElementById('recently-sold-grid');
+        
+        try {
+          var response = await fetch('/data/properties.json');
+          if (!response.ok) throw new Error('Failed to load properties');
+          
+          var data = await response.json();
+          
+          // Filter for sold properties
+          var soldProperties = data.filter(function(p) {
+            return p.status === 'Sold';
+          }).slice(0, 6); // Show max 6
+          
+          if (soldProperties.length === 0) {
+            grid.innerHTML = '<p class="col-span-full text-center text-slate-400 py-12">No recently sold properties to display.</p>';
+            return;
+          }
+
+          grid.innerHTML = soldProperties.map(function(prop) {
+            var safeImage = sanitizeURL(prop.image);
+            var safeTitle = escapeHTML(prop.title);
+            var safeType = escapeHTML(prop.type);
+            var safeLocation = escapeHTML(prop.location);
+            var safePrice = escapeHTML(prop.priceFormatted || '');
+            var safeSoldPrice = escapeHTML(prop.soldPrice || prop.priceFormatted || '');
+            var safeDays = prop.daysOnMarket || 'N/A';
+            
+            return '<article class="property-card bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition duration-300 flex flex-col justify-between group">' +
+              '<div>' +
+                '<div class="relative overflow-hidden h-48 sm:h-52 bg-slate-100">' +
+                  '<img src="' + safeImage + '" alt="' + safeTitle + '" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80\'" />' +
+                  '<div class="sold-overlay"></div>' +
+                  '<div class="sold-badge">SOLD</div>' +
+                  '<div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg shadow-sm border border-slate-200">' +
+                    '<span class="text-xs font-bold text-slate-500 line-through">' + safePrice + '</span>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="p-4">' +
+                  '<span class="text-[10px] font-bold uppercase tracking-widest text-emerald-800">' + safeType + ' • ' + safeLocation + '</span>' +
+                  '<h3 class="text-sm font-serif font-bold text-slate-900 mt-1 line-clamp-1 group-hover:text-emerald-800 transition">' + safeTitle + '</h3>' +
+                  '<div class="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-slate-100 text-slate-600 text-[10px]">' +
+                    (prop.beds > 0 ? 
+                      '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bed text-emerald-800"></i><span>' + prop.beds + ' Beds</span></div>' :
+                      '<div class="flex items-center gap-1.5"><i class="fa-solid fa-briefcase text-emerald-800"></i><span>Office</span></div>'
+                    ) +
+                    '<div class="flex items-center gap-1.5"><i class="fa-solid fa-bath text-emerald-800"></i><span>' + prop.baths + ' Baths</span></div>' +
+                    '<div class="flex items-center gap-1.5"><i class="fa-solid fa-ruler-combined text-emerald-800"></i><span>' + escapeHTML(prop.sqm) + '</span></div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div class="px-4 pb-4 pt-1 space-y-2">' +
+                '<div class="bg-emerald-50 border border-emerald-100 rounded-xl px-3 py-2 text-center">' +
+                  '<span class="text-[10px] text-emerald-700 font-bold uppercase tracking-wider">Sold Price</span>' +
+                  '<p class="text-sm font-bold text-emerald-800">' + safeSoldPrice + '</p>' +
+                '</div>' +
+                '<div class="flex items-center justify-between text-[10px] text-slate-500">' +
+                  '<span><i class="fa-regular fa-clock mr-1"></i>Sold in ' + safeDays + ' days</span>' +
+                  '<a href="/property-details.html?id=' + escapeHTML(prop.id) + '" class="text-emerald-700 font-bold hover:text-emerald-900 transition">' +
+                    'View <i class="fa-solid fa-arrow-right text-[8px]"></i>' +
+                  '</a>' +
+                '</div>' +
+              '</div>' +
+            '</article>';
+          }).join('');
+
+        } catch (error) {
+          console.error('Error loading recently sold:', error);
+          grid.innerHTML = '<div class="col-span-full text-center py-12">' +
+            '<i class="fa-regular fa-circle-exclamation text-4xl text-slate-300 mb-3"></i>' +
+            '<p class="text-sm text-slate-500">Unable to load recently sold properties.</p>' +
+            '<p class="text-xs text-slate-400 mt-1">Please try again later.</p>' +
+          '</div>';
+        }
+      }
+
+      // ============================================================
+      // 2. BACK TO TOP
+      // ============================================================
+      function initBackToTop() {
+        var backToTopBtn = document.getElementById('backToTopBtn');
+        if (backToTopBtn) {
+          window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+              backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+              backToTopBtn.classList.add('opacity-100');
+            } else {
+              backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+              backToTopBtn.classList.remove('opacity-100');
+            }
+          });
+        }
+      }
+
+      // ============================================================
+      // 3. INITIALIZATION
+      // ============================================================
+      document.addEventListener('DOMContentLoaded', function() {
+        loadRecentlySold();
+        initBackToTop();
+        console.log('✅ Experience page loaded');
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

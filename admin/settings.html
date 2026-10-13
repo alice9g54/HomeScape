@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings | HomeScape Admin</title>
+  
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0f1c" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#0d9488', 800: '#065f46', 900: '#022c22' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link:hover { background: rgba(255, 255, 255, 0.04); color: white; }
+    .sidebar-link.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+      font-weight: 600;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      color: #f3f4f6;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input::placeholder { color: #4b5563; }
+    .form-input:focus {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.05);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    }
+    .form-input.error {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.05);
+    }
+    .form-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.85rem 1.75rem;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.25);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 600;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+
+    /* Password Strength Meter */
+    .strength-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .strength-weak { width: 25%; background: #ef4444; }
+    .strength-fair { width: 50%; background: #f59e0b; }
+    .strength-good { width: 75%; background: #3b82f6; }
+    .strength-strong { width: 100%; background: #22c55e; }
+
+    /* Session Info */
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.75rem;
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-label {
+      color: #64748b;
+      text-transform: uppercase;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .info-value { color: #cbd5e1; font-weight: 500; }
+
+    /* Tab navigation */
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .tab-btn:hover { background: rgba(255, 255, 255, 0.04); color: white; }
+    .tab-btn.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    /* Tab Panels */
+    .tab-panel { display: none; animation: fadeIn 0.3s ease; }
+    .tab-panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+
+    #sidebar { transition: transform 0.3s ease; }
+    @media (max-width: 1023px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+    }
+
+    .fade-in { animation: fadeIn 0.4s ease; }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-switch.on { background: #22c55e; }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-switch.on::after { transform: translateX(20px); }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-blue-500 bottom-0 right-0"></div>
+
+  <!-- Overlay -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-lg border-r border-white/5 z-40 flex flex-col justify-between">
+    
+    <div>
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white font-serif font-bold text-sm leading-none">Home<span class="text-brand-400">Scape</span></span>
+            <span class="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Admin</span>
+          </div>
+        </a>
+        <button id="closeSidebar" class="lg:hidden text-slate-500 hover:text-white transition p-1" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="p-3 space-y-1">
+        <a href="/admin/dashboard.html" class="sidebar-link">
+          <i class="fa-solid fa-chart-line w-4 text-center"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/properties.html" class="sidebar-link">
+          <i class="fa-solid fa-city w-4 text-center"></i>
+          <span>Properties</span>
+        </a>
+        <a href="/admin/videos.html" class="sidebar-link">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Videos</span>
+        </a>
+        <a href="/admin/inquiries.html" class="sidebar-link">
+          <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+          <span>Inquiries</span>
+        </a>
+        <div class="border-t border-white/5 my-2"></div>
+        <a href="/admin/backups.html" class="sidebar-link">
+          <i class="fa-solid fa-database w-4 text-center"></i>
+          <span>Backups</span>
+        </a>
+        <a href="/admin/activity.html" class="sidebar-link">
+          <i class="fa-solid fa-clock-rotate-left w-4 text-center"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="/admin/settings.html" class="sidebar-link active">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-3 space-y-1 border-t border-white/5">
+      <div class="px-3 py-2 rounded-xl bg-white/5 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xs font-bold" id="adminInitials">A1</div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-white truncate" id="adminName">Admin</p>
+            <p class="text-[10px] text-slate-500 truncate" id="adminRole">admin</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/index.html" class="sidebar-link">
+        <i class="fa-solid fa-globe w-4 text-center"></i>
+        <span>View Website</span>
+      </a>
+      
+      <button id="logoutBtn" type="button" class="sidebar-link w-full text-red-400 hover:bg-red-500/10 hover:text-red-300">
+        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="lg:ml-64 min-h-screen relative z-10">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-lg border-b border-white/5">
+      <div class="px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-3">
+          <button id="openSidebar" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="text-lg sm:text-xl font-serif font-bold text-white">Settings</h1>
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              Account & Security
+            </p>
+          </div>
+        </div>
+
+        <a href="/admin/dashboard.html" class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i>
+          Back to Dashboard
+        </a>
+
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4 sm:p-6 space-y-6 fade-in">
+
+      <!-- Password Expiry Alert -->
+      <div id="expiryAlert" class="hidden glass-panel rounded-2xl p-4 border-l-4 border-amber-500">
+        <div class="flex items-start gap-3">
+          <i class="fa-solid fa-triangle-exclamation text-amber-400 text-lg mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-white">Password Expiring Soon</p>
+            <p class="text-xs text-slate-400 mt-1" id="expiryAlertText">
+              Your password will expire soon. Please update it now.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex flex-wrap gap-2">
+        <button type="button" class="tab-btn active" data-tab="profile">
+          <i class="fa-solid fa-user text-xs"></i>
+          <span>Profile</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="password">
+          <i class="fa-solid fa-key text-xs"></i>
+          <span>Password</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="alerts">
+          <i class="fa-solid fa-bell text-xs"></i>
+          <span>Alerts</span>
+        </button>
+        <button type="button" class="tab-btn" data-tab="session">
+          <i class="fa-solid fa-desktop text-xs"></i>
+          <span>Session</span>
+        </button>
+      </div>
+
+      <!-- ==================== TAB: PROFILE ==================== -->
+      <div id="tab-profile" class="tab-panel active space-y-6">
+
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-5">
+            <i class="fa-solid fa-user text-brand-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Profile Information</h2>
+          </div>
+
+          <!-- Avatar & Basic Info -->
+          <div class="flex flex-col sm:flex-row items-center gap-5 mb-6 pb-6 border-b border-white/5">
+            <div class="w-20 h-20 rounded-full bg-brand-500/20 border-2 border-brand-500/30 flex items-center justify-center text-brand-400 text-3xl font-bold" id="profileInitials">
+              A1
+            </div>
+            <div class="text-center sm:text-left">
+              <h3 class="text-xl font-serif font-bold text-white" id="profileName">Admin</h3>
+              <p class="text-xs text-slate-400 mt-1" id="profileRole">admin</p>
+              <p class="text-xs text-slate-500 mt-1" id="profileEmail">admin@homescape.co.ke</p>
+            </div>
+          </div>
+
+          <!-- Profile Fields (Read-only) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="form-label">Username</label>
+              <input type="text" id="profileUsername" class="form-input" disabled />
+            </div>
+            <div>
+              <label class="form-label">Full Name</label>
+              <input type="text" id="profileFullName" class="form-input" disabled />
+            </div>
+            <div>
+              <label class="form-label">Email Address</label>
+              <input type="email" id="profileEmailField" class="form-input" disabled />
+            </div>
+            <div>
+              <label class="form-label">Phone Number</label>
+              <input type="tel" id="profilePhone" class="form-input" disabled />
+            </div>
+            <div>
+              <label class="form-label">Role</label>
+              <input type="text" id="profileRoleField" class="form-input" disabled />
+            </div>
+            <div>
+              <label class="form-label">Account Created</label>
+              <input type="text" id="profileCreatedAt" class="form-input" disabled />
+            </div>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-white/5">
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              <i class="fa-solid fa-circle-info mr-1"></i>
+              To update your profile, please contact the Super Admin.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== TAB: PASSWORD ==================== -->
+      <div id="tab-password" class="tab-panel space-y-6">
+
+        <!-- Password Expiry Info -->
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-clock text-amber-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Password Status</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl bg-white/5">
+              <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Last Changed</p>
+              <p class="text-sm font-semibold text-white mt-1" id="lastChanged">—</p>
+            </div>
+            <div class="p-4 rounded-xl bg-white/5">
+              <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Expires On</p>
+              <p class="text-sm font-semibold text-white mt-1" id="expiresOn">—</p>
+            </div>
+            <div class="p-4 rounded-xl bg-white/5">
+              <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Days Left</p>
+              <p class="text-sm font-semibold mt-1" id="daysLeft">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Change Password Form -->
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-5">
+            <i class="fa-solid fa-key text-brand-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Change Password</h2>
+          </div>
+
+          <form id="passwordForm" class="space-y-5" novalidate>
+
+            <!-- Current Password -->
+            <div>
+              <label for="currentPassword" class="form-label">Current Password *</label>
+              <div class="relative">
+                <input type="password" id="currentPassword" required autocomplete="current-password" class="form-input pr-12" placeholder="Enter current password" />
+                <button type="button" class="password-toggle absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-brand-400 transition" data-target="currentPassword">
+                  <i class="fa-solid fa-eye text-xs"></i>
+                </button>
+              </div>
+              <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+            </div>
+
+            <!-- New Password -->
+            <div>
+              <label for="newPassword" class="form-label">New Password * (min. 12 characters)</label>
+              <div class="relative">
+                <input type="password" id="newPassword" required autocomplete="new-password" class="form-input pr-12" placeholder="Enter new password" />
+                <button type="button" class="password-toggle absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-brand-400 transition" data-target="newPassword">
+                  <i class="fa-solid fa-eye text-xs"></i>
+                </button>
+              </div>
+              
+              <!-- Strength Meter -->
+              <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+              </div>
+              <p class="text-[10px] mt-1.5 font-mono uppercase tracking-widest" id="strengthText">
+                <span class="text-slate-500">Password strength: </span>
+                <span id="strengthLabel" class="text-slate-500">—</span>
+              </p>
+              
+              <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+              <label for="confirmPassword" class="form-label">Confirm New Password *</label>
+              <div class="relative">
+                <input type="password" id="confirmPassword" required autocomplete="new-password" class="form-input pr-12" placeholder="Re-enter new password" />
+                <button type="button" class="password-toggle absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-brand-400 transition" data-target="confirmPassword">
+                  <i class="fa-solid fa-eye text-xs"></i>
+                </button>
+              </div>
+              <p class="field-error hidden text-[10px] text-rose-400 mt-1 font-semibold"></p>
+            </div>
+
+            <!-- Password Requirements -->
+            <div class="p-4 rounded-xl bg-white/5 border border-white/10">
+              <p class="text-[10px] text-slate-400 font-mono uppercase tracking-widest mb-3">
+                <i class="fa-solid fa-list-check mr-1"></i> Password Requirements
+              </p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div class="flex items-center gap-2" data-req="length">
+                  <i class="fa-solid fa-circle text-[6px] text-slate-600"></i>
+                  <span class="text-slate-500">At least 12 characters</span>
+                </div>
+                <div class="flex items-center gap-2" data-req="upper">
+                  <i class="fa-solid fa-circle text-[6px] text-slate-600"></i>
+                  <span class="text-slate-500">One uppercase letter (A-Z)</span>
+                </div>
+                <div class="flex items-center gap-2" data-req="lower">
+                  <i class="fa-solid fa-circle text-[6px] text-slate-600"></i>
+                  <span class="text-slate-500">One lowercase letter (a-z)</span>
+                </div>
+                <div class="flex items-center gap-2" data-req="number">
+                  <i class="fa-solid fa-circle text-[6px] text-slate-600"></i>
+                  <span class="text-slate-500">One number (0-9)</span>
+                </div>
+                <div class="flex items-center gap-2" data-req="special">
+                  <i class="fa-solid fa-circle text-[6px] text-slate-600"></i>
+                  <span class="text-slate-500">One special character (!@#$...)</span>
+                </div>
+                <div class="flex items-center gap-2" data-req="match">
+                  <i class="fa-solid fa-circle text-[6px] text-slate-600"></i>
+                  <span class="text-slate-500">Passwords match</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex items-center justify-end gap-3 pt-2">
+              <button type="button" onclick="document.getElementById('passwordForm').reset();" class="btn-secondary">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+              </button>
+              <button type="submit" id="savePasswordBtn" class="btn-primary">
+                <i class="fa-solid fa-key"></i> Update Password
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+      <!-- ==================== TAB: ALERTS ==================== -->
+      <div id="tab-alerts" class="tab-panel space-y-6">
+
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-5">
+            <i class="fa-solid fa-bell text-brand-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Alert Preferences</h2>
+          </div>
+
+          <p class="text-xs text-slate-400 mb-5">
+            Choose how you want to receive security alerts and notifications.
+          </p>
+
+          <div class="space-y-4">
+
+            <!-- Email Alerts -->
+            <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
+              <div class="flex items-center gap-3 flex-1 min-w-0">
+                <div class="w-10 h-10 rounded-lg bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400 flex-shrink-0">
+                  <i class="fa-solid fa-envelope text-sm"></i>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold text-white">Email Notifications</p>
+                  <p class="text-xs text-slate-500 truncate" id="alertEmail">admin@homescape.co.ke</p>
+                </div>
+              </div>
+              <div class="toggle-switch on" data-pref="email"></div>
+            </div>
+
+            <!-- SMS Alerts -->
+            <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
+              <div class="flex items-center gap-3 flex-1 min-w-0">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 flex-shrink-0">
+                  <i class="fa-solid fa-mobile-screen text-sm"></i>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold text-white">SMS Notifications</p>
+                  <p class="text-xs text-slate-500 truncate" id="alertPhone">+254 700 000 000</p>
+                </div>
+              </div>
+              <div class="toggle-switch" data-pref="sms"></div>
+            </div>
+
+            <!-- Dashboard Alerts -->
+            <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
+              <div class="flex items-center gap-3 flex-1 min-w-0">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
+                  <i class="fa-solid fa-desktop text-sm"></i>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold text-white">Dashboard Alerts</p>
+                  <p class="text-xs text-slate-500">Show alerts directly in admin panel</p>
+                </div>
+              </div>
+              <div class="toggle-switch on" data-pref="dashboard"></div>
+            </div>
+
+          </div>
+
+          <div class="flex items-center justify-end gap-3 mt-6 pt-6 border-t border-white/5">
+            <button type="button" id="saveAlertsBtn" class="btn-primary">
+              <i class="fa-solid fa-check"></i> Save Preferences
+            </button>
+          </div>
+
+        </div>
+
+        <!-- What Alerts You'll Receive -->
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <i class="fa-solid fa-circle-info text-brand-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">What You'll Be Alerted About</h2>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+              <i class="fa-solid fa-key text-amber-400 text-xs mt-1"></i>
+              <div>
+                <p class="text-xs font-semibold text-white">Password Expiry</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">5, 2, and 0 days before expiry</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+              <i class="fa-solid fa-shield-halved text-rose-400 text-xs mt-1"></i>
+              <div>
+                <p class="text-xs font-semibold text-white">Failed Logins</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">After 3 failed attempts</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+              <i class="fa-solid fa-database text-emerald-400 text-xs mt-1"></i>
+              <div>
+                <p class="text-xs font-semibold text-white">Backup Failures</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">Immediately after failure</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3 p-3 rounded-lg bg-white/5">
+              <i class="fa-solid fa-user-shield text-blue-400 text-xs mt-1"></i>
+              <div>
+                <p class="text-xs font-semibold text-white">New Sign-Ins</p>
+                <p class="text-[10px] text-slate-500 mt-0.5">When you log in from new device</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== TAB: SESSION ==================== -->
+      <div id="tab-session" class="tab-panel space-y-6">
+
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-5">
+            <i class="fa-solid fa-desktop text-brand-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Current Session</h2>
+          </div>
+
+          <div class="space-y-1">
+            <div class="info-row">
+              <span class="info-label">Session ID</span>
+              <span class="info-value font-mono" id="sessionId">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Login Time</span>
+              <span class="info-value" id="loginTime">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Expires At</span>
+              <span class="info-value" id="sessionExpires">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Session Type</span>
+              <span class="info-value" id="sessionType">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Browser</span>
+              <span class="info-value" id="sessionBrowser">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Session Actions -->
+        <div class="glass-panel rounded-2xl p-5 sm:p-6">
+          <div class="flex items-center gap-2 mb-5">
+            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm"></i>
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Session Actions</h2>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button type="button" id="logoutAllBtn" class="btn-secondary flex-1">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Logout Session</span>
+            </button>
+          </div>
+
+          <p class="text-[10px] text-slate-500 mt-4 font-mono">
+            <i class="fa-solid fa-circle-info mr-1"></i>
+            Logging out ends your current session. You'll need to sign in again.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-6 py-6 text-center text-[10px] text-slate-600 font-mono border-t border-white/5">
+      &copy; <span id="footerYear">2026</span> HomeScape Admin Panel. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="glass-panel rounded-xl px-4 py-3 flex items-center gap-3 shadow-2xl">
+      <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-check text-sm"></i>
+      </div>
+      <p id="toastMessage" class="text-xs font-semibold text-white">Success!</p>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        sessionKey: 'homescape_admin_session',
+        loginUrl: '/admin/index.html',
+        dataUrl: '/data/',
+        adminsFile: 'admins.json'
+      };
+
+      // ============================================================
+      // STATE
+      // ============================================================
+      var currentAdmin = null;
+      var session = null;
+
+      // ============================================================
+      // SECURITY
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function getInitials(name) {
+        if (!name) return 'A';
+        return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '—';
+        try {
+          var d = new Date(dateStr);
+          return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        } catch (e) { return '—'; }
+      }
+
+      function formatDateTime(dateStr) {
+        if (!dateStr) return '—';
+        try {
+          var d = new Date(dateStr);
+          return d.toLocaleString('en-GB', { 
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          });
+        } catch (e) { return '—'; }
+      }
+
+      // ============================================================
+      // SESSION CHECK
+      // ============================================================
+      function getSession() {
+        var data = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!data) return null;
+        try {
+          var s = JSON.parse(data);
+          var expiresAt = new Date(s.expiresAt);
+          if (expiresAt < new Date()) {
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            return null;
+          }
+          return s;
+        } catch (e) { return null; }
+      }
+
+      session = getSession();
+      if (!session) {
+        window.location.href = CONFIG.loginUrl;
+        return;
+      }
+
+      // ============================================================
+      // POPULATE SIDEBAR
+      // ============================================================
+      var adminNameEl = document.getElementById('adminName');
+      if (adminNameEl) adminNameEl.textContent = escapeHTML(session.fullName || 'Admin');
+      var adminRoleEl = document.getElementById('adminRole');
+      if (adminRoleEl) adminRoleEl.textContent = escapeHTML(session.role || 'admin');
+      var adminInitialsEl = document.getElementById('adminInitials');
+      if (adminInitialsEl) adminInitialsEl.textContent = getInitials(session.fullName);
+
+      // ============================================================
+      // FOOTER YEAR
+      // ============================================================
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // SIDEBAR
+      // ============================================================
+      var sidebar = document.getElementById('sidebar');
+      var sidebarOverlay = document.getElementById('sidebarOverlay');
+      var openBtn = document.getElementById('openSidebar');
+      var closeBtn = document.getElementById('closeSidebar');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to logout?')) return;
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // TOAST
+      // ============================================================
+      function showToast(message, type) {
+        type = type || 'success';
+        var toast = document.getElementById('toast');
+        var toastIcon = document.getElementById('toastIcon');
+        var toastMessage = document.getElementById('toastMessage');
+
+        var colors = {
+          success: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/30', text: 'text-emerald-400', icon: 'fa-check' },
+          error: { bg: 'bg-rose-500/20', border: 'border-rose-500/30', text: 'text-rose-400', icon: 'fa-circle-exclamation' },
+          warning: { bg: 'bg-amber-500/20', border: 'border-amber-500/30', text: 'text-amber-400', icon: 'fa-triangle-exclamation' }
+        };
+
+        var c = colors[type] || colors.success;
+        toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center ' + c.bg + ' border ' + c.border + ' ' + c.text;
+        toastIcon.innerHTML = '<i class="fa-solid ' + c.icon + ' text-sm"></i>';
+        toastMessage.textContent = message;
+
+        toast.classList.remove('translate-y-4', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(function() {
+          toast.classList.add('translate-y-4', 'opacity-0', 'pointer-events-none');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+
+      // ============================================================
+      // TABS
+      // ============================================================
+      document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var tab = this.dataset.tab;
+
+          document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+          this.classList.add('active');
+
+          document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+          var panel = document.getElementById('tab-' + tab);
+          if (panel) panel.classList.add('active');
+        });
+      });
+
+      // ============================================================
+      // PASSWORD VISIBILITY TOGGLE
+      // ============================================================
+      document.querySelectorAll('.password-toggle').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var target = document.getElementById(this.dataset.target);
+          if (!target) return;
+
+          var icon = this.querySelector('i');
+          if (target.type === 'password') {
+            target.type = 'text';
+            icon.className = 'fa-solid fa-eye-slash text-xs';
+          } else {
+            target.type = 'password';
+            icon.className = 'fa-solid fa-eye text-xs';
+          }
+        });
+      });
+
+      // ============================================================
+      // LOAD ADMIN DATA
+      // ============================================================
+      function loadAdminData() {
+        fetch(CONFIG.dataUrl + CONFIG.adminsFile)
+          .then(function(res) {
+            if (!res.ok) throw new Error('Failed to load');
+            return res.json();
+          })
+          .then(function(data) {
+            var admins = data.admins || [];
+            currentAdmin = admins.find(function(a) { return a.id === session.id; });
+            if (!currentAdmin) {
+              showToast('Admin account not found', 'error');
+              return;
+            }
+            populateProfile();
+            populatePasswordStatus();
+            populateAlerts();
+            populateSession();
+            checkExpiry();
+          })
+          .catch(function(e) {
+            console.error('Load error:', e);
+            showToast('Failed to load admin data', 'error');
+          });
+      }
+
+      // ============================================================
+      // POPULATE PROFILE TAB
+      // ============================================================
+      function populateProfile() {
+        if (!currentAdmin) return;
+
+        document.getElementById('profileInitials').textContent = getInitials(currentAdmin.fullName);
+        document.getElementById('profileName').textContent = currentAdmin.fullName || 'Admin';
+        document.getElementById('profileRole').textContent = currentAdmin.role || 'admin';
+        document.getElementById('profileEmail').textContent = currentAdmin.email || '';
+
+        document.getElementById('profileUsername').value = currentAdmin.username || '';
+        document.getElementById('profileFullName').value = currentAdmin.fullName || '';
+        document.getElementById('profileEmailField').value = currentAdmin.email || '';
+        document.getElementById('profilePhone').value = currentAdmin.phone || '—';
+        document.getElementById('profileRoleField').value = currentAdmin.role || 'admin';
+        document.getElementById('profileCreatedAt').value = formatDate(currentAdmin.createdAt);
+      }
+
+      // ============================================================
+      // POPULATE PASSWORD STATUS
+      // ============================================================
+      function populatePasswordStatus() {
+        if (!currentAdmin) return;
+
+        var lastChanged = document.getElementById('lastChanged');
+        var expiresOn = document.getElementById('expiresOn');
+        var daysLeftEl = document.getElementById('daysLeft');
+
+        if (lastChanged) lastChanged.textContent = formatDate(currentAdmin.lastPasswordChange);
+        if (expiresOn) expiresOn.textContent = formatDate(currentAdmin.passwordExpiresAt);
+
+        if (currentAdmin.passwordExpiresAt) {
+          var expiryDate = new Date(currentAdmin.passwordExpiresAt);
+          var daysLeft = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+          
+          if (daysLeftEl) {
+            if (daysLeft < 0) {
+              daysLeftEl.textContent = 'Expired';
+              daysLeftEl.className = 'text-sm font-semibold mt-1 text-rose-400';
+            } else if (daysLeft <= 2) {
+              daysLeftEl.textContent = daysLeft + ' day' + (daysLeft !== 1 ? 's' : '');
+              daysLeftEl.className = 'text-sm font-semibold mt-1 text-amber-400';
+            } else {
+              daysLeftEl.textContent = daysLeft + ' days';
+              daysLeftEl.className = 'text-sm font-semibold mt-1 text-emerald-400';
+            }
+          }
+        }
+      }
+
+      // ============================================================
+      // POPULATE ALERTS TAB
+      // ============================================================
+      function populateAlerts() {
+        if (!currentAdmin) return;
+
+        var alertEmail = document.getElementById('alertEmail');
+        var alertPhone = document.getElementById('alertPhone');
+        if (alertEmail) alertEmail.textContent = currentAdmin.email || '';
+        if (alertPhone) alertPhone.textContent = currentAdmin.phone || '—';
+
+        // Set toggles based on preferences
+        var pref = currentAdmin.alertPreference || 'email';
+        document.querySelectorAll('.toggle-switch').forEach(function(t) {
+          var key = t.dataset.pref;
+          if (key === 'email' && (pref === 'email' || pref === 'all')) t.classList.add('on');
+          else if (key === 'sms' && (pref === 'sms' || pref === 'all')) t.classList.add('on');
+          else if (key === 'dashboard') t.classList.add('on');
+        });
+      }
+
+      // ============================================================
+      // POPULATE SESSION TAB
+      // ============================================================
+      function populateSession() {
+        var sessionIdEl = document.getElementById('sessionId');
+        var loginTimeEl = document.getElementById('loginTime');
+        var expiresEl = document.getElementById('sessionExpires');
+        var typeEl = document.getElementById('sessionType');
+        var browserEl = document.getElementById('sessionBrowser');
+
+        if (sessionIdEl) sessionIdEl.textContent = (session.id || '').substring(0, 12) + '...';
+        if (loginTimeEl) loginTimeEl.textContent = formatDateTime(session.loginAt);
+        if (expiresEl) expiresEl.textContent = formatDateTime(session.expiresAt);
+        
+        var isPersistent = !!localStorage.getItem(CONFIG.sessionKey);
+        if (typeEl) typeEl.textContent = isPersistent ? 'Persistent (Remembered)' : 'Session only';
+        
+        var ua = navigator.userAgent;
+        var browser = 'Unknown';
+        if (ua.indexOf('Chrome') !== -1) browser = 'Chrome';
+        else if (ua.indexOf('Firefox') !== -1) browser = 'Firefox';
+        else if (ua.indexOf('Safari') !== -1) browser = 'Safari';
+        else if (ua.indexOf('Edge') !== -1) browser = 'Edge';
+        if (browserEl) browserEl.textContent = browser;
+      }
+
+      // ============================================================
+      // CHECK EXPIRY ALERT
+      // ============================================================
+      function checkExpiry() {
+        if (!currentAdmin || !currentAdmin.passwordExpiresAt) return;
+
+        var expiryDate = new Date(currentAdmin.passwordExpiresAt);
+        var daysLeft = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+
+        if (daysLeft <= 3) {
+          var alertEl = document.getElementById('expiryAlert');
+          var alertText = document.getElementById('expiryAlertText');
+          if (alertEl) alertEl.classList.remove('hidden');
+          if (alertText) {
+            if (daysLeft < 0) {
+              alertText.textContent = 'Your password has EXPIRED. Please change it immediately.';
+            } else if (daysLeft === 0) {
+              alertText.textContent = 'Your password expires TODAY. Please change it now.';
+            } else if (daysLeft === 1) {
+              alertText.textContent = 'Your password expires TOMORROW. Please change it.';
+            } else {
+              alertText.textContent = 'Your password expires in ' + daysLeft + ' days. Please update it soon.';
+            }
+          }
+        }
+      }
+
+      // ============================================================
+      // PASSWORD STRENGTH METER
+      // ============================================================
+      var newPasswordInput = document.getElementById('newPassword');
+      var confirmPasswordInput = document.getElementById('confirmPassword');
+      var strengthFill = document.getElementById('strengthFill');
+      var strengthLabel = document.getElementById('strengthLabel');
+
+      function checkPasswordStrength(pw) {
+        var strength = 0;
+        var checks = {
+          length: pw.length >= 12,
+          upper: /[A-Z]/.test(pw),
+          lower: /[a-z]/.test(pw),
+          number: /[0-9]/.test(pw),
+          special: /[^A-Za-z0-9]/.test(pw)
+        };
+
+        Object.keys(checks).forEach(function(k) {
+          var el = document.querySelector('[data-req="' + k + '"]');
+          if (el) {
+            var icon = el.querySelector('i');
+            var span = el.querySelector('span');
+            if (checks[k]) {
+              icon.className = 'fa-solid fa-circle-check text-[10px] text-emerald-400';
+              span.className = 'text-emerald-400';
+            } else {
+              icon.className = 'fa-solid fa-circle text-[6px] text-slate-600';
+              span.className = 'text-slate-500';
+            }
+          }
+        });
+
+        if (checks.length) strength++;
+        if (checks.upper && checks.lower) strength++;
+        if (checks.number) strength++;
+        if (checks.special) strength++;
+
+        var labels = ['—', 'Weak', 'Fair', 'Good', 'Strong'];
+        var classes = ['', 'strength-weak', 'strength-fair', 'strength-good', 'strength-strong'];
+        var textColors = ['text-slate-500', 'text-rose-400', 'text-amber-400', 'text-blue-400', 'text-emerald-400'];
+
+        strengthFill.className = 'strength-fill ' + (classes[strength] || '');
+        strengthLabel.textContent = labels[strength];
+        strengthLabel.className = textColors[strength];
+      }
+
+      if (newPasswordInput) {
+        newPasswordInput.addEventListener('input', function() {
+          checkPasswordStrength(this.value);
+          checkMatch();
+        });
+      }
+
+      function checkMatch() {
+        var pw = newPasswordInput.value;
+        var confirm = confirmPasswordInput.value;
+        var el = document.querySelector('[data-req="match"]');
+        if (!el) return;
+
+        var icon = el.querySelector('i');
+        var span = el.querySelector('span');
+
+        if (pw && confirm && pw === confirm) {
+          icon.className = 'fa-solid fa-circle-check text-[10px] text-emerald-400';
+          span.className = 'text-emerald-400';
+        } else {
+          icon.className = 'fa-solid fa-circle text-[6px] text-slate-600';
+          span.className = 'text-slate-500';
+        }
+      }
+
+      if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', checkMatch);
+      }
+
+      // ============================================================
+      // PASSWORD FORM SUBMIT
+      // ============================================================
+      var passwordForm = document.getElementById('passwordForm');
+      if (passwordForm) {
+        passwordForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Clear errors
+          passwordForm.querySelectorAll('.field-error').forEach(function(el) {
+            el.textContent = '';
+            el.classList.add('hidden');
+          });
+          passwordForm.querySelectorAll('.form-input').forEach(function(el) {
+            el.classList.remove('error');
+          });
+
+          var current = document.getElementById('currentPassword').value;
+          var newPw = newPasswordInput.value;
+          var confirm = confirmPasswordInput.value;
+
+          var isValid = true;
+
+          // Current password
+          if (!current) {
+            showFieldError('currentPassword', 'Current password is required');
+            isValid = false;
+          } else if (currentAdmin && current !== currentAdmin.password) {
+            showFieldError('currentPassword', 'Current password is incorrect');
+            isValid = false;
+          }
+
+          // New password
+          if (!newPw) {
+            showFieldError('newPassword', 'New password is required');
+            isValid = false;
+          } else if (newPw.length < 12) {
+            showFieldError('newPassword', 'Password must be at least 12 characters');
+            isValid = false;
+          } else if (!/[A-Z]/.test(newPw) || !/[a-z]/.test(newPw) || !/[0-9]/.test(newPw) || !/[^A-Za-z0-9]/.test(newPw)) {
+            showFieldError('newPassword', 'Password does not meet all requirements');
+            isValid = false;
+          }
+
+          // Confirm
+          if (!confirm) {
+            showFieldError('confirmPassword', 'Please confirm your password');
+            isValid = false;
+          } else if (newPw !== confirm) {
+            showFieldError('confirmPassword', 'Passwords do not match');
+            isValid = false;
+          }
+
+          // Same as old
+          if (current && newPw && current === newPw) {
+            showFieldError('newPassword', 'New password must be different');
+            isValid = false;
+          }
+
+          if (!isValid) {
+            showToast('Please fix errors', 'error');
+            return;
+          }
+
+          // Submit
+          var submitBtn = document.getElementById('savePasswordBtn');
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Updating...';
+
+          setTimeout(function() {
+            // Simulate success
+            showToast('Password updated successfully!', 'success');
+            passwordForm.reset();
+            strengthFill.className = 'strength-fill';
+            strengthLabel.textContent = '—';
+            
+            document.querySelectorAll('[data-req]').forEach(function(el) {
+              var icon = el.querySelector('i');
+              var span = el.querySelector('span');
+              icon.className = 'fa-solid fa-circle text-[6px] text-slate-600';
+              span.className = 'text-slate-500';
+            });
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-key"></i> Update Password';
+          }, 1500);
+        });
+      }
+
+      function showFieldError(fieldId, message) {
+        var field = document.getElementById(fieldId);
+        if (!field) return;
+        field.classList.add('error');
+        var error = field.parentElement.parentElement.querySelector('.field-error');
+        if (error) {
+          error.textContent = message;
+          error.classList.remove('hidden');
+        }
+      }
+
+      // ============================================================
+      // TOGGLE SWITCHES
+      // ============================================================
+      document.querySelectorAll('.toggle-switch').forEach(function(t) {
+        t.addEventListener('click', function() {
+          this.classList.toggle('on');
+        });
+      });
+
+      // Save alerts
+      var saveAlertsBtn = document.getElementById('saveAlertsBtn');
+      if (saveAlertsBtn) {
+        saveAlertsBtn.addEventListener('click', function() {
+          var email = document.querySelector('[data-pref="email"]').classList.contains('on');
+          var sms = document.querySelector('[data-pref="sms"]').classList.contains('on');
+          var dashboard = document.querySelector('[data-pref="dashboard"]').classList.contains('on');
+
+          var pref = 'dashboard';
+          if (email && sms) pref = 'all';
+          else if (email) pref = 'email';
+          else if (sms) pref = 'sms';
+
+          showToast('Alert preferences saved!', 'success');
+        });
+      }
+
+      // ============================================================
+      // LOGOUT SESSION BUTTON
+      // ============================================================
+      var logoutAllBtn = document.getElementById('logoutAllBtn');
+      if (logoutAllBtn) {
+        logoutAllBtn.addEventListener('click', function() {
+          if (!confirm('End your current session?')) return;
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      loadAdminData();
+
+      console.log('✅ Settings page loaded');
+
+    })();
+  </script>
+
+</body>
+</html>

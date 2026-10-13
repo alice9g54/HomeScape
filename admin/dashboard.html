@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | HomeScape Real Estate</title>
+  
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0f1c" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#0d9488', 800: '#065f46', 900: '#022c22' },
+            darkbg: '#0a0f1c',
+            cardbg: '#111827'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <style>
+    body {
+      background-color: #0a0f1c;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* Glow Blobs */
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    /* Glass Panel */
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    /* Sidebar Link */
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #94a3b8;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: white;
+    }
+
+    .sidebar-link.active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #4ade80;
+      border-color: rgba(34, 197, 94, 0.2);
+      font-weight: 600;
+    }
+
+    /* Stat Card */
+    .stat-card {
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 197, 94, 0.3);
+      box-shadow: 0 20px 40px -15px rgba(34, 197, 94, 0.15);
+    }
+
+    /* Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Activity Dot */
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0f1c; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #16a34a; }
+
+    /* Sidebar Mobile Slide */
+    #sidebar {
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 1023px) {
+      #sidebar {
+        transform: translateX(-100%);
+      }
+      #sidebar.open {
+        transform: translateX(0);
+      }
+    }
+
+    /* Fade in */
+    .fade-in {
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow -->
+  <div class="glow-blob w-[500px] h-[500px] bg-brand-500 -top-40 -left-40"></div>
+  <div class="glow-blob w-[400px] h-[400px] bg-emerald-500 bottom-0 right-0"></div>
+
+  <!-- ==================== MOBILE MENU OVERLAY ==================== -->
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-slate-950/95 backdrop-blur-lg border-r border-white/5 z-40 flex flex-col justify-between">
+    
+    <!-- Logo -->
+    <div>
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 group">
+          <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-white font-serif font-bold text-sm leading-none">Home<span class="text-brand-400">Scape</span></span>
+            <span class="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Admin</span>
+          </div>
+        </a>
+        <button id="closeSidebar" class="lg:hidden text-slate-500 hover:text-white transition p-1" aria-label="Close menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Nav -->
+      <nav class="p-3 space-y-1">
+        <a href="/admin/dashboard.html" class="sidebar-link active">
+          <i class="fa-solid fa-chart-line w-4 text-center"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="/admin/properties.html" class="sidebar-link">
+          <i class="fa-solid fa-city w-4 text-center"></i>
+          <span>Properties</span>
+        </a>
+        <a href="/admin/videos.html" class="sidebar-link">
+          <i class="fa-solid fa-video w-4 text-center"></i>
+          <span>Videos</span>
+        </a>
+        <a href="/admin/inquiries.html" class="sidebar-link">
+          <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+          <span>Inquiries</span>
+        </a>
+        <div class="border-t border-white/5 my-2"></div>
+        <a href="/admin/backups.html" class="sidebar-link">
+          <i class="fa-solid fa-database w-4 text-center"></i>
+          <span>Backups</span>
+        </a>
+        <a href="/admin/activity.html" class="sidebar-link">
+          <i class="fa-solid fa-clock-rotate-left w-4 text-center"></i>
+          <span>Activity Log</span>
+        </a>
+        <a href="/admin/settings.html" class="sidebar-link">
+          <i class="fa-solid fa-gear w-4 text-center"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom -->
+    <div class="p-3 space-y-1 border-t border-white/5">
+      
+      <!-- Admin Info -->
+      <div id="adminInfo" class="px-3 py-2 rounded-xl bg-white/5 mb-2">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xs font-bold" id="adminInitials">
+            A1
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-white truncate" id="adminName">Admin</p>
+            <p class="text-[10px] text-slate-500 truncate" id="adminRole">admin</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/index.html" class="sidebar-link">
+        <i class="fa-solid fa-globe w-4 text-center"></i>
+        <span>View Website</span>
+      </a>
+      
+      <button id="logoutBtn" type="button" class="sidebar-link w-full text-red-400 hover:bg-red-500/10 hover:text-red-300">
+        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="lg:ml-64 min-h-screen relative z-10">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-20 bg-slate-950/80 backdrop-blur-lg border-b border-white/5">
+      <div class="px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-3">
+          <button id="openSidebar" class="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="text-lg sm:text-xl font-serif font-bold text-white">Dashboard</h1>
+            <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">
+              Welcome back, <span id="headerAdminName">Admin</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <a href="/admin/properties.html" class="hidden sm:inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400 text-black text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition">
+            <i class="fa-solid fa-plus text-[10px]"></i>
+            <span>Add Property</span>
+          </a>
+          <a href="/admin/properties.html" class="sm:hidden w-10 h-10 rounded-xl bg-brand-500 hover:bg-brand-400 text-black flex items-center justify-center transition">
+            <i class="fa-solid fa-plus text-xs"></i>
+          </a>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4 sm:p-6 space-y-6 fade-in">
+
+      <!-- Password Expiry Warning -->
+      <div id="passwordWarning" class="hidden glass-panel rounded-2xl p-4 border-l-4 border-amber-500">
+        <div class="flex items-start gap-3">
+          <i class="fa-solid fa-triangle-exclamation text-amber-400 text-lg mt-0.5"></i>
+          <div class="flex-1">
+            <p class="text-sm font-semibold text-white">Password Expiry Notice</p>
+            <p class="text-xs text-slate-400 mt-1" id="passwordWarningText">
+              Your password will expire soon. Please update it.
+            </p>
+          </div>
+          <a href="/admin/settings.html" class="bg-amber-500 hover:bg-amber-400 text-black text-[10px] font-bold uppercase tracking-wider px-3 py-2 rounded-lg transition whitespace-nowrap">
+            Update Now
+          </a>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        
+        <div class="stat-card glass-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start justify-between">
+            <div class="w-9 h-9 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-400">
+              <i class="fa-solid fa-building text-sm"></i>
+            </div>
+            <span class="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">LIVE</span>
+          </div>
+          <p class="text-2xl sm:text-3xl font-serif font-bold text-white mt-3" id="statProperties">—</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1">Properties</p>
+        </div>
+
+        <div class="stat-card glass-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start justify-between">
+            <div class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+              <i class="fa-solid fa-video text-sm"></i>
+            </div>
+            <span class="text-[9px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full">4K</span>
+          </div>
+          <p class="text-2xl sm:text-3xl font-serif font-bold text-white mt-3" id="statVideos">—</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1">Videos</p>
+        </div>
+
+        <div class="stat-card glass-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start justify-between">
+            <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+              <i class="fa-solid fa-envelope-open-text text-sm"></i>
+            </div>
+          </div>
+          <p class="text-2xl sm:text-3xl font-serif font-bold text-white mt-3" id="statInquiries">—</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1">Inquiries</p>
+        </div>
+
+        <div class="stat-card glass-panel rounded-2xl p-4 sm:p-5">
+          <div class="flex items-start justify-between">
+            <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <i class="fa-solid fa-database text-sm"></i>
+            </div>
+            <span id="backupStatus" class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-400">—</span>
+          </div>
+          <p class="text-2xl sm:text-3xl font-serif font-bold text-white mt-3" id="statBackup">—</p>
+          <p class="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-1">Last Backup</p>
+        </div>
+
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="glass-panel rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fa-solid fa-bolt text-brand-400 text-sm"></i>
+          <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Quick Actions</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <a href="/admin/properties.html" class="group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-brand-500/10 border border-white/5 hover:border-brand-500/30 transition">
+            <i class="fa-solid fa-plus text-brand-400 text-lg group-hover:scale-110 transition"></i>
+            <span class="text-xs font-semibold text-white">Add Property</span>
+          </a>
+          <a href="/admin/videos.html" class="group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-brand-500/10 border border-white/5 hover:border-brand-500/30 transition">
+            <i class="fa-solid fa-video text-brand-400 text-lg group-hover:scale-110 transition"></i>
+            <span class="text-xs font-semibold text-white">Add Video</span>
+          </a>
+          <a href="/admin/backups.html" class="group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-brand-500/10 border border-white/5 hover:border-brand-500/30 transition">
+            <i class="fa-solid fa-download text-brand-400 text-lg group-hover:scale-110 transition"></i>
+            <span class="text-xs font-semibold text-white">Backup Now</span>
+          </a>
+          <a href="/admin/settings.html" class="group flex flex-col items-center gap-2 p-4 rounded-xl bg-white/5 hover:bg-brand-500/10 border border-white/5 hover:border-brand-500/30 transition">
+            <i class="fa-solid fa-key text-brand-400 text-lg group-hover:scale-110 transition"></i>
+            <span class="text-xs font-semibold text-white">Change Password</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Two Column Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        
+        <!-- Recent Properties -->
+        <div class="lg:col-span-2 glass-panel rounded-2xl overflow-hidden">
+          <div class="p-5 border-b border-white/5 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-city text-brand-400 text-sm"></i>
+              <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Recent Properties</h2>
+            </div>
+            <a href="/admin/properties.html" class="text-[10px] text-brand-400 hover:text-brand-300 font-bold uppercase tracking-wider">
+              View All <i class="fa-solid fa-arrow-right text-[8px]"></i>
+            </a>
+          </div>
+          <div id="recentProperties" class="divide-y divide-white/5">
+            <div class="p-8 text-center text-slate-500 text-xs">
+              <div class="inline-block w-6 h-6 border-2 border-brand-500/30 border-t-brand-500 rounded-full animate-spin mb-2"></div>
+              <p>Loading properties...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="glass-panel rounded-2xl overflow-hidden">
+          <div class="p-5 border-b border-white/5 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-clock-rotate-left text-brand-400 text-sm"></i>
+              <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">Recent Activity</h2>
+            </div>
+            <a href="/admin/activity.html" class="text-[10px] text-brand-400 hover:text-brand-300 font-bold uppercase tracking-wider">
+              All <i class="fa-solid fa-arrow-right text-[8px]"></i>
+            </a>
+          </div>
+          <div id="activityLog" class="p-4 space-y-3">
+            <div class="text-center text-slate-500 text-xs py-6">Loading activity...</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- System Status -->
+      <div class="glass-panel rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fa-solid fa-heart-pulse text-brand-400 text-sm"></i>
+          <h2 class="text-sm font-bold text-white uppercase tracking-widest font-mono">System Status</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-white/5">
+            <span class="activity-dot bg-emerald-400"></span>
+            <span class="text-slate-300">Website: <strong class="text-emerald-400">Online</strong></span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-white/5">
+            <span class="activity-dot bg-emerald-400"></span>
+            <span class="text-slate-300">Data: <strong class="text-emerald-400">Synced</strong></span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-white/5">
+            <span class="activity-dot bg-emerald-400"></span>
+            <span class="text-slate-300">Backup: <strong id="backupStatusText" class="text-emerald-400">Fresh</strong></span>
+          </div>
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-white/5">
+            <span class="activity-dot bg-emerald-400"></span>
+            <span class="text-slate-300">Session: <strong class="text-emerald-400">Active</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-6 py-6 text-center text-[10px] text-slate-600 font-mono border-t border-white/5">
+      &copy; <span id="footerYear">2026</span> HomeScape Admin Panel. All rights reserved.
+    </footer>
+
+  </main>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ============================================================
+      // CONFIG
+      // ============================================================
+      var CONFIG = {
+        sessionKey: 'homescape_admin_session',
+        loginUrl: '/admin/index.html',
+        dataUrl: '/data/'
+      };
+
+      // ============================================================
+      // SECURITY UTILITIES
+      // ============================================================
+      function escapeHTML(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function sanitizeURL(url) {
+        if (!url) return '';
+        var s = String(url).trim();
+        if (s.startsWith('javascript:') || s.startsWith('data:')) return '';
+        return s;
+      }
+
+      function getInitials(name) {
+        if (!name) return 'A';
+        return name.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+      }
+
+      // ============================================================
+      // SESSION CHECK — CRITICAL SECURITY
+      // ============================================================
+      function getSession() {
+        var data = localStorage.getItem(CONFIG.sessionKey) || sessionStorage.getItem(CONFIG.sessionKey);
+        if (!data) return null;
+
+        try {
+          var session = JSON.parse(data);
+          var expiresAt = new Date(session.expiresAt);
+          if (expiresAt < new Date()) {
+            // Session expired — clean up
+            localStorage.removeItem(CONFIG.sessionKey);
+            sessionStorage.removeItem(CONFIG.sessionKey);
+            return null;
+          }
+          return session;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function requireAuth() {
+        var session = getSession();
+        if (!session) {
+          // Not logged in — redirect to login
+          window.location.href = CONFIG.loginUrl;
+          return null;
+        }
+        return session;
+      }
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      var session = requireAuth();
+      if (!session) return; // Stop if not authenticated
+
+      // Populate admin info
+      var adminName = escapeHTML(session.fullName || 'Admin');
+      var adminRole = escapeHTML(session.role || 'admin');
+
+      var adminNameEl = document.getElementById('adminName');
+      if (adminNameEl) adminNameEl.textContent = adminName;
+
+      var adminRoleEl = document.getElementById('adminRole');
+      if (adminRoleEl) adminRoleEl.textContent = adminRole;
+
+      var headerAdminNameEl = document.getElementById('headerAdminName');
+      if (headerAdminNameEl) headerAdminNameEl.textContent = adminName.split(' ')[0];
+
+      var adminInitialsEl = document.getElementById('adminInitials');
+      if (adminInitialsEl) adminInitialsEl.textContent = getInitials(session.fullName);
+
+      // ============================================================
+      // FOOTER YEAR
+      // ============================================================
+      var yearEl = document.getElementById('footerYear');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // ============================================================
+      // SIDEBAR MOBILE TOGGLE
+      // ============================================================
+      var sidebar = document.getElementById('sidebar');
+      var overlay = document.getElementById('sidebarOverlay');
+      var openBtn = document.getElementById('openSidebar');
+      var closeBtn = document.getElementById('closeSidebar');
+
+      function openSidebar() {
+        sidebar.classList.add('open');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (overlay) overlay.addEventListener('click', closeSidebar);
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      var logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (!confirm('Are you sure you want to logout?')) return;
+          
+          // Clear session
+          localStorage.removeItem(CONFIG.sessionKey);
+          sessionStorage.removeItem(CONFIG.sessionKey);
+          
+          // Redirect
+          window.location.href = CONFIG.loginUrl;
+        });
+      }
+
+      // ============================================================
+      // PASSWORD EXPIRY CHECK
+      // ============================================================
+      function checkPasswordExpiry() {
+        // Fetch admins to find current admin
+        fetch(CONFIG.dataUrl + 'admins.json')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            var admins = data.admins || [];
+            var currentAdmin = admins.find(function(a) { return a.id === session.id; });
+            if (!currentAdmin) return;
+
+            if (!currentAdmin.passwordExpiresAt) return;
+
+            var expiryDate = new Date(currentAdmin.passwordExpiresAt);
+            var now = new Date();
+            var daysLeft = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+
+            if (daysLeft < 0) {
+              // Expired — force logout
+              alert('Your password has expired. Please contact support.');
+              localStorage.removeItem(CONFIG.sessionKey);
+              sessionStorage.removeItem(CONFIG.sessionKey);
+              window.location.href = CONFIG.loginUrl;
+            } else if (daysLeft <= 2) {
+              // Warning
+              var warning = document.getElementById('passwordWarning');
+              var warningText = document.getElementById('passwordWarningText');
+              if (warning) warning.classList.remove('hidden');
+              if (warningText) {
+                warningText.textContent = daysLeft === 0 
+                  ? 'Your password expires today! Update immediately.'
+                  : 'Your password expires in ' + daysLeft + ' day' + (daysLeft > 1 ? 's' : '') + '. Please update it.';
+              }
+            }
+          })
+          .catch(function(e) { console.error('Expiry check failed:', e); });
+      }
+
+      // ============================================================
+      // LOAD PROPERTIES
+      // ============================================================
+      function loadProperties() {
+        fetch(CONFIG.dataUrl + 'properties.json')
+          .then(function(res) {
+            if (!res.ok) throw new Error('Failed to load');
+            return res.json();
+          })
+          .then(function(data) {
+            var properties = data.properties || data;
+            
+            // Update stat
+            var statEl = document.getElementById('statProperties');
+            if (statEl) statEl.textContent = properties.length;
+
+            // Render recent
+            var container = document.getElementById('recentProperties');
+            if (!container) return;
+
+            if (properties.length === 0) {
+              container.innerHTML = '<div class="p-8 text-center text-slate-500 text-xs">No properties yet.</div>';
+              return;
+            }
+
+            var html = '';
+            properties.slice(0, 5).forEach(function(prop) {
+              var safeTitle = escapeHTML(prop.title);
+              var safeType = escapeHTML(prop.type);
+              var safePrice = escapeHTML(prop.priceFormatted);
+              var statusClass = prop.status === 'Sold'
+                ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                : prop.status === 'Under Offer'
+                  ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                  : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+
+              html += '<div class="p-4 flex items-center gap-3 hover:bg-white/5 transition">' +
+                '<div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0">' +
+                  '<i class="fa-solid fa-building text-slate-400 text-sm"></i>' +
+                '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<p class="text-xs font-semibold text-white truncate">' + safeTitle + '</p>' +
+                  '<p class="text-[10px] text-slate-500 mt-0.5">' + safeType + ' • ' + safePrice + '</p>' +
+                '</div>' +
+                '<span class="status-badge ' + statusClass + '">' + escapeHTML(prop.status || 'Active') + '</span>' +
+              '</div>';
+            });
+            container.innerHTML = html;
+          })
+          .catch(function(e) {
+            console.error('Properties error:', e);
+            var statEl = document.getElementById('statProperties');
+            if (statEl) statEl.textContent = '0';
+            var container = document.getElementById('recentProperties');
+            if (container) container.innerHTML = '<div class="p-8 text-center text-slate-500 text-xs">Unable to load properties.</div>';
+          });
+      }
+
+      // ============================================================
+      // LOAD VIDEOS
+      // ============================================================
+      function loadVideos() {
+        fetch(CONFIG.dataUrl + 'videos.json')
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            var videos = data.videos || data;
+            var statEl = document.getElementById('statVideos');
+            if (statEl) statEl.textContent = videos.length;
+          })
+          .catch(function(e) {
+            console.error('Videos error:', e);
+            var statEl = document.getElementById('statVideos');
+            if (statEl) statEl.textContent = '0';
+          });
+      }
+
+      // ============================================================
+      // LOAD BACKUP STATUS
+      // ============================================================
+      function loadBackupStatus() {
+        var lastBackup = localStorage.getItem('homescape_last_backup');
+        var statEl = document.getElementById('statBackup');
+        var statusEl = document.getElementById('backupStatus');
+        var statusTextEl = document.getElementById('backupStatusText');
+
+        if (!lastBackup) {
+          if (statEl) statEl.textContent = 'Never';
+          if (statusEl) {
+            statusEl.textContent = 'NONE';
+            statusEl.className = 'text-[9px] font-mono px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400';
+          }
+          if (statusTextEl) {
+            statusTextEl.textContent = 'Missing';
+            statusTextEl.className = 'text-rose-400';
+          }
+          return;
+        }
+
+        try {
+          var backupDate = new Date(lastBackup);
+          var now = new Date();
+          var diffHours = Math.floor((now - backupDate) / (1000 * 60 * 60));
+          var diffDays = Math.floor(diffHours / 24);
+
+          if (statEl) {
+            if (diffHours < 1) statEl.textContent = 'Just now';
+            else if (diffHours < 24) statEl.textContent = diffHours + 'h ago';
+            else statEl.textContent = diffDays + 'd ago';
+          }
+
+          if (diffDays >= 2) {
+            if (statusEl) {
+              statusEl.textContent = 'STALE';
+              statusEl.className = 'text-[9px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400';
+            }
+            if (statusTextEl) {
+              statusTextEl.textContent = 'Stale';
+              statusTextEl.className = 'text-amber-400';
+            }
+          } else {
+            if (statusEl) {
+              statusEl.textContent = 'FRESH';
+              statusEl.className = 'text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400';
+            }
+            if (statusTextEl) {
+              statusTextEl.textContent = 'Fresh';
+              statusTextEl.className = 'text-emerald-400';
+            }
+          }
+        } catch (e) {
+          console.error('Backup status error:', e);
+        }
+      }
+
+      // ============================================================
+      // LOAD INQUIRIES COUNT
+      // ============================================================
+      function loadInquiries() {
+        // Placeholder — no inquiries file yet
+        var statEl = document.getElementById('statInquiries');
+        if (statEl) statEl.textContent = '0';
+      }
+
+      // ============================================================
+      // LOAD ACTIVITY LOG
+      // ============================================================
+      function loadActivity() {
+        var container = document.getElementById('activityLog');
+        if (!container) return;
+
+        // Sample activity (will come from activity log later)
+        var activities = [
+          { action: 'Login', detail: 'Signed in', time: 'Just now', color: 'bg-emerald-400' },
+          { action: 'Session started', detail: 'New session', time: 'Just now', color: 'bg-blue-400' },
+          { action: 'System', detail: 'Admin panel loaded', time: 'Just now', color: 'bg-slate-400' }
+        ];
+
+        var html = '';
+        activities.forEach(function(a) {
+          html += '<div class="flex items-start gap-3">' +
+            '<span class="activity-dot ' + a.color + ' mt-1.5"></span>' +
+            '<div class="flex-1 min-w-0">' +
+              '<p class="text-xs font-semibold text-white">' + escapeHTML(a.action) + '</p>' +
+              '<p class="text-[10px] text-slate-500 truncate">' + escapeHTML(a.detail) + '</p>' +
+            '</div>' +
+            '<span class="text-[9px] text-slate-600 font-mono whitespace-nowrap">' + escapeHTML(a.time) + '</span>' +
+          '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      // ============================================================
+      // INITIALIZE
+      // ============================================================
+      checkPasswordExpiry();
+      loadProperties();
+      loadVideos();
+      loadBackupStatus();
+      loadInquiries();
+      loadActivity();
+
+      console.log('✅ Dashboard loaded for:', adminName);
+
+    })();
+  </script>
+
+</body>
+</html>

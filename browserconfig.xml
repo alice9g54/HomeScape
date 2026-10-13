@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ============================================================
+  HOMESCAPE REAL ESTATE - WINDOWS BROWSER CONFIG
+  ============================================================
+  Purpose: Defines Windows Start menu tiles and taskbar pins
+  Documentation: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426(v=vs.85)
+  Last Updated: September 2026
+  ============================================================
+-->
+<browserconfig>
+  <msapplication>
+    
+    <!-- Tile Configuration -->
+    <tile>
+      <square70x70logo src="/assets/images/icon-72x72.png"/>
+      <square150x150logo src="/assets/images/icon-152x152.png"/>
+      <square310x310logo src="/assets/images/icon-384x384.png"/>
+      <wide310x150logo src="/assets/images/icon-384x384.png"/>
+      <TileColor>#0a0f1c</TileColor>
+    </tile>
+    
+    <!-- Notification Configuration (polling-based) -->
+    <notification>
+      <polling-uri src="/notifications/notification.xml"/>
+      <frequency>1440</frequency>
+      <cycle>1</cycle>
+    </notification>
+    
+    <!-- Taskbar Jump List -->
+    <taskbar>
+      <task>
+        <name>Browse Properties</name>
+        <url>/properties.html</url>
+        <icon>/assets/images/icon-96x96.png</icon>
+      </task>
+      <task>
+        <name>Watch Video Tours</name>
+        <url>/video-tours.html</url>
+        <icon>/assets/images/icon-96x96.png</icon>
+      </task>
+      <task>
+        <name>Book Consultation</name>
+        <url>/contact.html</url>
+        <icon>/assets/images/icon-96x96.png</icon>
+      </task>
+    </taskbar>
+    
+    <!-- App Display Name -->
+    <application>
+      <name>HomeScape</name>
+    </application>
+    
+  </msapplication>
+</browserconfig>
